@@ -85,7 +85,7 @@ export class ERIC extends SearchEngine {
   parse() {
 
     // Calls the general parser function and returns the result
-    return parseSearchEngineResults(this.url, this.response as string, "#rrw a", "title", false);
+    return parseSearchEngineResults(this.url, this.response as string, '#rrw a[title]:not(a[title$=".pdf"])', "title", false);
   }
 }
 
@@ -263,14 +263,14 @@ export class BASE extends SearchEngine {
     
     // Calls the parent constructor
     super(searchTerm, websitePageNumber);
-    this.url = `https://www.base-search.net/Search/Results?lookfor=${this.searchTerm}&page=${this.pageNum}`;
+    this.url = `https://www.base-search.net/Search/Results?lookfor=${this.searchTerm}&page=${this.pageNum}&filter[]=f_dclang:eng&filter[]=f_dctypenorm:121`;
   }
 
   // Function to parse the DOM of the HTML and return the list of links
   parse() {
 
     // Calls the general parser function and returns the result
-    return parseSearchEngineResults(this.url, this.response, "a.link1.bold", "href", false);
+    return parseSearchEngineResults(this.url, this.response, 'a.link1.bold:not([href$=".pdf"])', "href", false);
   }
 }
 
@@ -476,7 +476,7 @@ function parseSearchEngineResults(url: string, response: string, selector: strin
     // Gets the href containing the link
     const href = link.getAttribute(attribute);
 
-    // If the href isn't null, fits the regular expression and passes the additional check then add the link to the list
+    // If the href isn't null
     if (href != null) {
       results.push(`${requiresHost ? host : ""}${href}`);
     }

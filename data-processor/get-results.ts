@@ -8,7 +8,7 @@ import { Readability } from "@mozilla/readability";
 // The dictionary type
 interface Dictionary<T> {
   [Key: string | number] : T;
-}
+};
 
 // The set of websites to skip getting the meta content
 const WEBSITES_TO_SKIP = new Set(["https://vsearch.nlm.nih.gov"]);
@@ -17,7 +17,48 @@ const WEBSITES_TO_SKIP = new Set(["https://vsearch.nlm.nih.gov"]);
 const MAX_NUM_OF_RESULTS = 100;
 
 // The CSS selector to get the abstract from the page
-const ABSTRACT_CSS_SELECTOR = 'meta[name~="abstract"], meta[property~="abstract"], meta[property="og:description"], meta[name*="Description"]';
+const META_ABSTRACT_CSS_SELECTOR = 'meta[name*="abstract"], meta[property*="abstract"], meta[property="og:description"], meta[name*="Description"]';
+
+// The CSS selector to get the main content from the page
+const ABSTRACT_CSS_SELECTOR = [
+
+  // Sage Journals, Taylor & Francis Online, Life Science Ed (LSE), American Journal of Physiology, ASHA Wire
+  "div.abstractSection.abstractInFull",
+
+  // Springer
+  "div#Abs1-content.c-article-section__content",
+
+  // Wiley Online Library, British Educational Research Association (BERA)
+  "div.article-section__content.en.main",
+
+  // IOP Science
+  "div.article-text.wd-jnl-art-abstract.cf",
+
+  // CORE
+  "section#abstract > p",
+
+  // Cambridge University Press
+  "div.abstract",
+
+  // Cambridge Apollo Respository
+  "div.simple-item-view-description.item-page-field-wrapper.table > div",
+
+  // Scholarworks, ODU Digital Commons
+  "div#abstract > p",
+
+  // Columbia Academic Commons
+  "p.blacklight-abstract_ssi",
+
+  // Dovepress
+  "div.article-inner_html",
+
+  // Trinity's Access to Research Archive (TARA)
+  "div.simple-item-view-description.item-page-field-wrapper > span",
+
+  // MOspace
+  "div.simple-item-view-description.item-page-field-wrapper > div",
+  
+].join(", ");
 
 // The set of common english words
 const COMMON_WORDS = new Set(["about", "above", "actually", "after", "again", "against", "all", "almost", "also", "although", "always", "am", "an", "and", "any", "are", "as", "at", "be", "became", "become", "because", "been", "before", "being", "below", "between", "both", "but", "by", "can", "could", "did", "do", "does", "doing", "down", "during", "each", "either", "else", "few", "for", "from", "further", "had", "has", "have", "having", "he", "he'd", "he'll", "hence", "he's", "her", "here", "here's", "hers", "herself", "him", "himself", "his", "how", "how's", "I", "I'd", "I'll", "I'm", "I've", "if", "in", "into", "is", "it", "it's", "its", "itself", "just", "let's", "may", "maybe", "me", "might", "mine", "more", "most", "must", "my", "myself", "neither", "nor", "not", "of", "oh", "on", "once", "only", "ok", "or", "other", "ought", "our", "ours", "ourselves", "out", "over", "own", "same", "she", "she'd", "she'll", "she's", "should", "so", "some", "such", "than", "that", "that's", "the", "their", "theirs", "them", "themselves", "then", "there", "there's", "these", "they", "they'd", "they'll", "they're", "they've", "this", "those", "through", "to", "too", "under", "until", "up", "very", "was", "we", "we'd", "we'll", "we're", "we've", "were", "what", "what's", "when", "whenever", "when's", "where", "whereas", "wherever", "where's", "whether", "which", "while", "who", "whoever", "who's", "whose", "whom", "why", "why's", "will", "with", "within", "would", "yes", "yet", "you", "you'd", "you'll", "you're", "you've", "your", "yours", "yourself", "yourselves"]);
@@ -159,7 +200,7 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
     // 10 results
     new engine.PubMed(searchTerm, websitePageNumber),
 
-    // 10 results
+    // 10 results or less
     new engine.BASE(searchTerm, websitePageNumber),
 
     // 10 results
@@ -363,17 +404,37 @@ function getTextContentOfHTML(html: string, url: string) {
   }
 
   // Checks if the url is a CiteSeerX link
-  else if (url.match(engine.HOST_NAME_REGEX)![0] === "http://http://citeseerx.ist.psu.edu/") {
+  else if (url.match(engine.HOST_NAME_REGEX)![0] === "http://citeseerx.ist.psu.edu/") {
 
     // Gets the text using this CSS selector
     text = doc.querySelector('meta[name="description"]') ? doc.querySelector('meta[name="description"]')!.getAttribute("content") : "";
+  }
+
+  // Checks if the url is a science direct link
+  else if (url.match(engine.HOST_NAME_REGEX)![0] === "https://www.sciencedirect.com") {
+
+    // Gets the list of elements
+    const elems = doc.querySelectorAll("div.abstract.author > div > p");
+
+    // Gets the text from the elements
+    text = elems.map(elem => elem.text).join(" ");
+  }
+
+  // Checks if the URL is a BMC Pediatrics link
+  else if (url.match(engine.HOST_NAME_REGEX)![0] === "https://bmcpediatr.biomedcentral.com") {
+
+    // Gets the list of elements
+    const elems = doc.querySelectorAll("div#Abs1-content.c-article-section__content > p");
+
+    // Gets the text from the elements
+    text = elems.map(elem => elem.text).join(" ");
   }
 
   // Otherwise, use the page's metadata
   else {
 
     // Gets the text content from the page
-    text = doc.querySelector(ABSTRACT_CSS_SELECTOR) ? doc.querySelector(ABSTRACT_CSS_SELECTOR)!.getAttribute("content") : "";
+    text = doc.querySelector(META_ABSTRACT_CSS_SELECTOR) ? doc.querySelector(META_ABSTRACT_CSS_SELECTOR)!.getAttribute("content") : "";
   }
 
   // Trims the text
