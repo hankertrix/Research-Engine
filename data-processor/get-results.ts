@@ -1,7 +1,7 @@
 // Module to get the results from the other search engines
 
 import * as engine from "./search-engines";
-import { parse } from "node-html-parser";
+import { parse, HTMLElement } from "node-html-parser";
 import { JSDOM } from "jsdom";
 import { Readability } from "@mozilla/readability";
 
@@ -36,9 +36,6 @@ const ABSTRACT_CSS_SELECTOR = [
 
   // CORE
   "section#abstract > p",
-
-  // Cambridge University Press
-  "div.abstract",
 
   // Cambridge Apollo Respository
   "div.simple-item-view-description.item-page-field-wrapper.table > div",
@@ -384,34 +381,36 @@ function fixSentence(searchTerm: string, sentence: string) {
 }
 
 
-// Function to parse the html of the page and get back the text content
-function getTextContentOfHTML(html: string, url: string) {
+// Function to check the hostname of the website
+function checkHostname(url: string, wantedHostname: string) {
+
+  // Returns whether the url hostname matches the wanted hostname
+  return url.match(engine.HOST_NAME_REGEX)![0] === wantedHostname;
+}
+
+
+// Function to get the text from various websites
+function getAbstract(doc: HTMLElement, url: string) {
 
   // Initialise the text
   let text: string | undefined = "";
 
-  // Parses the html using node html parser
-  const doc = parse(html);
-
-  // Gets the title of the page
-  const title = doc.querySelector("title") ? doc.querySelector("title")!.text : "Untitled";
-
   // Checks if the url is an OSTI link
-  if (url.match(engine.HOST_NAME_REGEX)![0] === "https://www.osti.gov") {
+  if (checkHostname(url, "https://www.osti.gov")) {
 
     // Gets the text using this CSS selector
     text = doc.querySelector('div.biblio-detail > p#citation-abstract.description[itemprop="description"]') ? doc.querySelector('div.biblio-detail > p#citation-abstract.description[itemprop="description"]')!.text : "";
   }
 
   // Checks if the url is a CiteSeerX link
-  else if (url.match(engine.HOST_NAME_REGEX)![0] === "http://citeseerx.ist.psu.edu/") {
+  else if (checkHostname(url, "http://citeseerx.ist.psu.edu/")) {
 
     // Gets the text using this CSS selector
     text = doc.querySelector('meta[name="description"]') ? doc.querySelector('meta[name="description"]')!.getAttribute("content") : "";
   }
 
   // Checks if the url is a science direct link
-  else if (url.match(engine.HOST_NAME_REGEX)![0] === "https://www.sciencedirect.com") {
+  else if (checkHostname(url, "https://www.sciencedirect.com")) {
 
     // Gets the list of elements
     const elems = doc.querySelectorAll("div.abstract.author > div > p");
@@ -421,13 +420,20 @@ function getTextContentOfHTML(html: string, url: string) {
   }
 
   // Checks if the URL is a BMC Pediatrics link
-  else if (url.match(engine.HOST_NAME_REGEX)![0] === "https://bmcpediatr.biomedcentral.com") {
+  else if (checkHostname(url, "https://bmcpediatr.biomedcentral.com")) {
 
     // Gets the list of elements
     const elems = doc.querySelectorAll("div#Abs1-content.c-article-section__content > p");
 
     // Gets the text from the elements
     text = elems.map(elem => elem.text).join(" ");
+  }
+
+  // Checks if the URL is a Cambridge University Press link
+  else if (checkHostname(url, "https://www.cambridge.org/")) {
+
+    // Gets the text using this CSS selector
+    text = doc.querySelector("div.abstract") ? doc.querySelector("div.abstract")!.text : "";
   }
 
   // Otherwise, use the page's metadata
@@ -439,6 +445,23 @@ function getTextContentOfHTML(html: string, url: string) {
 
   // Trims the text
   text = text!.trim();
+
+  // Returns the text
+  return text;
+}
+
+
+// Function to parse the html of the page and get back the text content
+function getTextContentOfHTML(html: string, url: string) {
+
+  // Parses the html using node html parser
+  const doc = parse(html);
+
+  // Gets the title of the page
+  const title = doc.querySelector("title") ? doc.querySelector("title")!.text : "Untitled";
+
+  // Calls the get abstract function to get the text of the document
+  let text = getAbstract(doc, url);
 
   // If the text content is nothing, or is in the list of websites to skip, or ends with ...
   if (!text || WEBSITES_TO_SKIP.has(url.match(engine.HOST_NAME_REGEX)![0]) || (text.endsWith("...") || text.endsWith("…"))) {
