@@ -361,21 +361,23 @@ export class CiteSeerX extends SearchEngine {
 }
 
 
-// The class for MedlinePlus
-export class MedlinePlus extends SearchEngine {
+// The class for Paperity
+export class Paperity extends SearchEngine {
+
+  numOfResults = 20;
 
   constructor(searchTerm: string, websitePageNumber: number) {
 
     // Calls the parent constructor
     super(searchTerm, websitePageNumber);
-    this.url = `https://vsearch.nlm.nih.gov/vivisimo/cgi-bin/query-meta?v%3Aproject=medlineplus&v%3Asources=medlineplus-bundle&query=${this.searchTerm}&v:state=root%7Croot-${(this.pageNum - 1) * this.numOfResults}-10%7C0&`;
+    this.url = `https://paperity.org/search/${this.pageNum}?q=${this.searchTerm}`;
   }
 
   // Function to parse the DOM of the HTML and return the list of links
   parse() {
 
     // Calls the general parser function and returns the result
-    return parseSearchEngineResults(this.url, this.response, "div.document-header > a", "href", true);
+    return parseSearchEngineResults(this.url, this.response, "div.panel.panel-body.panel-content.bg-white > div.row > div > h4 > a", "href", true);
   }
 }
 

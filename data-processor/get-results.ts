@@ -10,9 +10,6 @@ interface Dictionary<T> {
   [Key: string | number] : T;
 };
 
-// The set of websites to skip getting the meta content
-const WEBSITES_TO_SKIP = new Set(["https://vsearch.nlm.nih.gov"]);
-
 // The maximum number of results
 const MAX_NUM_OF_RESULTS = 100;
 
@@ -75,6 +72,9 @@ const ABSTRACT_CSS_SELECTOR = [
 
   // MATEC Web of Conferences
   "div#head > p:not(.aff):not(.history):not(.bold)",
+
+  // Paperity
+  "div.col-lg-9.col-md-9.col-xs-12 > blockquote"
   
 ].join(", ");
 
@@ -142,7 +142,7 @@ async function fetchAll(requests: {url?: string, method: string, redirect: strin
 
 
 // Function to retry getting the webpage
-async function retryRequestsForSearchEngines(listOfResponses: Response[], searchEngines: (engine.ERIC | engine.CORE | engine.SemanticScholar | engine.PubMed | engine.BASE | engine.DOAJ | engine.Fatcat | engine.CiteSeerX | engine.MedlinePlus)[]) {
+async function retryRequestsForSearchEngines(listOfResponses: Response[], searchEngines: (engine.ERIC | engine.CORE | engine.SemanticScholar | engine.PubMed | engine.BASE | engine.DOAJ | engine.Fatcat | engine.CiteSeerX | engine.Paperity | engine.AMiner | engine.OSTI)[]) {
 
   // Initialise the list of search engines that are able to set a response
   const responsedEngines = [];
@@ -231,7 +231,7 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
     new engine.CiteSeerX(searchTerm, websitePageNumber),
 
     // 10 results
-    new engine.MedlinePlus(searchTerm, websitePageNumber),
+    new engine.Paperity(searchTerm, websitePageNumber),
 
     // 10 results
     new engine.AMiner(searchTerm, websitePageNumber),
@@ -262,7 +262,7 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
 
 
 // Function to get the list of websites
-function getWebsiteList(searchEngines: (engine.ERIC | engine.CORE | engine.SemanticScholar | engine.PubMed | engine.BASE | engine.DOAJ | engine.Fatcat | engine.CiteSeerX | engine.MedlinePlus)[], pageNumber: number) {
+function getWebsiteList(searchEngines: (engine.ERIC | engine.CORE | engine.SemanticScholar | engine.PubMed | engine.BASE | engine.DOAJ | engine.Fatcat | engine.CiteSeerX | engine.Paperity | engine.AMiner | engine.OSTI)[], pageNumber: number) {
 
   // List of the search results from every search engine
   const searchEngineResultList = [];
@@ -459,8 +459,15 @@ function getTextContentOfHTML(html: string, url: string) {
   // Calls the get abstract function to get the text of the document
   let text = getAbstract(doc, url.match(engine.HOST_NAME_REGEX)![0]);
 
-  // If the text content is nothing, or is in the list of websites to skip, or ends with ...
-  if (!text || WEBSITES_TO_SKIP.has(url.match(engine.HOST_NAME_REGEX)![0]) || (text.endsWith("...") || text.endsWith("…"))) {
+  // If the text content is nothing
+  if (!text) {
+
+    // Use the CSS selectors to pull the content from the webpage
+    text = doc.querySelector(ABSTRACT_CSS_SELECTOR) ? doc.querySelector(ABSTRACT_CSS_SELECTOR)!.text : "";
+  }
+
+  // If the text content is still nothing
+  if (!text) {
 
     // Creates a dom
     const dom = new JSDOM(html);
