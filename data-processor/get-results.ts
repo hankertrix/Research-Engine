@@ -16,8 +16,11 @@ const WEBSITES_TO_SKIP = new Set(["https://vsearch.nlm.nih.gov"]);
 // The maximum number of results
 const MAX_NUM_OF_RESULTS = 100;
 
+// The CSS selector to exclude meta content that end with ellipsis or have a dash inside
+const EXCLUDABLES = ':not([content$="..."]):not([content$="…"]):not([content~="-"]):not([content*="|"])'
+
 // The CSS selector to get the abstract from the page
-const META_ABSTRACT_CSS_SELECTOR = 'meta[name*="abstract"], meta[property*="abstract"], meta[property="og:description"], meta[name*="Description"]';
+const META_ABSTRACT_CSS_SELECTOR = `meta[name*=".abstract"]${EXCLUDABLES}, meta[property*=".abstract"]${EXCLUDABLES}, meta[property="og:description"]${EXCLUDABLES}, meta[name*="Description"]${EXCLUDABLES}, meta[name="citation_abstract"]${EXCLUDABLES}`;
 
 // The CSS selector to get the main content from the page
 const ABSTRACT_CSS_SELECTOR = [
@@ -25,7 +28,7 @@ const ABSTRACT_CSS_SELECTOR = [
   // Sage Journals, Taylor & Francis Online, Life Science Ed (LSE), American Journal of Physiology, ASHA Wire
   "div.abstractSection.abstractInFull",
 
-  // Springer
+  // Springer, Scientific Reports (nature.com)
   "div#Abs1-content.c-article-section__content",
 
   // Wiley Online Library, British Educational Research Association (BERA)
@@ -36,6 +39,9 @@ const ABSTRACT_CSS_SELECTOR = [
 
   // CORE
   "section#abstract > p",
+
+  // Cambridge Core (Cambridge University Press)
+  "div.abstract",
 
   // Cambridge Apollo Respository
   "div.simple-item-view-description.item-page-field-wrapper.table > div",
@@ -54,6 +60,21 @@ const ABSTRACT_CSS_SELECTOR = [
 
   // MOspace
   "div.simple-item-view-description.item-page-field-wrapper > div",
+
+  // Pubmed
+  "div#enc-abstract.abstract-content.selected",
+
+  // Althea Medical Journal
+  "div#articleAbstract > div",
+
+  // MDPI
+  "div.art-abstract.in-tab.hypothesis_container",
+
+  // Frontiers
+  "div.JournalAbstract > p",
+
+  // MATEC Web of Conferences
+  "div#head > p:not(.aff):not(.history):not(.bold)",
   
 ].join(", ");
 
@@ -381,66 +402,41 @@ function fixSentence(searchTerm: string, sentence: string) {
 }
 
 
-// Function to check the hostname of the website
-function checkHostname(url: string, wantedHostname: string) {
-
-  // Returns whether the url hostname matches the wanted hostname
-  return url.match(engine.HOST_NAME_REGEX)![0] === wantedHostname;
-}
-
-
 // Function to get the text from various websites
-function getAbstract(doc: HTMLElement, url: string) {
+function getAbstract(doc: HTMLElement, hostname: string) {
 
   // Initialise the text
   let text: string | undefined = "";
 
-  // Checks if the url is an OSTI link
-  if (checkHostname(url, "https://www.osti.gov")) {
+  // Initialise the list of HTMLElements
+  let elems: HTMLElement[] = [];
 
-    // Gets the text using this CSS selector
-    text = doc.querySelector('div.biblio-detail > p#citation-abstract.description[itemprop="description"]') ? doc.querySelector('div.biblio-detail > p#citation-abstract.description[itemprop="description"]')!.text : "";
-  }
+  // A switch statement to deal with all the cases
+  switch (hostname) {
 
-  // Checks if the url is a CiteSeerX link
-  else if (checkHostname(url, "http://citeseerx.ist.psu.edu/")) {
+    // The default case
+    default:
 
-    // Gets the text using this CSS selector
-    text = doc.querySelector('meta[name="description"]') ? doc.querySelector('meta[name="description"]')!.getAttribute("content") : "";
-  }
+      // Gets the text content from the page
+      text = doc.querySelector(META_ABSTRACT_CSS_SELECTOR) ? doc.querySelector(META_ABSTRACT_CSS_SELECTOR)!.getAttribute("content") : "";
+      break;
 
-  // Checks if the url is a science direct link
-  else if (checkHostname(url, "https://www.sciencedirect.com")) {
+    // If the url is a CiteSeerX link
+    case "http://citeseerx.ist.psu.edu/":
 
-    // Gets the list of elements
-    const elems = doc.querySelectorAll("div.abstract.author > div > p");
+      // Gets the text using this CSS selector
+      text = doc.querySelector('meta[name="description"]') ? doc.querySelector('meta[name="description"]')!.getAttribute("content") : "";
+      break;
 
-    // Gets the text from the elements
-    text = elems.map(elem => elem.text).join(" ");
-  }
+    // If the url is a Science Direct Link
+    case "https://www.sciencedirect.com":
 
-  // Checks if the URL is a BMC Pediatrics link
-  else if (checkHostname(url, "https://bmcpediatr.biomedcentral.com")) {
-
-    // Gets the list of elements
-    const elems = doc.querySelectorAll("div#Abs1-content.c-article-section__content > p");
-
-    // Gets the text from the elements
-    text = elems.map(elem => elem.text).join(" ");
-  }
-
-  // Checks if the URL is a Cambridge University Press link
-  else if (checkHostname(url, "https://www.cambridge.org/")) {
-
-    // Gets the text using this CSS selector
-    text = doc.querySelector("div.abstract") ? doc.querySelector("div.abstract")!.text : "";
-  }
-
-  // Otherwise, use the page's metadata
-  else {
-
-    // Gets the text content from the page
-    text = doc.querySelector(META_ABSTRACT_CSS_SELECTOR) ? doc.querySelector(META_ABSTRACT_CSS_SELECTOR)!.getAttribute("content") : "";
+      // Gets the list of elements
+      elems = doc.querySelectorAll("div.abstract.author > div > p");
+  
+      // Gets the text from the elements
+      text = elems.map(elem => elem.text).join(" ");
+      break;
   }
 
   // Trims the text
@@ -461,7 +457,7 @@ function getTextContentOfHTML(html: string, url: string) {
   const title = doc.querySelector("title") ? doc.querySelector("title")!.text : "Untitled";
 
   // Calls the get abstract function to get the text of the document
-  let text = getAbstract(doc, url);
+  let text = getAbstract(doc, url.match(engine.HOST_NAME_REGEX)![0]);
 
   // If the text content is nothing, or is in the list of websites to skip, or ends with ...
   if (!text || WEBSITES_TO_SKIP.has(url.match(engine.HOST_NAME_REGEX)![0]) || (text.endsWith("...") || text.endsWith("…"))) {
