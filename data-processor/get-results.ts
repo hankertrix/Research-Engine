@@ -10,6 +10,12 @@ interface Dictionary<T> {
   [Key: string | number] : T;
 };
 
+// The type for the list of search engines
+type SearchEngineList = (engine.ERIC | engine.CORE | engine.SemanticScholar | engine.PubMed | engine.BASE | engine.DOAJ | engine.Fatcat | engine.CiteSeerX | engine.Paperity | engine.AMiner | engine.OSTI)[];
+
+// The type for the website list
+type Website = (string | {url: string, title: string, text: string});
+
 // The maximum number of results
 const MAX_NUM_OF_RESULTS = 100;
 
@@ -120,6 +126,7 @@ async function fetchAll(requests: {url?: string, method: string, redirect: strin
       }));
     }
 
+    // If the request is an object
     else {
 
       // Pulls out the url from the request object
@@ -141,8 +148,9 @@ async function fetchAll(requests: {url?: string, method: string, redirect: strin
 }
 
 
+// Not in use currently
 // Function to retry getting the webpage
-async function retryRequestsForSearchEngines(listOfResponses: Response[], searchEngines: (engine.ERIC | engine.CORE | engine.SemanticScholar | engine.PubMed | engine.BASE | engine.DOAJ | engine.Fatcat | engine.CiteSeerX | engine.Paperity | engine.AMiner | engine.OSTI)[]) {
+async function retryRequestsForSearchEngines(listOfResponses: Response[], searchEngines: SearchEngineList) {
 
   // Initialise the list of search engines that are able to set a response
   const responsedEngines = [];
@@ -200,6 +208,43 @@ async function retryRequestsForSearchEngines(listOfResponses: Response[], search
 }
 
 
+// Function to remove the list of search engines that have invalid responses
+async function filterSearchEngines(responses: Response[], searchEngines: SearchEngineList) {
+
+  // The new list of search engines
+  const responsedEngines = [];
+
+  // The tasks to set the response of the search engines
+  const tasks = [];
+
+  // Iterates the list of search engines
+  for (let i = 0; i < searchEngines.length; ++i) {
+
+    // Gets the search engine
+    const engine = searchEngines[i];
+
+    // The html response
+    const response = responses[i];
+
+    // Checks if the response of the search engine is a successful one
+    if (response.status < 400) {
+
+      // Adds the search engine to the list
+      responsedEngines.push(engine);
+
+      // Adds the task to set the response the list
+      tasks.push(engine.setResponse(response));
+    }
+  }
+
+  // Wait for all the set response function to return
+  await Promise.all(tasks);
+
+  // Returns the list of search engines
+  return responsedEngines;
+}
+
+
 // Function to search the various search engines
 async function searchWebpages(searchTerm: string, websitePageNumber: number) {
 
@@ -239,7 +284,7 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
     // 10 results
     new engine.OSTI(searchTerm, websitePageNumber)
   ];
-
+  
   // The list of all requests
   const requests = [];
 
@@ -254,7 +299,7 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
   let htmlResponses = await fetchAll(requests);
 
   // Retry getting the html response if it fails
-  const responsedEngines = await retryRequestsForSearchEngines(htmlResponses, searchEngines);
+  const responsedEngines = await filterSearchEngines(htmlResponses, searchEngines);
 
   // Returns the list of search engines that responded
   return responsedEngines;
@@ -262,7 +307,7 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
 
 
 // Function to get the list of websites
-function getWebsiteList(searchEngines: (engine.ERIC | engine.CORE | engine.SemanticScholar | engine.PubMed | engine.BASE | engine.DOAJ | engine.Fatcat | engine.CiteSeerX | engine.Paperity | engine.AMiner | engine.OSTI)[], pageNumber: number) {
+function getWebsiteList(searchEngines: SearchEngineList, pageNumber: number) {
 
   // List of the search results from every search engine
   const searchEngineResultList = [];
@@ -274,10 +319,10 @@ function getWebsiteList(searchEngines: (engine.ERIC | engine.CORE | engine.Seman
   for (const engine of searchEngines) {
 
     // Gets the list of websites
-    const listOfWebsites = engine.parse();
+    const listOfWebsites: Website[] = engine.parse();
 
-    console.log(engine.constructor.name);
-    console.log(listOfWebsites);
+    //console.log(engine.constructor.name);
+    //console.log(listOfWebsites);
 
     // Adds the list of websites to the search engine result list
     searchEngineResultList.push(listOfWebsites);
@@ -286,19 +331,8 @@ function getWebsiteList(searchEngines: (engine.ERIC | engine.CORE | engine.Seman
     numOfResultsList.push(engine.numOfResults);
   }
 
-  // The set of websites as I don't want duplicate websites
-  const websites: Set<(string | {url: string, title: string, text: string})> = new Set();
-
-  // Iterates from 0 to the maximum number of results
-  for (let i = 0; i < Math.max(...numOfResultsList); ++i) {
-
-    // Iterates the list of search results from the search engines
-    for (const resultList of searchEngineResultList) {
-
-      // If i is less than the length of the list, add the website to the set
-      if (i < resultList.length) websites.add(resultList[i]);
-    }
-  }
+  // The set of websites created from the search engine results as I don't want duplicate websites
+  const websites: Set<Website> = new Set(([] as Website[]).concat(...searchEngineResultList));
 
   // The index to start the slice of the array of websites at
   const sliceIndex = ((pageNumber - 1) % 10) * 10;
@@ -339,6 +373,7 @@ function markSearchTerm(searchTerm: string, listOfMatchedResults: RegExpMatchArr
 }
 
 
+// Not in use currently
 // Function to remove the weirdness in a sentence
 function fixSentence(searchTerm: string, sentence: string) {
 	
@@ -563,6 +598,7 @@ function searchRelevantParts(website: ({url: string, title: string, text: string
 }
 
 
+// Not in use currently
 // Function to retry the requests, giving back a list of objects containing the response text and the link
 async function retryRequestsWithBoundLink(responses: Response[], websiteList: string[]) {
 
@@ -608,6 +644,31 @@ async function retryRequestsWithBoundLink(responses: Response[], websiteList: st
 }
 
 
+// Function to filter the websites that failed and create the website objects
+function filterWebsiteList(responses: Response[], websiteList: string[]) {
+
+  // Gets the list of website links and responses
+  const websiteObjList = [];
+
+  // Iterates the list of responses
+  for (let i = 0; i < responses.length; ++i) {
+
+    // Gets the response
+    const response = responses[i];
+
+    // Checks if the response is successful
+    if (response.status < 400) {
+
+      // Adds the website object to the list
+      websiteObjList.push({url: websiteList[i], response: response, html: ""});
+    }
+  }
+
+  // Returns the list of website objects
+  return websiteObjList;
+}
+
+
 // Function to get the relevant results from the list of websites
 async function getRelevantPartsList(websiteList: (string | {url: string, title: string, text: string})[], searchTerm: string) {
 
@@ -638,7 +699,7 @@ async function getRelevantPartsList(websiteList: (string | {url: string, title: 
   const responses = await fetchAll(websitesToBeFetched);
   
   // Retry getting all the failed websites
-  const websiteObjs = await retryRequestsWithBoundLink(responses, websitesToBeFetched);
+  const websiteObjs = filterWebsiteList(responses, websitesToBeFetched);
   
   // Gets the html from the responses
   const htmls = await Promise.all(websiteObjs.map(obj => obj.response.text()));
@@ -705,14 +766,24 @@ export async function createSearchResults(searchTerm: string, pageNumber: number
   // Gets the website page number
   const websitePageNumber = Math.floor(10 * pageNumber / MAX_NUM_OF_RESULTS) + 1
 
+  console.time("searchWebpages");
+
   // Gets the list of search engines
   const searchEngineList = await searchWebpages(searchTerm, websitePageNumber);
+
+  console.timeEnd("searchWebpages");
+  console.time("getWebsiteList");
 
   // Gets the list of websites from the list of search enginers
   const websiteList = getWebsiteList(searchEngineList, pageNumber);
 
+  console.timeEnd("getWebsiteList");
+  console.time("getRelevantPartsList");
+  
   // Gets the list of relevant parts for each website
   const websiteListWithParts = await getRelevantPartsList(websiteList, searchTerm);
+
+  console.timeEnd("getRelevantPartsList");
 
   // Returns the list of websites with parts
   return websiteListWithParts;
