@@ -75,6 +75,7 @@ export default async function handler(
     let data = await createSearchResults(searchTerm, pageNumber);
 
     console.timeEnd("createSearchResults");
+    console.log("----------------------------");
 
     // Convert the data to one without markdown if the rich text isn't wanted
     if (!richText) data = removeMarkup(data);

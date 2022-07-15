@@ -333,8 +333,8 @@ function getWebsiteList(searchEngines: engine.SearchEngineList, pageNumber: numb
     // Gets the list of websites
     const listOfWebsites: engine.Website[] = engine.parse();
 
-    console.log(engine.constructor.name);
-    console.log(listOfWebsites);
+    //console.log(engine.constructor.name);
+    //console.log(listOfWebsites);
 
     // Adds the list of websites to the search engine result list
     searchEngineResultList[i] = listOfWebsites;
