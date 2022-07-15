@@ -19,12 +19,12 @@ type Data = {
 // The invalid request message
 const INVALID_REQ_MSG = `The request to the API should be a GET request with a query string behind.
 
-Example request url: https://research-engine.vercel.app/api/search?searchTerm=your+search+term&pageNum=1&richText=true
+Example request url: https://research-engine.vercel.app/api/search?q=your+search+term&page=1&rich=true
 
 Query parameters:
-- searchTerm: Your URL encoded search term (required).
-- pageNum: The page number that you want (optional, defaults to 1).
-- richText: Set it to "true" if you want html formatted text and "false" if you want plain text (optional, defaults to false).`;
+- q: Your URL encoded search term (required).
+- page: The page number that you want (optional, defaults to 1).
+- rich: Set it to "true" if you want html formatted text and "false" if you want plain text (optional, defaults to false).`;
 
 // The function to return the actual data
 export default async function handler(
@@ -33,7 +33,7 @@ export default async function handler(
 ) {
 
   // If the request is not a GET request or has no query string, returns a message to the user telling them the issue
-  if (req.method !== 'GET' || !req.query.searchTerm) {
+  if (req.method !== 'GET' || !req.query.q) {
     res.status(400).json({status: "400 Bad Request", message: INVALID_REQ_MSG})
   }
 
@@ -41,16 +41,16 @@ export default async function handler(
   else {
 
     // Gets the search term from the query string
-    const searchTerm = Array.isArray(req.query.searchTerm) ? req.query.searchTerm.join(" ") : req.query.searchTerm;
+    const searchTerm = Array.isArray(req.query.q) ? req.query.q.join(" ") : req.query.q;
 
     // Initialise the page number variable
     let pageNum = "";
 
     // Checks if the page number exists
-    if (req.query.pageNum) {
+    if (req.query.page) {
 
       // Set the page number to it
-      pageNum = Array.isArray(req.query.pageNum) ? req.query.pageNum.join("") : req.query.pageNum;
+      pageNum = Array.isArray(req.query.page) ? req.query.page.join("") : req.query.page;
 
       // If the page number isn't a valid number, change it to 1
       if (!/^\d+$/g.test(pageNum)) pageNum = "1";
@@ -67,7 +67,7 @@ export default async function handler(
     const pageNumber = parseInt(pageNum) <= 0 ? 1 : parseInt(pageNum);
 
     // Gets the rich text option from the query string
-    const richText = req.query.richText === "true" ? true : false;
+    const richText = req.query.rich === "true" ? true : false;
 
     console.time("createSearchResults");
 

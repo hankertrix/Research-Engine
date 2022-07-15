@@ -10,12 +10,6 @@ interface Dictionary<T> {
   [Key: string | number] : T;
 };
 
-// The type for the list of search engines
-type SearchEngineList = (engine.ERIC | engine.CORE | engine.SemanticScholar | engine.PubMed | engine.BASE | engine.DOAJ | engine.Fatcat | engine.CiteSeerX | engine.Paperity | engine.AMiner | engine.OSTI)[];
-
-// The type for the website list
-type Website = (string | {url: string, title: string, text: string});
-
 // The maximum number of results
 const MAX_NUM_OF_RESULTS = 100;
 
@@ -109,21 +103,27 @@ const REMOVE_MARKING_TAG_REGEX = new RegExp(`</?${MARKING_TAG}>`, "g");
 // Function to fetch all the requests, returning a list of responses
 async function fetchAll(requests: {url?: string, method: string, redirect: string, headers: HeadersInit}[] | string[]) {
 
+  // The length of the requests list
+  const reqLen = requests.length;
+
   // The list of promises to be fulfilled
-  const promisesList = [];
+  const promisesList = new Array(reqLen);
   
   // Iterates the list of request objects
-  for (const request of requests) {
+  for (let i = 0; i < reqLen; ++i) {
+
+    // Gets the request object
+    const request = requests[i];
 
     // Check if the request is just a url
     if (typeof request === "string") {
 
       // Adds the fetch request to the list
-      promisesList.push(fetch(request as RequestInfo, {
+      promisesList[i] = fetch(request as RequestInfo, {
         "method" : "GET",
         "redirect" : "follow",
         "headers" : engine.HEADERS
-      }));
+      });
     }
 
     // If the request is an object
@@ -139,7 +139,7 @@ async function fetchAll(requests: {url?: string, method: string, redirect: strin
       delete copiedReq.url;
   
       // Adds the fetch request to the promises
-      promisesList.push(fetch(url, copiedReq as RequestInit));
+      promisesList[i] = fetch(url, copiedReq as RequestInit);
     }
   }
 
@@ -150,16 +150,19 @@ async function fetchAll(requests: {url?: string, method: string, redirect: strin
 
 // Not in use currently
 // Function to retry getting the webpage
-async function retryRequestsForSearchEngines(listOfResponses: Response[], searchEngines: SearchEngineList) {
+async function retryRequestsForSearchEngines(listOfResponses: Response[], searchEngines: engine.SearchEngineList) {
+
+  // Length of the list of responses
+  const resLen = listOfResponses.length;
 
   // Initialise the list of search engines that are able to set a response
-  const responsedEngines = [];
+  const responsedEngines = new Array(resLen);
   
   // Initialise the list of tasks
-  const tasks = [];
+  const tasks = new Array(resLen);
 
   // Iterates the list of HTTP responses
-  for (let i = 0; i < listOfResponses.length; ++i) {
+  for (let i = 0; i < resLen; ++i) {
 
     // Gets the response object
     let response = listOfResponses[i];
@@ -193,10 +196,10 @@ async function retryRequestsForSearchEngines(listOfResponses: Response[], search
     if (response.status < 400) {
 
       // Adds the set response function to the list of tasks
-      tasks.push(searchEngines[i].setResponse(response));
+      tasks[i] = searchEngines[i].setResponse(response);
 
       // Adds the search engine to the list of search engines
-      responsedEngines.push(searchEngines[i]);
+      responsedEngines[i] = searchEngines[i];
     }
   }
 
@@ -209,7 +212,7 @@ async function retryRequestsForSearchEngines(listOfResponses: Response[], search
 
 
 // Function to remove the list of search engines that have invalid responses
-async function filterSearchEngines(responses: Response[], searchEngines: SearchEngineList) {
+async function filterSearchEngines(responses: Response[], searchEngines: engine.SearchEngineList) {
 
   // The new list of search engines
   const responsedEngines = [];
@@ -284,15 +287,21 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
     // 10 results
     new engine.OSTI(searchTerm, websitePageNumber)
   ];
+
+  // The length of the list of search engines
+  const engineLen = searchEngines.length;
   
   // The list of all requests
-  const requests = [];
+  const requests = new Array(engineLen);
 
   // Adds all the urls to the list
-  for (const searchEngine of searchEngines) {
+  for (let i = 0; i < engineLen; ++i) {
+
+    // Gets the search engine
+    const engine = searchEngines[i];
 
     // Add the url to the list of urls
-    requests.push(searchEngine.makeRequest());
+    requests[i] = engine.makeRequest();
   }
 
   // Gets the responses from the websites
@@ -307,32 +316,32 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
 
 
 // Function to get the list of websites
-function getWebsiteList(searchEngines: SearchEngineList, pageNumber: number) {
+function getWebsiteList(searchEngines: engine.SearchEngineList, pageNumber: number) {
+
+  // Length of the list of search engines
+  const engineLen = searchEngines.length;
 
   // List of the search results from every search engine
-  const searchEngineResultList = [];
-
-  // List of the expected number of results from every search engine
-  const numOfResultsList = [];
+  const searchEngineResultList = new Array(engineLen);
 
   // Iterates the list of search engines
-  for (const engine of searchEngines) {
+  for (let i = 0; i < engineLen; ++i) {
+
+    // Gets the search engine
+    const engine = searchEngines[i];
 
     // Gets the list of websites
-    const listOfWebsites: Website[] = engine.parse();
+    const listOfWebsites: engine.Website[] = engine.parse();
 
-    //console.log(engine.constructor.name);
-    //console.log(listOfWebsites);
+    console.log(engine.constructor.name);
+    console.log(listOfWebsites);
 
     // Adds the list of websites to the search engine result list
-    searchEngineResultList.push(listOfWebsites);
-
-    // Adds the number of results to the list of number of results
-    numOfResultsList.push(engine.numOfResults);
+    searchEngineResultList[i] = listOfWebsites;
   }
 
   // The set of websites created from the search engine results as I don't want duplicate websites
-  const websites: Set<Website> = new Set(([] as Website[]).concat(...searchEngineResultList));
+  const websites: Set<engine.Website> = new Set(([] as engine.Website[]).concat(...searchEngineResultList));
 
   // The index to start the slice of the array of websites at
   const sliceIndex = ((pageNumber - 1) % 10) * 10;
@@ -368,7 +377,7 @@ function markSearchTerm(searchTerm: string, listOfMatchedResults: RegExpMatchArr
   // The regular expression to get the search term
   const regex = new RegExp(searchTerm, "gi");
 
-  // Returns the new array with the matched term marked
+  // Returns the array with the matched term marked
   return listOfMatchedResults.map(result => result.replace(regex, `<${MARKING_TAG}>${searchTerm}</${MARKING_TAG}>`));
 }
 
@@ -672,14 +681,17 @@ function filterWebsiteList(responses: Response[], websiteList: string[]) {
 // Function to get the relevant results from the list of websites
 async function getRelevantPartsList(websiteList: (string | {url: string, title: string, text: string})[], searchTerm: string) {
 
+  // The length of the list of websites
+  const websitesLen = websiteList.length;
+
   // The list of websites that need to be fetched
-  const websitesToBeFetched = [];
+  const websitesToBeFetched: string[] = [];
 
   // The dictionary of website indexes
   const websiteIndexes: Dictionary<number> = {};
 
   // Iterates the list of websites
-  for (let i = 0; i < websiteList.length; ++i) {
+  for (let i = 0; i < websitesLen; ++i) {
 
     // Gets the website
     const website = websiteList[i];
@@ -739,17 +751,23 @@ async function getRelevantPartsList(websiteList: (string | {url: string, title: 
   // Slice the new website list to only contain 10 results
   newWebsiteList = newWebsiteList.slice(0, 10);
 
+  // Length of the new website list
+  const newWebsiteListLen = newWebsiteList.length;
+
   // The list of relevant parts of each website
-  const websiteListWithParts = [];
+  const websiteListWithParts = new Array(newWebsiteListLen);
 
   // Iterate the website list
-  for (const website of newWebsiteList) {
+  for (let i = 0; i < newWebsiteListLen; ++i) {
+
+    // Gets the website object
+    const website = newWebsiteList[i];
 
     // Calls the function to search the relevant parts
     const relevantPartObject = searchRelevantParts(website, searchTerm);
 
     // Adds the object to the list of relevant parts for each website
-    websiteListWithParts.push(relevantPartObject);
+    websiteListWithParts[i] = relevantPartObject;
   }
 
   // Returns the list of websites with their parts attached

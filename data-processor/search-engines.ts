@@ -2,6 +2,12 @@
 
 import { parse } from 'node-html-parser';
 
+// The type for the list of search engines
+export type SearchEngineList = (ERIC | CORE | SemanticScholar | PubMed | BASE | DOAJ | Fatcat | CiteSeerX | Paperity | AMiner | OSTI)[];
+
+// The type for the website list
+export type Website = (string | {url: string, title: string, text: string});
+
 // Regular expression to get a website's hostname
 export const HOST_NAME_REGEX = /https?:\/\/.*?(?=\/)/g;
 
@@ -131,17 +137,26 @@ export class CORE extends SearchEngine {
   // Function to parse the response and return the list of links
   parse() {
 
+    // The list of results
+    const resultList = this.response.results;
+
+    // The length of the list of results
+    const resultLen = resultList.length;
+
     // The list of websites
-    const websiteList = [];
+    const websiteList: Website[] = new Array(resultLen);
 
     // Iterates the list of results
-    for (const result of this.response.results) {
+    for (let i = 0; i < resultLen; ++i) {
 
+      // Gets the result object
+      const result = resultList[i];
+      
       // Builds a url from the id
       const url = `https://core.ac.uk/works/${result.id}`;
 
       // Adds website object to the list of urls
-      websiteList.push({"url": url, "title" : result.title, "text": result.abstract});
+      websiteList[i] = {"url": url, "title" : result.title, "text": result.abstract};
     }
 
     // Returns the list of website objects
@@ -192,21 +207,30 @@ export class SemanticScholar extends SearchEngine {
   // Function to parse JSON and return the html links
   parse() {
 
+    // The list of results
+    const resultList = this.response.data;
+
+    // The length of the list of results
+    const resultLen = resultList.length;
+
     // The list of websites
-    const websiteList = [];
+    const websiteList: Website[] = new Array(resultLen);
 
     // Iterates the objects returned
-    for (const paper of this.response.data) {
+    for (let i = 0; i < resultLen; ++i) {
+
+      // Gets the paper object
+      const paper = resultList[i];
 
       // Checks if the abstract exists
       if (paper.abstract != null) {
 
           // Adds the website object to the list of websites
-        websiteList.push({"url": paper.url, "title" : paper.title, "text" : paper.abstract});
+        websiteList[i] = {"url": paper.url, "title" : paper.title, "text" : paper.abstract};
       }
 
       // Otherwise just add the website to the list
-      else websiteList.push(paper.url);
+      else websiteList[i] = paper.url;
     }
 
     // Returns the list of websites
@@ -240,17 +264,26 @@ export class SemanticScholar extends SearchEngine {
     // Gets the IDs of the results given
     const resultIDs = resultDiv!.getAttribute("data-chunk-ids");
 
+    // The list of result IDs
+    const resultIDList = resultIDs!.split(",");
+
+    // Get the length of the list of result IDs
+    const resultIDsLen = resultIDList.length;
+
     // The list of urls
-    const urls = [];
+    const urls: string[] = new Array(resultIDsLen);
 
     // Iterates the list of IDs and create URLs from them
-    for (const id of resultIDs!.split(",")) {
+    for (let i = 0; i < resultIDsLen; ++i) {
+
+      // Gets the id
+      const id = resultIDList[i];
 
       // Add the url to the list
-      urls.push(`${host}/${id}/`);
+      urls[i] = `${host}/${id}/`;
     }
 
-    // Return the results list
+    // Return the list of urls
     return urls;
   }
 }
@@ -295,11 +328,20 @@ export class DOAJ extends SearchEngine {
   // Function to parse the DOM of the HTML and return the list of links
   parse() {
 
+    // The list of results
+    const resultList = this.response.results;
+
+    // The length of the list of results
+    const resultLen = resultList.length;
+
     // The list of websites
-    const websiteList = [];
+    const websiteList: Website[] = new Array(resultLen);
 
     // Iterate the list of results
-    for (const result of this.response.results) {
+    for (let i = 0; i < resultLen; ++i) {
+
+      // Gets the result object
+      const result = resultList[i];
 
       // Gets the website url
       const url = result.bibjson.link[0].url;
@@ -308,11 +350,11 @@ export class DOAJ extends SearchEngine {
       if (result.bibjson.abstract) {
 
         // Adds the url to the list of websites
-        websiteList.push({"url" : url, "title" : result.bibjson.title, "text" : result.bibjson.abstract});
+        websiteList[i] = {"url" : url, "title" : result.bibjson.title, "text" : result.bibjson.abstract};
       }
 
       // Otherwise just add the website to the list
-      else websiteList.push(url);
+      else websiteList[i] = url;
     }
 
     // Returns the list of websites
@@ -402,11 +444,20 @@ export class AMiner extends SearchEngine {
   // Function to parse the JSON response and return the website object
   parse() {
 
+    // The list of results
+    const resultList = this.response.result;
+
+    // The length of the list of results
+    const resultLen = resultList.length;
+
     // The list of websites
-    const websiteList = [];
+    const websiteList: Website[] = [];
     
     // Iterates the results
-    for (const result of this.response.result) {
+    for (let i = 0; i < resultLen; ++i) {
+
+      // Gets the result object
+      const result = resultList[i];
 
       // If the length of the urls array is 0, continue the loop
       if (result.urls.length === 0) continue;
@@ -415,7 +466,7 @@ export class AMiner extends SearchEngine {
       else if (result.abstract) {
 
         // Add the website object to the list of websites
-        websiteList.push({"url" : result.urls[0], "title" : result.title, "text" : result.abstract})
+        websiteList.push({"url" : result.urls[0], "title" : result.title, "text" : result.abstract});
       }
 
       // If the abstract doesn't contain any text then just add the url
@@ -469,18 +520,26 @@ function parseSearchEngineResults(url: string, response: string, selector: strin
   // Gets all the links in the div
   const links = doc.querySelectorAll(selector);
 
+  // Length of the list of links
+  const linksLen = links.length;
+
   // The list of result links
-  const results: string[] = [];
+  const results: string[] = new Array(linksLen);
 
   // Iterates the links
-  for (const link of links) {
+  for (let i = 0; i < linksLen; ++i) {
+
+    // Gets the link
+    const link = links[i];
 
     // Gets the href containing the link
     const href = link.getAttribute(attribute);
 
     // If the href isn't null
     if (href != null) {
-      results.push(`${requiresHost ? host : ""}${href}`);
+
+      // Adds the link to the list
+      results[i] = `${requiresHost ? host : ""}${href}`;
     }
   }
 
