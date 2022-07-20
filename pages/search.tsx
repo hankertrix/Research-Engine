@@ -3,7 +3,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import SearchBar from "../components/SearchBar";
 import { parseQuery } from "../data-processor/utils";
 
@@ -30,7 +29,9 @@ const Results: NextPage = () => {
     <Head>
       <title>{` - Research Engine`}</title>
     </Head>
+      <div></div>
     <SearchBar page={1}/>
+     
     </div>
   );
 };

@@ -28,7 +28,7 @@ const SearchBar: NextPage<{page: number}> = ({ page }) => {
     // Gets the search term
     const searchTerm = (event.target as EventTarget & {search: HTMLInputElement}).search.value.trim();
 
-    // If the search term contains a value, brings the user to the search page
+    // If the search term contains a value, brings the user to the new search page that they requested
     if (searchTerm) return router.push(`/search?q=${searchTerm}&page=${page}`);
   }
 
