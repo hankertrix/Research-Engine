@@ -25,10 +25,10 @@ export function removeMarkup(websiteObjList: {title: string, sentences: string[]
 
 
 // Function to parse a query
-export function parseQuery(query: any): {q: string, page: number} {
+export function parseQuery(query: any) {
   
   // If the query object doesn't have the search term, immediately return an empty string and a page number of 1
-  if (!query.q) return {q: "", page: 1};
+  if (!query.q) return ["", 1];
 
   // Gets the search term
   const searchTerm = Array.isArray(query.q) ? query.q.join(" ").trim() : query.q.trim();
@@ -57,5 +57,5 @@ export function parseQuery(query: any): {q: string, page: number} {
   const pageNumber = parseInt(pageNum) < 1 ? 1 : parseInt(pageNum);
 
   // Returns an object containing the query string and the page number
-  return {q: searchTerm, page: pageNumber};
+  return [searchTerm, pageNumber];
 }

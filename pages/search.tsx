@@ -12,12 +12,8 @@ const Results: NextPage = () => {
   // // Gets the router object
   // const router = useRouter();
 
-  // // Gets the query parameters from the page
-  // const parsedQuery = parseQuery(router.query);
-
-  // // Gets the search term and page number
-  // const searchTerm = parsedQuery.q;
-  // const pageNumber = parsedQuery.page;
+  // // Gets the search term and the page number from the parsed query
+  // const [searchTerm, pageNumber] = parseQuery(req.query);
 
   // // If the search term is empty, redirects the user to the main page
   // if (searchTerm.length === 0) useEffect(() => {
