@@ -5,6 +5,8 @@ import Image from "next/image";
 import researchIcon from "../public/placeholder.svg";
 import searchIcon from "../public/search.svg";
 import styles from "../styles/SearchBar.module.css";
+import { FormEvent } from "react";
+import { useRouter } from "next/router";
 
 // The font size of the app name
 const logoFontSize = 20;
@@ -14,6 +16,23 @@ const inputFontSize = 16;
 
 // The search bar
 const SearchBar: NextPage<{page: number}> = ({ page }) => {
+
+  // Gets the router
+  const router = useRouter();
+  
+  // The function to handle the search form submission
+  const handleSearch = async (event: FormEvent<HTMLFormElement>) => {
+    // Prevents the default behaviour
+    event.preventDefault();
+
+    // Gets the search term
+    const searchTerm = (event.target as EventTarget & {search: HTMLInputElement}).search.value.trim();
+
+    // If the search term contains a value, brings the user to the search page
+    if (searchTerm) return router.push(`/search?q=${searchTerm}&page=${page}`);
+  }
+
+  // The search bar at the top of every results page
   return (
     <div className={`${styles.searchBar} ${styles.container}`}>
 
@@ -27,8 +46,8 @@ const SearchBar: NextPage<{page: number}> = ({ page }) => {
 
       {/* The search bar part */}
       <div className={styles.inputBox}>
-        <form className={`${styles.container} ${styles.form}`}>
-          <input type="text" placeholder="Research..." className={`${styles.input} ${styles.text}`} style={{fontSize: inputFontSize}}></input>
+        <form className={`${styles.container} ${styles.form}`} onSubmit={handleSearch}>
+          <input type="text" name="search" placeholder="Research..." className={`${styles.input} ${styles.text}`} style={{fontSize: inputFontSize}}></input>
           <button type="submit" className={styles.btn} title="Search"><Image src={searchIcon} width={20} height={20} style={{background: "transparent"}} priority={true} /></button>
         </form>
       </div>
