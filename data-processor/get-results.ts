@@ -97,7 +97,7 @@ const MATCH_SENTENCE_REGEX_STR = String.raw`(?:(?<=[\.\?!] ?|\n|^)[^\n\.\?!]*?[\
 const MARKING_TAG = "b";
 
 // The regular expression to remove the marking tags
-const REMOVE_MARKING_TAG_REGEX = new RegExp(`</?${MARKING_TAG}>`, "g");
+export const REMOVE_MARKING_TAG_REGEX = new RegExp(`</?${MARKING_TAG}>`, "g");
 
 
 // Function to fetch all the requests, returning a list of responses
@@ -805,26 +805,4 @@ export async function createSearchResults(searchTerm: string, pageNumber: number
 
   // Returns the list of websites with parts
   return websiteListWithParts;
-}
-
-
-// Removes the markup from the sentences in the list of website objects
-export function removeMarkup(websiteObjList: {title: string, sentences: string[], link: string}[]) {
-
-  // Iterates the website object list
-  for (const website of websiteObjList) {
-
-    // Iterates the list of sentences in the object
-    for (let i = 0; i < website.sentences.length; ++i) {
-
-      // Gets the sentence
-      const sentence = website.sentences[i];
-
-      // Sets the sentence in the list to the one with the markdown removed
-      website.sentences[i] = sentence.replace(REMOVE_MARKING_TAG_REGEX, "");
-    }
-  }
-
-  // Returns the new website object list
-  return websiteObjList;
 }
