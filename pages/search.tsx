@@ -26,10 +26,13 @@ const Results: NextPage = () => {
       <title>{` - Research Engine`}</title>
     </Head>
       <div></div>
-    <SearchBar page={1}/>
+    <SearchBar query={""}/>
      
     </div>
   );
 };
+
+// The function to get the results for the search term
+
 
 export default Results;

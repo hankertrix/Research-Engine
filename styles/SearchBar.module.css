@@ -1,6 +1,12 @@
 
-.text {
+.text-light {
   font-family: Helvetica;
+  color: black;
+}
+
+.text-dark {
+  font-family: Helvetica;
+  color: white;
 }
 
 .container {
@@ -9,38 +15,77 @@
   align-items: center;
 }
 
-.searchBar {
+.searchBar-light {
   position: sticky;
   top: 20px;
-  margin-top: 20px;
+  padding: 20px 0px;
   width: 100vw;
+  background-color: white;
 }
 
-.inputBox {
+.searchBar-dark {
+  position: sticky;
+  top: 20px;
+  padding: 20px 0px;
+  width: 100vw;
+  background-color: black;
+}
+
+.inputBox-light {
   border: 1px solid transparent;
   border-radius: 24px;
   padding: 10px 20px;
-  box-shadow: 0 2px 5px 1px rgba(64, 60, 67, .16);
   justify-content: space-between;
   width: 100%;
   margin-right: 40px;
+  box-shadow: 0 2px 5px 1px rgba(64, 60, 67, .16);
+}
+
+.inputBox-dark {
+  border: 1px solid transparent;
+  border-radius: 24px;
+  padding: 10px 20px;
+  justify-content: space-between;
+  width: 100%;
+  margin-right: 40px;
+  box-shadow: 0 1.4px 5px 1px rgba(255, 255, 255, .60);
 }
 
 .form {
   justify-content: space-between;
 }
 
-.input {
+.input-light {
   border-style: none;
   outline: none;
   width: calc(100% - 20px);
+  background-color: white;
 }
 
-.btn {
+.input-dark {
+  border-style: none;
+  outline: none;
+  width: calc(100% - 20px);
+  background-color: black;
+}
+
+.input-dark::placeholder {
+  color: white;
+}
+
+.btn-light {
   border-style: none;
   outline: none;
   background: transparent;
   cursor: pointer;
+}
+
+.btn-dark {
+  border-style: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+  filter: invert(1);
 }
 
 .logo {
@@ -52,9 +97,15 @@
   white-space: nowrap;
 }
 
-.logoIcon {
+.logoIcon-light {
   margin-left: 40px;
   margin-right: 20px;
+}
+
+.logoIcon-dark {
+  margin-left: 40px;
+  margin-right: 20px;
+  filter: invert(1);
 }
 
 @media only screen and (max-width: 700px) {
