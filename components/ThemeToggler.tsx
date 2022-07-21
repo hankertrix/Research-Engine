@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { ThemeContext, ThemeContextType } from "../pages/_app";
 import styles from "../styles/ThemeToggler.module.css";
 
+// The button to toggle between light and dark mode
 const ThemeToggler: NextPage = () => {
 
   // Gets the theme context
@@ -13,6 +14,8 @@ const ThemeToggler: NextPage = () => {
   return (
     <div>
       <button className={`${themeClass(styles, "theme-toggle")} ${styles["theme-toggle"]}`} onClick={toggleTheme} title="Toggles light & dark theme" aria-label="auto" aria-live="polite">
+
+        {/* The SVG of the sun and moon icon */}
         <svg className={styles["sun-and-moon"]} aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
           <mask className={styles.moon} id="moon-mask">
             <rect x="0" y="0" width="100%" height="100%" fill="white"></rect>
@@ -30,6 +33,7 @@ const ThemeToggler: NextPage = () => {
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </g>
         </svg>
+        
       </button>
     </div>
   )
