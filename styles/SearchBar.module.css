@@ -1,14 +1,4 @@
 
-.text-light {
-  font-family: Helvetica;
-  color: black;
-}
-
-.text-dark {
-  font-family: Helvetica;
-  color: white;
-}
-
 .container {
   display: flex;
   flex-direction: row;
@@ -28,7 +18,20 @@
   top: 20px;
   padding: 20px 0px;
   width: 100vw;
-  background-color: black;
+  background-color: #121212;
+
+  --dark-theme-white-opacity: 0.8;
+}
+
+.text-light {
+  font-family: Helvetica;
+  color: black;
+}
+
+.text-dark {
+  font-family: Helvetica;
+  color: white;
+  opacity: var(--dark-theme-white-opacity);
 }
 
 .inputBox-light {
@@ -42,13 +45,14 @@
 }
 
 .inputBox-dark {
-  border: 1px solid transparent;
+  --inputBox-dark-theme-color: #333333;
+  border: 1px solid var(--inputBox-dark-theme-color);
   border-radius: 24px;
   padding: 10px 20px;
   justify-content: space-between;
   width: 100%;
   margin-right: 40px;
-  box-shadow: 0 1.4px 5px 1px rgba(255, 255, 255, .60);
+  background-color: var(--inputBox-dark-theme-color);
 }
 
 .form {
@@ -66,11 +70,12 @@
   border-style: none;
   outline: none;
   width: calc(100% - 20px);
-  background-color: black;
+  background-color: var(--inputBox-dark-theme-color);
 }
 
 .input-dark::placeholder {
   color: white;
+  opacity: 0.7;
 }
 
 .btn-light {
@@ -85,7 +90,7 @@
   outline: none;
   background: transparent;
   cursor: pointer;
-  filter: invert(1);
+  filter: invert(var(--dark-theme-white-opacity));
 }
 
 .logo {
@@ -105,14 +110,12 @@
 .logoIcon-dark {
   margin-left: 40px;
   margin-right: 20px;
-  filter: invert(1);
+  filter: invert(var(--dark-theme-white-opacity));
 }
 
 @media only screen and (max-width: 700px) {
   
   .logoName {
-    visibility: hidden;
-    width: 0;
-    margin: 0;
+    display: none;
   }
 }

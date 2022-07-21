@@ -60,7 +60,6 @@ const SearchBar: NextPage<{query: string}> = ({ query }) => {
         {/* The button to toggle between light and dark mode */}
         
       </div>
-    
   );
 };
 

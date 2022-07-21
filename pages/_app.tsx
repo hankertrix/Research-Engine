@@ -4,7 +4,6 @@ import { createContext, useState } from "react";
 
 // The theme context type
 export type ThemeContextType = {
-  theme: string,
   toggleTheme: () => void
   themeClass: (style: any, cssClass: string) => string
 }
@@ -29,7 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }
   
   return (
-    <ThemeContext.Provider value={{theme, toggleTheme, themeClass}}>
+    <ThemeContext.Provider value={{toggleTheme, themeClass}}>
       <Component {...pageProps} />
     </ThemeContext.Provider>
   );
