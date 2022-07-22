@@ -22,10 +22,6 @@ https://www.youtube.com/watch?v=kZiS1QStIWc */
   -webkit-tap-highlight-color: transparent;
 
   outline-offset: 5px;
-
-    @media (hover: none) {
-      --size: 48px;
-  }
 }
 
 .theme-toggle > svg {

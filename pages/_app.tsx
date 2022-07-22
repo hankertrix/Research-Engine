@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 // The theme context type
 export type ThemeContextType = {
@@ -15,6 +15,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   // The theme state for the application
   const [theme, setTheme] = useState("light");
+
+  // The function to save the state to the local storage when the theme changes
+  useEffect(() => window.localStorage.setItem("theme", theme), [theme]);
 
   // Function to toggle the theme
   const toggleTheme = () => {

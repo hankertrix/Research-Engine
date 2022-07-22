@@ -29,6 +29,7 @@
 /* Styles on the button to toggle the theme */
 .themeToggle {
   min-width: 25px;
+  max-width: 25px;
   margin: 0px 40px;
 }
 
@@ -119,5 +120,13 @@
   
   .logoName {
     display: none;
+  }
+
+  .themeToggle {
+    margin: 0px 20px;
+  }
+
+  .logoIcon {
+    margin: 0px 20px;
   }
 }
