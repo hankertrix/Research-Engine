@@ -9,6 +9,7 @@ import { FormEvent, useContext } from "react";
 import { useRouter } from "next/router";
 import { ThemeContext, ThemeContextType } from "../pages/_app";
 import ThemeToggler from "./ThemeToggler";
+import Link from "next/link";
 
 // The font size of the app name
 const logoFontSize = 20;
@@ -43,12 +44,14 @@ const SearchBar: NextPage<{query: string}> = ({ query }) => {
       <div className={`${themeClass(styles, "searchBar")} ${styles.container} ${styles.searchBar}`}>
         
           {/* The logo of the app */}
-          <a className={`${styles.container} ${styles.logo}`} href="/" title="Go to the Homepage">
-            <div className={styles.logoIcon} style={{minWidth: logoFontSize * 2}}>
-              <Image src={researchIcon} width={logoFontSize * 2} height={logoFontSize * 2} priority={true} />
-            </div>
-            <div className={`${styles.text} ${styles.logoName}`} style={{fontSize: logoFontSize}}>Research Engine</div>
-          </a>
+          <Link href="/">
+            <a className={`${styles.container} ${styles.logo}`} title="Go to the Homepage">
+              <div className={styles.logoIcon} style={{minWidth: logoFontSize * 2}}>
+                <Image src={researchIcon} width={logoFontSize * 2} height={logoFontSize * 2} priority={true} />
+              </div>
+              <div className={`${styles.text} ${styles.logoName}`} style={{fontSize: logoFontSize}}>Research Engine</div>
+            </a>
+          </Link>
     
           {/* The search bar part */}
           <div className={styles.inputBox}>
