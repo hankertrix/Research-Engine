@@ -1,5 +1,9 @@
 /* Styles for the button to toggle between light and dark mode */
 
+/* References
+https://web.dev/building-a-theme-switch-component/
+https://www.youtube.com/watch?v=kZiS1QStIWc */
+
 /* The styles for the theme toggle button */
 .theme-toggle {
   --size: 100%;

@@ -1,5 +1,9 @@
 // The button to switch between light and dark mode
 
+// References
+// https://web.dev/building-a-theme-switch-component/
+// https://www.youtube.com/watch?v=kZiS1QStIWc
+
 import type { NextPage } from "next";
 import { useContext } from "react";
 import { ThemeContext, ThemeContextType } from "../pages/_app";
