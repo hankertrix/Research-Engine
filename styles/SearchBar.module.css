@@ -5,94 +5,15 @@
   align-items: center;
 }
 
-.searchBar-light {
+.searchBar {
   position: sticky;
   top: 20px;
   padding: 20px 0px;
   width: 100vw;
-  background-color: white;
-}
-
-.searchBar-dark {
-  position: sticky;
-  top: 20px;
-  padding: 20px 0px;
-  width: 100vw;
-  background-color: #121212;
-
-  --dark-theme-white-opacity: 0.85;
-  --dark-theme-text-color: white;
-  --dark-theme-text-opacity: 0.85;
-}
-
-.text-light {
-  font-family: Helvetica;
-  color: black;
-}
-
-.text-dark {
-  font-family: Helvetica;
-  color: var(--dark-theme-text-color);
-  opacity: var(--dark-theme-text-opacity);
-}
-
-.inputBox-light {
-  border: 1px solid transparent;
-  border-radius: 24px;
-  padding: 10px 20px;
-  justify-content: space-between;
-  width: 100%;
-  margin-right: 40px;
-  box-shadow: 0 2px 5px 1px rgba(64, 60, 67, .16);
-}
-
-.inputBox-dark {
-  --inputBox-dark-theme-color: #333333;
-  border: 1px solid var(--inputBox-dark-theme-color);
-  border-radius: 24px;
-  padding: 10px 20px;
-  justify-content: space-between;
-  width: 100%;
-  margin-right: 40px;
-  background-color: var(--inputBox-dark-theme-color);
 }
 
 .form {
   justify-content: space-between;
-}
-
-.input-light {
-  border-style: none;
-  outline: none;
-  width: calc(100% - 20px);
-  background-color: white;
-}
-
-.input-dark {
-  border-style: none;
-  outline: none;
-  width: calc(100% - 20px);
-  background-color: var(--inputBox-dark-theme-color);
-}
-
-.input-dark::placeholder {
-  color: white;
-  opacity: calc(var(--dark-theme-text-opacity) - 0.3);
-}
-
-.btn-light {
-  border-style: none;
-  outline: none;
-  background: transparent;
-  cursor: pointer;
-}
-
-.btn-dark {
-  border-style: none;
-  outline: none;
-  background: transparent;
-  cursor: pointer;
-  filter: invert(var(--dark-theme-white-opacity));
 }
 
 .logo {
@@ -104,14 +25,93 @@
   white-space: nowrap;
 }
 
-.logoIcon-light {
+
+/* Styles on the button to toggle the theme */
+.themeToggle {
+  min-width: 25px;
+  margin: 0px 40px;
+}
+
+
+
+/* Light theme */
+
+.searchBar-light {
+  background-color: white;
+}
+
+.text {
+  font-family: Helvetica;
+  color: black;
+}
+
+.inputBox {
+  border: 1px solid transparent;
+  border-radius: 24px;
+  padding: 10px 20px;
+  justify-content: space-between;
+  width: 100%;
+  box-shadow: 0 2px 5px 1px rgba(64, 60, 67, .16);
+}
+
+.input {
+  border-style: none;
+  outline: none;
+  width: 100%;
+  background-color: white;
+}
+
+.btn {
+  border-style: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.logoIcon {
   margin-left: 40px;
   margin-right: 20px;
 }
 
-.logoIcon-dark {
-  margin-left: 40px;
-  margin-right: 20px;
+
+
+
+/* Dark theme */
+
+.searchBar-dark {
+  background-color: #121212;
+
+  --dark-theme-white-opacity: 0.85;
+  --dark-theme-text-color: white;
+  --dark-theme-text-opacity: 0.85;
+}
+
+.searchBar-dark .text {
+  font-family: Helvetica;
+  color: var(--dark-theme-text-color);
+  opacity: var(--dark-theme-text-opacity);
+}
+
+.searchBar-dark .inputBox {
+  --inputBox-dark-theme-color: #333333;
+  border: 1px solid var(--inputBox-dark-theme-color);
+  background-color: var(--inputBox-dark-theme-color);
+}
+
+.searchBar-dark .input {
+  background-color: var(--inputBox-dark-theme-color);
+}
+
+.searchBar-dark .input::placeholder {
+  color: white;
+  opacity: calc(var(--dark-theme-text-opacity) - 0.3);
+}
+
+.searchBar-dark .btn {
+  filter: invert(var(--dark-theme-white-opacity));
+}
+
+.searchBar-dark .logoIcon {
   filter: invert(var(--dark-theme-white-opacity));
 }
 

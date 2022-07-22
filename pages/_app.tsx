@@ -14,7 +14,7 @@ export const ThemeContext = createContext<ThemeContextType | null>(null);
 function MyApp({ Component, pageProps }: AppProps) {
 
   // The theme state for the application
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
 
   // Function to toggle the theme
   const toggleTheme = () => {

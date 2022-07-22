@@ -8,6 +8,7 @@ import styles from "../styles/SearchBar.module.css";
 import { FormEvent, useContext } from "react";
 import { useRouter } from "next/router";
 import { ThemeContext, ThemeContextType } from "../pages/_app";
+import ThemeToggler from "./ThemeToggler";
 
 // The font size of the app name
 const logoFontSize = 20;
@@ -39,26 +40,28 @@ const SearchBar: NextPage<{query: string}> = ({ query }) => {
 
   // The search bar at the top of every results page
   return (
-      <div className={`${themeClass(styles, "searchBar")} ${styles.container}`}>
+      <div className={`${themeClass(styles, "searchBar")} ${styles.container} ${styles.searchBar}`}>
         
           {/* The logo of the app */}
           <a className={`${styles.container} ${styles.logo}`} href="/" title="Go to the Homepage">
-            <div className={themeClass(styles, "logoIcon")} style={{minWidth: logoFontSize * 2}}>
+            <div className={styles.logoIcon} style={{minWidth: logoFontSize * 2}}>
               <Image src={researchIcon} width={logoFontSize * 2} height={logoFontSize * 2} priority={true} />
             </div>
-            <div className={`${themeClass(styles, "text")} ${styles.logoName}`} style={{fontSize: logoFontSize}}>Research Engine</div>
+            <div className={`${styles.text} ${styles.logoName}`} style={{fontSize: logoFontSize}}>Research Engine</div>
           </a>
     
           {/* The search bar part */}
-          <div className={themeClass(styles, "inputBox")}>
+          <div className={styles.inputBox}>
             <form className={`${styles.container} ${styles.form}`} onSubmit={handleSearch}>
-              <input type="text" name="search" placeholder="Research..." className={`${themeClass(styles, "input")} ${themeClass(styles, "text")}`} style={{fontSize: inputFontSize}} defaultValue={query}></input>
-              <button type="submit" className={themeClass(styles, "btn")} title="Search"><Image src={searchIcon} width={20} height={20} style={{background: "transparent"}} priority={true} /></button>
+              <input type="text" name="search" placeholder="Research..." className={`${styles.input} ${styles.text}`} style={{fontSize: inputFontSize}} defaultValue={query}></input>
+              <button type="submit" className={styles.btn} title="Search"><Image src={searchIcon} width={20} height={20} style={{background: "transparent"}} priority={true} /></button>
             </form>
           </div>
   
         {/* The button to toggle between light and dark mode */}
-        
+        <div className={styles.themeToggle}>
+          <ThemeToggler/>
+        </div>
       </div>
   );
 };

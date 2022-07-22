@@ -1,11 +1,8 @@
 /* Styles for the button to toggle between light and dark mode */
 
-/* This import is for the animation of the icon */
-@import "https://unpkg.com/open-props/easings.min.css";
-
 /* The styles for the theme toggle button */
 .theme-toggle {
-  --size: 40rem;
+  --size: 100%;
 
   background: none;
   border: none;
@@ -108,19 +105,19 @@
   /* Light theme animations */
 
   
-  /* Animate the transform operation on the sun to finish in half a second and use the elastic easing imported above */
+  /* Animate the transform operation on the sun to finish in half a second */
   .sun-and-moon > .sun {
-    transition: transform .5s var(--ease-elastic-3)
+    transition: transform .5s cubic-bezier(.5, 1.25, .75, 1.25);
   }
 
-  /* Animate the transform operation on the sun beams for half a second and use the elastic easing while also fading out the sun beams after half a second */
+  /* Animate the transform operation on the sun beams for half a second while also fading out the sun beams after half a second */
   .sun-and-moon > .sun-beams {
-		transition: transform .5s var(--ease-elastic-4), opacity .5s var(--ease-3)
+		transition: transform .5s cubic-bezier(.5, 1.5, .75, 1.25), opacity .5s cubic-bezier(.25, 0, .3, 1);
 	}
 
   /* Animate the transform operation on the mask of the moon for a quarter of a second */
 	.sun-and-moon .moon > circle {
-		transition: transform .25s var(--ease-out-5)
+		transition: transform .25s cubic-bezier(0, 0, 0, 1);
 	}
 
   /* Checks if the browser supports changing the position of a SVG shape element */
@@ -128,7 +125,7 @@
 
     /* Animate that transition in a quarter of a second */
 		.sun-and-moon .moon > circle {
-			transition: cx .25s var(--ease-out-5)
+			transition: cx .25s cubic-bezier(0, 0, 0, 1);
 		}
 	}
 
@@ -139,7 +136,7 @@
   /* Make the sun grow by 1.75x in a quarter of a second */
 	.theme-toggle-dark .sun-and-moon > .sun {
 		transform: scale(1.75);
-		transition-timing-function: var(--ease-3);
+		transition-timing-function: cubic-bezier(.25, 0, .3, 1);
 		transition-duration: .25s
 	}
 
