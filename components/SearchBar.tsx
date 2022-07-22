@@ -47,7 +47,7 @@ const SearchBar: NextPage<{query: string}> = ({ query }) => {
           <Link href="/">
             <a className={`${styles.container} ${styles.logo}`} title="Go to the Homepage">
               <div className={styles.logoIcon} style={{minWidth: logoFontSize * 2}}>
-                <Image src={researchIcon} width={logoFontSize * 2} height={logoFontSize * 2} priority={true} />
+                <Image src={researchIcon} width={logoFontSize * 2} height={logoFontSize * 2} priority={true} alt="Research Engine" />
               </div>
               <div className={`${styles.text} ${styles.logoName}`} style={{fontSize: logoFontSize}}>Research Engine</div>
             </a>
@@ -57,7 +57,7 @@ const SearchBar: NextPage<{query: string}> = ({ query }) => {
           <div className={styles.inputBox}>
             <form className={`${styles.container} ${styles.form}`} onSubmit={handleSearch}>
               <input type="text" name="search" placeholder="Research..." className={`${styles.input} ${styles.text}`} style={{fontSize: inputFontSize}} defaultValue={query}></input>
-              <button type="submit" className={styles.btn} title="Search"><Image src={searchIcon} width={20} height={20} style={{background: "transparent"}} priority={true} /></button>
+              <button type="submit" className={styles.btn} title="Search"><Image src={searchIcon} width={20} height={20} style={{background: "transparent"}} priority={true} alt="Search" /></button>
             </form>
           </div>
   
