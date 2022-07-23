@@ -37,3 +37,6 @@ yarn-error.log*
 # replit
 .replit
 replit.nix
+
+# Others
+.swp
