@@ -105,7 +105,7 @@
 
 .searchBar-dark .input::placeholder {
   color: white;
-  opacity: calc(var(--dark-theme-text-opacity) - 0.3);
+  opacity: calc(var(--dark-theme-text-opacity) - 0.2);
 }
 
 .searchBar-dark .btn {
