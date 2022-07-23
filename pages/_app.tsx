@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { createContext, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 // The theme context type
 export type ThemeContextType = {
@@ -13,20 +14,38 @@ export const ThemeContext = createContext<ThemeContextType | null>(null);
 
 function MyApp({ Component, pageProps }: AppProps) {
 
+  // The router to use
+  const router = useRouter();
+
+  // The loading state
+  const [loading, setLoading] = useState(true);
+
+  // Function to set the loading state
+  useEffect(() => {
+    router.events.on("routeChangeStart", () => setLoading(true));
+    router.events.on("routeChangeComplete", () => setLoading(false));
+    router.events.on("routeChangeError", () => setLoading(false));
+    return () => {
+     router.events.off("routeChangeStart", () => setLoading(true));
+    router.events.off("routeChangeComplete", () => setLoading(false));
+    router.events.off("routeChangeError", () => setLoading(false)); 
+    };
+  }, [router.events]);
+
   // The theme state for the application
   const [theme, setTheme] = useState("light");
 
-  // The function to check the user's system theme and the local storage for the theme and set the theme to their preference
+  // The function to check the user's system theme and the local storage for the theme and set the theme to their preference when the component is mounted
   useEffect(() => {
+
+    // Set loading to false when the component is mounted
+    setLoading(false);
 
     // Gets the media query for the user's system theme
     const themeMq = window.matchMedia("(prefers-color-scheme: dark)");
 
     // Gets the media query listener
-    const mqListener = e => setTheme(e.matches ? "dark" : "light");
-
-    // Attach an event listener to the user's system theme
-    themeMq.addEventListener("change", mqListener);
+    const mqListener = (e: MediaQueryListEvent) => setTheme(e.matches ? "dark" : "light");
     
     // Gets the theme in the local storage
     let themeState: string | null = window.localStorage.getItem("theme");
@@ -41,16 +60,26 @@ function MyApp({ Component, pageProps }: AppProps) {
     // Sets the theme to the theme obtained from their system or the local storage
     setTheme(themeState);
 
+    // Attach an event listener to the user's system theme
+    themeMq.addEventListener("change", mqListener);
+    
     // Returns the function to remove the event listener
     return () => themeMq.removeEventListener("change", mqListener);
-  }, [])
-
-  // The function to save the state to the local storage when the theme changes
-  useEffect(() => window.localStorage.setItem("theme", theme), [theme]);
+  }, []);
 
   // Function to toggle the theme
   const toggleTheme = () => {
-    setTheme(current => current === "light" ? "dark" : "light");
+
+    // Gets the new theme
+    const newTheme = theme === "light" ? "dark" : "light";
+
+    // Set the new theme
+    setTheme(newTheme);
+
+    // Saves the new theme to local storage if the window is defined
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("theme", newTheme);
+    }
   };
 
   // Function to append a theme to the back of the css class name for easy switching
@@ -60,9 +89,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   }
   
   return (
-    <ThemeContext.Provider value={{toggleTheme, themeClass}}>
-      <Component {...pageProps} />
-    </ThemeContext.Provider>
+    <div>
+    {loading ? (<div></div>) : (
+      <ThemeContext.Provider value={{toggleTheme, themeClass}}>
+        <Component {...pageProps} />
+      </ThemeContext.Provider>
+    )}
+    </div>
   );
 };
 
