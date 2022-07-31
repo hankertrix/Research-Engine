@@ -1,0 +1,24 @@
+/* The styles for the loading page */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+}
+
+.page-light {
+  background-color: white;
+}
+
+.page-dark {
+  background-color: #1c1c1c;
+  color: white;
+}
+
+.isInitialLoad {
+  display: none;
+}

@@ -16,7 +16,7 @@ const ThemeToggler: NextPage = () => {
   const { themeClass, toggleTheme } = useContext(ThemeContext) as ThemeContextType;
   
   return (
-    <div>
+    <>
       <button className={`${themeClass(styles, "theme-toggle")} ${styles["theme-toggle"]}`} onClick={toggleTheme} title="Toggles light & dark theme" aria-label="auto" aria-live="polite">
 
         {/* The SVG of the sun and moon icon */}
@@ -39,7 +39,7 @@ const ThemeToggler: NextPage = () => {
         </svg>
         
       </button>
-    </div>
+    </>
   )
 }
 
