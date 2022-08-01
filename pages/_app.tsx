@@ -7,7 +7,7 @@ import LoadingPage from "../components/LoadingPage";
 // The theme context type
 export type ThemeContextType = {
   toggleTheme: () => void
-  themeClass: (style: any, cssClass: string) => string
+  themeClass: (style: { readonly [key: string]: string;}, cssClass: string) => string
 }
 
 // The theme context
