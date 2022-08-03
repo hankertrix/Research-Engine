@@ -2,7 +2,7 @@
 
 import type { NextPage } from "next";
 import Image from "next/image";
-import researchIcon from "../public/placeholder.svg";
+import researchIcon from "../public/research.svg";
 import searchIcon from "../public/search.svg";
 import styles from "../styles/SearchBar.module.css";
 import { FormEvent, useContext } from "react";
@@ -47,16 +47,16 @@ const SearchBar: NextPage<{query: string}> = ({ query }) => {
           <Link href="/">
             <a className={`${styles.container} ${styles.logo}`} title="Go to the Homepage">
               <div className={styles.logoIcon} style={{minWidth: logoFontSize * 2}}>
-                <Image src={researchIcon} width={logoFontSize * 2} height={logoFontSize * 2} priority={true} alt="Research Engine" />
+                <Image src={researchIcon} width={logoFontSize * 2} height={logoFontSize * 2.} priority={true} alt="Research Engine" />
               </div>
-              <div className={`${styles.text} ${styles.logoName}`} style={{fontSize: logoFontSize}}>Research Engine</div>
+              <div className={styles.logoName} style={{fontSize: logoFontSize}}>Research Engine</div>
             </a>
           </Link>
     
           {/* The search bar part */}
           <div className={styles.inputBox}>
             <form className={`${styles.container} ${styles.form}`} onSubmit={handleSearch}>
-              <input type="text" name="search" placeholder="Research..." className={`${styles.input} ${styles.text}`} style={{fontSize: inputFontSize}} defaultValue={query}></input>
+              <input type="text" name="search" placeholder="Research..." className={styles.input} style={{fontSize: inputFontSize}} defaultValue={query}></input>
               <button type="submit" className={styles.btn} title="Search"><Image src={searchIcon} width={20} height={20} style={{background: "transparent"}} priority={true} alt="Search" /></button>
             </form>
           </div>

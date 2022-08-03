@@ -21,7 +21,7 @@ export const HEADERS = {
 }
 
 // Abstract base class for to represent a search engine
-export class SearchEngine {
+abstract class SearchEngine {
 
   searchTerm: string;
   pageNum: number;
@@ -31,23 +31,14 @@ export class SearchEngine {
 
   constructor(searchTerm: string, websitePageNumber: number) {
 
-    // Throws an error if the class is instantiated
-    if (this.constructor == SearchEngine) {
-      throw new Error("Abstract classes can't be instantiated.");
-    }
+    // Change all the spaces in the search term into pluses
+    const encodedSearchTerm = searchTerm.replace(" ", "+");
 
-    // Initialise the object
-    else {
-
-      // Change all the spaces in the search term into pluses
-      let encodedSearchTerm = searchTerm.replace(" ", "+");
-
-      // Sets the properties of the object
-      this.searchTerm = encodedSearchTerm;
-      this.pageNum = websitePageNumber;
-      this.url = "";
-      this.response = "";
-    }
+    // Sets the properties of the object
+    this.searchTerm = encodedSearchTerm;
+    this.pageNum = websitePageNumber;
+    this.url = "";
+    this.response = "";
   }
 
   // Function to make the request
@@ -70,7 +61,7 @@ export class SearchEngine {
 
   // Function to parse the returned response
   parse() {
-    throw new Error("parse() is not implemented");
+    throw new Error("parse() is not implemented.");
   }
 }
 

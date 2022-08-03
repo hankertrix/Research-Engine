@@ -23,6 +23,7 @@
 .logoName {
   margin-right: 20px;
   white-space: nowrap;
+  font-family: Black Chancery;
 }
 
 
@@ -41,11 +42,6 @@
   background-color: white;
 }
 
-.text {
-  font-family: Helvetica;
-  color: black;
-}
-
 .inputBox {
   border: 1px solid transparent;
   border-radius: 24px;
@@ -55,7 +51,12 @@
   box-shadow: 0 2px 5px 1px rgba(64, 60, 67, .16);
 }
 
+.inputBox:hover {
+  box-shadow: 0 2px 8px 1px rgba(64, 60, 67, .24);
+}
+
 .input {
+  font-family: Helvetica;
   border-style: none;
   outline: none;
   width: 100%;
@@ -70,8 +71,8 @@
 }
 
 .logoIcon {
-  margin-left: 40px;
-  margin-right: 20px;
+  margin-left: 20px;
+  margin-right: 10px;
 }
 
 
@@ -83,28 +84,33 @@
   background-color: #121212;
 
   --dark-theme-white-opacity: 0.85;
-  --dark-theme-text-color: white;
+  --dark-theme-text-colour: white;
   --dark-theme-text-opacity: 0.85;
 }
 
 .searchBar-dark .text {
-  font-family: Helvetica;
-  color: var(--dark-theme-text-color);
+  color: var(--dark-theme-text-colour);
   opacity: var(--dark-theme-text-opacity);
 }
 
 .searchBar-dark .inputBox {
-  --inputBox-dark-theme-color: #333333;
-  border: 1px solid var(--inputBox-dark-theme-color);
-  background-color: var(--inputBox-dark-theme-color);
+  --inputBox-dark-theme-colour: #333333;
+  border: 1px solid var(--inputBox-dark-theme-colour);
+  background-color: var(--inputBox-dark-theme-colour);
+}
+
+.searchBar-dark .inputBox:hover {
+  --inputBox-dark-theme-colour: #414141;
 }
 
 .searchBar-dark .input {
-  background-color: var(--inputBox-dark-theme-color);
+  color: var(--dark-theme-text-colour);
+  opacity: var(--dark-theme-text-opacity);
+  background-color: var(--inputBox-dark-theme-colour);
 }
 
 .searchBar-dark .input::placeholder {
-  color: white;
+  color: var(--dark-theme-text-colour);
   opacity: calc(var(--dark-theme-text-opacity) - 0.2);
 }
 
@@ -112,8 +118,13 @@
   filter: invert(var(--dark-theme-white-opacity));
 }
 
+.searchBar-dark .logoName {
+  color: var(--dark-theme-text-colour);
+  opacity: var(--dark-theme-text-opacity);
+}
+
 .searchBar-dark .logoIcon {
-  filter: invert(var(--dark-theme-white-opacity));
+  filter: invert(calc(var(--dark-theme-white-opacity) + 0.1));
 }
 
 @media only screen and (max-width: 700px) {
@@ -127,6 +138,6 @@
   }
 
   .logoIcon {
-    margin: 0px 20px;
+    margin: 0px 15px;
   }
 }

@@ -411,7 +411,7 @@ function fixSentence(searchTerm: string, sentence: string) {
     const previousChar = sentence.slice(i - 1, i);
     
     // Check if the current character is uppercase and the previous character is lowercase, a number of a full stop
-    if (/[A-Z]/g.test(currentChar) && /[a-z\d\.]/g.test(previousChar)) {
+    if (/[A-Z]/.test(currentChar) && /[a-z\d\.]/.test(previousChar)) {
     
     	// Sets the start index to the index of the current character
     	startIndex = i;
@@ -431,7 +431,7 @@ function fixSentence(searchTerm: string, sentence: string) {
     const nextChar = sentence.slice(j + 1, j + 2);
     
     // Checks if the current character is lowercase and the next character is uppercase or a number
-    if (/[a-z]/g.test(currentChar) && /[A-Z\d]/g.test(nextChar)) {
+    if (/[a-z]/.test(currentChar) && /[A-Z\d]/.test(nextChar)) {
     	
       // Sets the end index to 1 more than the current index
     	endIndex = j + 1;

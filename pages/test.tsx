@@ -9,7 +9,7 @@ import LoadingPage from "../components/LoadingPage";
 const Test: NextPage = () => {
   return (
     <div>
-      <LoadingPage isInitialLoad={false} text="Researching..." />
+      <SearchBar query="" />
     </div>
   );
 };

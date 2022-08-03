@@ -25,13 +25,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [researching, setResearching] = useState(false);
 
   // The regular expression to check if the URL is a search page
-  const searchPageRegex = /(?<!api)\/search\?(?:q=\S+|page=\d+&q=\S+)$/
+  const searchPageRegex = /\/search\?(?:q=\S+|page=\d+&q=\S+)$/
 
   // Function to handle the route starts to change
   function handleRouteStart(url: string) {
 
     // If the url is the main search page, set the state to researching
-    if (searchPageRegex.test(url)) setResearching(true);
+    if (searchPageRegex.test(url) && !url.includes("api")) setResearching(true);
 
     // Set researching to false otherwise
     setResearching(false);
