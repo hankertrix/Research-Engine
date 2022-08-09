@@ -1,0 +1,566 @@
+
+.icon {
+  --animation-duration: 10s;
+  --easing: ease-in-out;
+  --repeat: infinite;
+}
+
+.lens1, .lens2, .lens3 {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.scope {
+  transform-box: fill-box;
+  transform-origin: 59.6px 40px;
+  animation: rotate-scope var(--animation-duration) var(--easing) var(--repeat);
+}
+
+.lens1 {
+  --transform: translateX(-27.2px) translateY(-15.6px) rotateY(180deg) rotateZ(-60deg);
+}
+
+.lens1-1, .lens3-1 {
+  animation: rotate-first-part var(--animation-duration) var(--easing) var(--repeat);
+}
+
+/* Makes the second lens invisible first */
+.lens1-2, .lens3-2 {
+  opacity: 0;
+  animation: rotate-second-part var(--animation-duration) var(--easing) var(--repeat);
+}
+
+.lens2 {
+  animation: enlarge-lens var(--animation-duration) var(--easing) var(--repeat);
+}
+
+.lens3 {
+  --transform: translateX(26.2px) translateY(15.1px) rotateY(180deg) rotateZ(-60deg);
+}
+
+
+
+
+
+/* Light Theme */
+
+.lens1-1 > .marker {
+  --colour-1: yellow;
+  --colour-2: lightblue;
+  --colour-3: lightblue;
+  --colour-4: red;
+  --colour-5: red;
+  --colour-6: yellow;
+
+  stroke: var(--colour-1);
+  animation: lens1-1-colour var(--animation-duration) var(--repeat);
+}
+
+.lens1-2 > .marker {
+  --colour-1: red;
+  --colour-2: yellow;
+  --colour-3: yellow;
+  --colour-4: lightblue;
+  --colour-5: lightblue;
+  --colour-6: red;
+
+  stroke: var(--colour-1);
+  animation: lens1-2-colour var(--animation-duration) var(--repeat);
+}
+
+.lens2 > .marker {
+  --colour-1: lightblue;
+  --colour-2: yellow;
+  --colour-3: red;
+
+  stroke: var(--colour-1);
+  animation: lens2-colour var(--animation-duration) var(--repeat);
+}
+
+.lens3-1 > .marker {
+  --colour-1: red;
+  --colour-2: red;
+  --colour-3: yellow;
+  --colour-4: yellow;
+  --colour-5: lightblue;
+  --colour-6: lightblue;
+
+  stroke: var(--colour-1);
+  animation: lens3-1-colour var(--animation-duration) var(--repeat);
+}
+
+.lens3-2 > .marker {
+  --colour-1: lightblue;
+  --colour-2: lightblue;
+  --colour-3: red;
+  --colour-4: red;
+  --colour-5: yellow;
+  --colour-6: yellow;
+
+  stroke: var(--colour-1);
+  animation: lens3-2-colour var(--animation-duration) var(--repeat);
+}
+
+
+
+
+/* Dark Theme */
+
+.icon-dark {
+  --dark-theme-background: #121212;
+  --dark-theme-stroke: rgb(240, 240, 240);
+  
+  background-color: var(--dark-theme-background);
+}
+
+.icon-dark :is(rect, path, circle) {
+  stroke: var(--dark-theme-stroke);
+  fill: var(--dark-theme-background);
+}
+
+.icon-dark .special-fill {
+  fill: var(--dark-theme-stroke);
+}
+
+
+
+
+/* Colour animations */
+
+
+/* 
+
+How the lens1-1-colour and lens-3-1-colour animation works:
+
+0s - 0.375s:
+The lens are in their original colour.
+
+0.375s:
+Change the colour of the lens to the second colour. This is in the middle of the lens rotation animation above. The colour should change instantly.
+
+0.375s - 2.0s:
+The colour of the lens remain as the second colour.
+
+2.0s:
+Change the colour of the lens to the third colour, the initial colour of the lens at the start of the rotation.
+
+2.0 - 2.375s:
+The colour of the lens remain as the third colour.
+
+2.375s:
+Change the colour of the lens to the fourth colour in the middle of the rotation animation.
+
+2.375s - 5.0s:
+The colour of the lens remain as the fourth colour.
+
+5.0s:
+Change the colour of the lens to the fifth colour, the initial colour of the lens at the start of the rotation.
+
+5.0 - 5.375s:
+The colour of the lens remain as the fifth colour.
+
+5.375s:
+The colour of the lens changes to the sixth colour in the middle of the rotation animation.
+
+5.375s - 10.0s:
+The colour of the lens remain as the sixth colour.
+
+*/
+
+@keyframes lens1-1-colour {
+  0%, 3.74% {
+    stroke: yellow;
+  }
+  3.75%, 19.99% {
+    stroke: lightblue;
+  }
+  20%, 23.74% {
+    stroke: lightblue;
+  }
+  23.75%, 49.99% {
+    stroke: red;
+  }
+  50%, 53.74% {
+    stroke: red;
+  }
+  53.75%, 100% {
+    stroke: yellow;
+  }
+}
+
+@keyframes lens3-1-colour {
+  0%, 3.74% {
+    stroke: red;
+  }
+  3.75%, 19.99% {
+    stroke: red;
+  }
+  20%, 23.74% {
+    stroke: yellow;
+  }
+  23.75%, 49.99% {
+    stroke: yellow;
+  }
+  50%, 53.74% {
+    stroke: lightblue;
+  }
+  53.75%, 100% {
+    stroke: lightblue;
+  }
+}
+
+
+
+
+/* 
+
+How the lens1-2-colour and lens3-2-colour animation works
+
+0s - 1.125s:
+The lens remain in their original colour.
+
+1.125s:
+The lens change to their second colour instantly in the middle of the rotation animation.
+
+1.125s - 2.75s:
+The lens remain in their second colour.
+
+2.75s:
+The lens change to their third colour, which is the initial colour of the lens at the start of the rotation animation.
+
+2.75s - 3.125s:
+The lens remain in their third colour.
+
+3.125s:
+The lens change to their fourth colour instantly in the middle of the rotation animation.
+
+3.125s - 8.0s:
+The lens remain in their fourth colour.
+
+8.0s:
+The lens change to their fifth colour, the initial colour at the beginning of the rotation animation.
+
+8.0s - 8.375s:
+The lens remain in their fifth colour.
+
+8.375s:
+The lens change to their sixth colour in the middle of the rotation animation.
+
+8.375s - 10s:
+The lens remain in their sixth colour for the rest of the animation duration.
+
+*/
+
+@keyframes lens1-2-colour {
+  0%, 11.24% {
+    stroke: red;
+  }
+  11.25%, 27.49% {
+    stroke: yellow;
+  }
+  27.5%, 31.24% {
+    stroke: yellow;
+  }
+  31.25%, 79.99% {
+    stroke: lightblue;
+  }
+  80%, 83.74% {
+    stroke: lightblue;
+  }
+  83.75%, 100% {
+    stroke: red;
+  }
+}
+
+@keyframes lens3-2-colour {
+  0%, 11.24% {
+    stroke: lightblue;
+  }
+  11.25%, 27.49% {
+    stroke: lightblue;
+  }
+  27.5%, 31.24% {
+    stroke: red;
+  }
+  31.25%, 79.99% {
+    stroke: red;
+  }
+  80%, 83.74% {
+    stroke: yellow;
+  }
+  83.75%, 100% {
+    stroke: yellow;
+  }
+}
+
+
+
+
+/*
+
+How the lens2-colour animation works:
+
+0s - 0.375s:
+The lens remain in their original colour.
+
+0.375s:
+The lens changes to the second colour instantly in the middle of the rotation animation.
+
+0.375s - 1.125s:
+The lens remain in their second colour.
+
+1.125s:
+The lens changes to the third colour instantly in the middle of the rotation animation.
+
+1.125s - 2.375s:
+The lens remain in their third colour.
+
+2.375s:
+The lens changes to the original colour instantly in the middle of the rotation animation.
+
+2.375s - 3.125s:
+The lens remain in their original colour.
+
+3.125s:
+The lens changes to the second colour instantly in the middle of the rotation animation.
+
+3.125s - 5.375s:
+The lens remain in their second colour.
+
+5.375s:
+The lens change to the third colour instantly in the middle of the rotation animation.
+
+5.375s - 8.375s:
+The lens remain in their third colour.
+
+8.375s:
+The lens change to the original colour instantly in the middle of the rotation animation.
+
+8.375s - 10.0s:
+The lens remain in their original colour.
+
+*/
+
+@keyframes lens2-colour {
+  0%, 3.74%, 23.75%, 31.24%, 83.75%, 100% {
+    stroke: lightblue;
+  }
+  3.75%, 11.24%, 31.25%, 53.74% {
+    stroke: yellow;
+  }
+  11.25%, 23.74%, 53.75%, 83.74% {
+    stroke: red;
+  }
+}
+
+
+
+
+/* Movement animations */
+
+
+/*
+
+How the rotate-first-part animation works:
+
+0s - 0.75s:
+The lenses are visible and are rotating to their new positions.
+
+0.75s:
+The lenses have reached their final position and are going to become invisible for the next set of lenses to become visible and rotate.
+
+0.75s - 1.5s:
+The lenses are invisible.
+
+1.5s:
+The other set of lenses are done animating. The lenses are still invisible.
+
+1.5s - 2.0s:
+Pause the animation for 0.5s. The lenses are still invisible.
+
+2.0s:
+End of the pause. The lenses are now visible again and are rotating to their new positions.
+
+2.0s - 2.75s:
+Same as 0s - 0.75s.
+
+2.75s:
+Same as 0.75s.
+
+2.75s - 3.5s:
+Same as 0.75s - 1.5s.
+
+3.5s:
+Same as 1.5s.
+
+3.5s - 4.0s:
+Same as 1.5s - 2.0s.
+
+4.0s - 5.0s:
+Wait for the scope rotation animation to complete. The lens are invisible.
+
+5.0s:
+The lens become visible.
+
+5.0s - 5.75s:
+The lens rotate to their new position.
+
+5.75s - 8.0s:
+The lens remain visible while waiting for the enlarge-lens animation to complete.
+
+8.0s:
+The lens become invisible to let the other set of lenses rotate.
+
+8.0s - 10s:
+Wait for the rest of the scope animations to complete before repeating the animation. The lens are invisible for the whole duration.
+
+*/
+
+@keyframes rotate-first-part {
+  0%, 20%, 50% {
+    transform: none;
+    opacity: 100;
+  }
+  7.5%, 27.5%, 57.5%, 79.99% {
+    transform: var(--transform);
+    opacity: 100;
+  }
+  7.51%, 19.99%, 27.51%, 49.99%, 80%, 100% {
+    transform: none;
+    opacity: 0;
+  }
+}
+
+/*
+
+How the rotate-second-part animation works:
+
+0s - 0.75s:
+The lenses are invisible and are waiting for the other set of lenses to finish their animation.
+
+0.75s:
+The lenses are now visible and are starting their rotating animation.
+
+0.75s - 1.5s:
+The lenses are visible and are rotating to their final positions.
+
+1.5s:
+The lenses are done animating and are remaining visible.
+
+1.5s - 2.0s:
+Pause the animation for 0.5s. The lenses are still visible.
+
+2.0s:
+End of the pause. The lenses are now invisible again and are waiting for the other set of lenses to finish their animation.
+
+2.0s - 2.75s:
+Same as 0s - 0.75s.
+
+2.75s:
+Same as 0.75s.
+
+2.75s - 3.5s:
+Same as 0.75s - 1.5s.
+
+3.5s:
+Same as 1.5s.
+
+3.5s - 4.0s:
+Same as 1.5s - 2.0s.
+
+4.0s - 5.0s:
+Pause the animation until the scope animation is done. The lens continue to remain visible.
+
+5.0s - 8.0s:
+The lens become invisible to allow the other set of lenses to rotate.
+
+8.0s:
+The lens become visible.
+
+8.0s - 8.75s:
+The lens are visible and rotate once.
+
+8.75s - 10s:
+Pause the animation until the scope animation has completed before repeating the animation. The lens remain visible.
+
+*/
+
+@keyframes rotate-second-part {
+  0%, 7.49%, 20%, 27.49%, 50%, 79.99%, 100% {
+    opacity: 0;
+    transform: none;
+  }
+  7.5%, 27.5%, 80% {
+    opacity: 100;
+    transform: none;
+  }
+  15%, 19.99%, 35%, 49.99%, 87.5%, 99.99% {
+    opacity: 100;
+    transform: var(--transform);
+  }
+}
+
+/*
+How the rotate-scope animation works:
+
+0s - 4s:
+Waiting for the lens animation to complete.
+
+4s - 5s:
+The scope is rotating to line up with the vertical.
+
+5s:
+The scope is now vertical.
+
+5s - 9s:
+Waiting for the rotate-lens and enlarge-lens animations to finish. The scope remains vertical.
+
+9s - 10s:
+The scope is rotating back to its original position.
+
+*/
+
+@keyframes rotate-scope {
+  0%, 40%, 100% {
+    transform: none;
+  }
+  50%, 90% {
+    transform: translateX(-6.9px) translateY(-0.75px) rotateZ(-30deg);
+  }
+}
+
+/*
+
+How the enlarge-lens animation works:
+
+0s - 6s:
+Waiting for the lens animation and the scope animation to complete.
+
+6s - 6.5s:
+The center lens is enlarging to its new size.
+
+6.5s:
+The center lens is now at its new, larger size.
+
+6.5s - 7.5s:
+The center lens maintains its size and the animation is paused for 1 second.
+
+7.5s - 8.0s:
+The center lens is shrinking to its original size.
+
+8s:
+The center lens is now at its original size.
+
+8s - 10s:
+Waiting for the scope animation to complete.
+
+*/
+
+@keyframes enlarge-lens {
+  0%, 60%, 80%, 100% {
+    transform: none;
+  }
+  65%, 75% {
+    transform: translateX(-0.75px) translateY(1.25px) scale(1.1);
+  }
+}

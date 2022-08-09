@@ -4,12 +4,14 @@ import type { NextPage } from "next";
 import SearchBar from "../components/SearchBar";
 import ThemeToggler from "../components/ThemeToggler";
 import LoadingPage from "../components/LoadingPage";
+import LoadingIcon from "../components/LoadingIcon";
 
 // The test page
 const Test: NextPage = () => {
   return (
     <div>
-      <SearchBar query="" />
+      <ThemeToggler />
+      <LoadingIcon width="auto" height="90vh" />
     </div>
   );
 };
