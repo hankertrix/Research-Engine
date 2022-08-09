@@ -5,19 +5,19 @@
 // https://www.youtube.com/watch?v=kZiS1QStIWc
 
 import type { NextPage } from "next";
-import { useContext } from "react";
+import { useContext, CSSProperties } from "react";
 import { ThemeContext, ThemeContextType } from "../pages/_app";
 import styles from "../styles/ThemeToggler.module.css";
 
 // The button to toggle between light and dark mode
-const ThemeToggler: NextPage = () => {
+const ThemeToggler: NextPage<{style?: CSSProperties}> = ({ style }) => {
 
   // Gets the theme context
   const { themeClass, toggleTheme } = useContext(ThemeContext) as ThemeContextType;
   
   return (
     <>
-      <button className={`${themeClass(styles, "theme-toggle")} ${styles["theme-toggle"]}`} onClick={toggleTheme} title="Toggles light & dark theme" aria-label="auto" aria-live="polite">
+      <button className={`${themeClass(styles, "theme-toggle")} ${styles["theme-toggle"]}`} style={style} onClick={toggleTheme} title="Toggles light & dark theme" aria-label="auto" aria-live="polite">
 
         {/* The SVG of the sun and moon icon */}
         <svg className={styles["sun-and-moon"]} aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">

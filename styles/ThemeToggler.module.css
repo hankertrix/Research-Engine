@@ -7,6 +7,10 @@ https://www.youtube.com/watch?v=kZiS1QStIWc */
 /* The styles for the theme toggle button */
 .theme-toggle {
   --size: 100%;
+  --light-fill: hsl(210 10% 30%);
+  --light-fill-hover: hsl(210 10% 15%);
+  --dark-fill: hsl(210 10% 70%);
+  --dark-fill-hover: hsl(210 15% 90%);
 
   background: none;
   border: none;
@@ -31,13 +35,13 @@ https://www.youtube.com/watch?v=kZiS1QStIWc */
 }
 
 .theme-toggle-light {
-  --icon-fill: hsl(210 10% 30%);
-  --icon-fill-hover: hsl(210 10% 15%);
+  --icon-fill: var(--light-fill);
+  --icon-fill-hover: var(--light-fill-hover);
 }
 
 .theme-toggle-dark {
-  --icon-fill: hsl(210 10% 70%);
-  --icon-fill-hover: hsl(210 15% 90%);
+  --icon-fill: var(--dark-fill);
+  --icon-fill-hover: var(--dark-fill-hover);
 }
 
 

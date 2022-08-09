@@ -5,14 +5,14 @@ import { useContext } from "react";
 import { ThemeContext, ThemeContextType } from "../pages/_app";
 import styles from "../styles/LoadingIcon.module.css";
 
-const LoadingIcon: NextPage<{width: number | string, height: number | string}> = ({ width, height }) => {
+const LoadingIcon: NextPage<{width?: number | string, height?: number | string}> = ({ width, height }) => {
 
   // Gets the themeClass function to theme the component
   const { themeClass } = useContext(ThemeContext) as ThemeContextType;
   
   return (
     <>
-      <svg className={`${themeClass(styles, "icon")} ${styles.icon}`} style={{width: width, height: height}} width="120" height="160" viewBox="0 0 120 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg className={`${themeClass(styles, "icon")} ${styles.icon}`} style={{width: width ? width : "auto", height: height ? height : "auto"}} width="120" height="160" viewBox="0 0 120 160" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g id="Research Icon" clip-path="url(#clip0_1_12)">
           <path id="Ellipse 2" d="M68.9206 44.9014C81.6302 48.4516 92.5576 55.0672 100.116 63.7878C107.674 72.5083 111.471 82.8798 110.953 93.3965C110.436 103.913 105.632 114.028 97.2395 122.271C88.8466 130.515 77.3015 136.459 64.2804 139.24L61.4834 131.283C72.3341 128.965 81.9548 124.012 88.9487 117.142C95.9426 110.273 99.9456 101.844 100.377 93.0804C100.808 84.3167 97.6443 75.6739 91.3458 68.407C85.0472 61.14 75.9413 55.6271 65.3501 52.6687L68.9206 44.9014Z" fill="white" stroke="black" stroke-width="3" stroke-linejoin="round" />
           <g id="Subtract">

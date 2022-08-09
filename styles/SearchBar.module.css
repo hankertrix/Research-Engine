@@ -6,7 +6,7 @@
 }
 
 .searchBar {
-  position: sticky;
+  position: fixed;
   top: 20px;
   padding: 20px 0px;
   width: 100vw;

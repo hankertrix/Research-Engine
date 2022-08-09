@@ -1,6 +1,7 @@
 // A test page to test components
 
 import type { NextPage } from "next";
+import { CSSProperties } from "react";
 import SearchBar from "../components/SearchBar";
 import ThemeToggler from "../components/ThemeToggler";
 import LoadingPage from "../components/LoadingPage";
@@ -11,7 +12,7 @@ const Test: NextPage = () => {
   return (
     <div>
       <ThemeToggler />
-      <LoadingIcon width="auto" height="90vh" />
+      <LoadingIcon height="90vh" />
     </div>
   );
 };
