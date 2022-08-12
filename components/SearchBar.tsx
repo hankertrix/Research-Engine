@@ -41,11 +41,11 @@ const SearchBar: NextPage<{query: string}> = ({ query }) => {
 
   // The search bar at the top of every results page
   return (
-      <div className={`${themeClass(styles, "searchBar")} ${styles.container} ${styles.searchBar}`}>
+      <div className={`${themeClass(styles, "searchBar")} ${styles.flex} ${styles.searchBar}`}>
         
           {/* The logo of the app */}
           <Link href="/">
-            <a className={`${styles.container} ${styles.logo}`} title="Go to the Homepage">
+            <a className={`${styles.flex} ${styles.logo}`} title="Go to the Homepage">
               <div className={styles.logoIcon} style={{minWidth: logoFontSize * 2}}>
                 <Image src={researchIcon} width={logoFontSize * 2} height={logoFontSize * 2.} priority={true} alt="Research Engine" />
               </div>
@@ -55,7 +55,7 @@ const SearchBar: NextPage<{query: string}> = ({ query }) => {
     
           {/* The search bar part */}
           <div className={styles.inputBox}>
-            <form className={`${styles.container} ${styles.form}`} onSubmit={handleSearch}>
+            <form className={`${styles.flex} ${styles.form}`} onSubmit={handleSearch}>
               <input type="text" name="search" placeholder="Research..." className={styles.input} style={{fontSize: inputFontSize}} defaultValue={query}></input>
               <button type="submit" className={styles.btn} title="Search"><Image src={searchIcon} width={20} height={20} style={{background: "transparent"}} priority={true} alt="Search" /></button>
             </form>

@@ -1,22 +1,42 @@
 // The loading page component
 
 import { NextPage } from "next";
-import { useContext } from "react";
+import { useContext, CSSProperties } from "react";
 import { ThemeContext, ThemeContextType } from "../pages/_app";
 import styles from "../styles/LoadingPage.module.css";
+import ThemeToggler from "./ThemeToggler";
+import LoadingIcon from "./LoadingIcon";
 
 // The loading page
-const LoadingPage: NextPage<{text: string, isInitialLoad: boolean}> = ({ text, isInitialLoad }) => {
+const LoadingPage: NextPage<{text?: string, isInitialLoad?: boolean}> = ({ text, isInitialLoad }) => {
 
   // Gets the themeClass function to theme the component
   const { themeClass } = useContext(ThemeContext) as ThemeContextType;
 
-  // If the page is initially loading, set the text to loading instead of researching
-  text = isInitialLoad ? "Loading..." : text;
+  // If text is not passed, give the text a default string of "Researching..."
+  text = text ? text : "Researching";
+
+  // If the isInitialLoad variable isn't passed, set it to false by default
+  isInitialLoad = isInitialLoad ? isInitialLoad : false;
   
+  // If the page is initially loading, set the text to loading instead of researching
+  text = isInitialLoad ? "Loading" : text;
+
   return (
-    <div className={`${styles.page} ${themeClass(styles, "page")} ${isInitialLoad ? styles.isInitialLoad : ""}`.trim()}>
-      <div>{`${text}`}</div>
+    <div className={`${styles.page} ${themeClass(styles, "page")} ${styles.flex} ${isInitialLoad ? styles.isInitialLoad : ""}`.trim()}>
+      <div className={`${styles.wrapper} ${styles.flex}`}>
+        <div className={`${styles["glow-wrapper"]} ${styles.flex}`}>
+          <div className={styles.themeToggle}>
+            <ThemeToggler style={{"--light-fill": "rgb(255, 100, 0)", "--light-fill-hover": "yellow"} as CSSProperties}/>
+          </div>
+          <div className={`${themeClass(styles, "glow-circle")} ${styles["glow-circle"]}`}></div>
+          <div className={`${themeClass(styles, "glow")} ${styles.glow}`}></div>
+        </div>
+        <div className={styles.icon}>
+          <LoadingIcon style={{"--dark-background": "#1c1c1c"} as CSSProperties}/>
+        </div>
+        <div className={styles.text}>{text}</div>
+      </div>
     </div>
   )
 };

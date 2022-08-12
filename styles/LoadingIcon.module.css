@@ -3,6 +3,12 @@
   --animation-duration: 10s;
   --easing: ease-in-out;
   --repeat: infinite;
+  --dark-background: #121212;
+  --dark-opacity: 0.87;
+  --size: 100%;
+
+  inline-size: var(--size);
+  block-size: var(--size);
 }
 
 .lens1, .lens2, .lens3 {
@@ -107,15 +113,14 @@
 /* Dark Theme */
 
 .icon-dark {
-  --dark-theme-background: #121212;
-  --dark-theme-stroke: rgb(240, 240, 240);
-  
-  background-color: var(--dark-theme-background);
+  --dark-theme-stroke: white;
+
+  opacity: var(--dark-opacity);
 }
 
 .icon-dark :is(rect, path, circle) {
   stroke: var(--dark-theme-stroke);
-  fill: var(--dark-theme-background);
+  fill: var(--dark-background);
 }
 
 .icon-dark .special-fill {
@@ -419,11 +424,11 @@ Wait for the rest of the scope animations to complete before repeating the anima
 @keyframes rotate-first-part {
   0%, 20%, 50% {
     transform: none;
-    opacity: 100;
+    opacity: 1;
   }
   7.5%, 27.5%, 57.5%, 79.99% {
     transform: var(--transform);
-    opacity: 100;
+    opacity: 1;
   }
   7.51%, 19.99%, 27.51%, 49.99%, 80%, 100% {
     transform: none;
@@ -491,11 +496,11 @@ Pause the animation until the scope animation has completed before repeating the
     transform: none;
   }
   7.5%, 27.5%, 80% {
-    opacity: 100;
+    opacity: 1;
     transform: none;
   }
   15%, 19.99%, 35%, 49.99%, 87.5%, 99.99% {
-    opacity: 100;
+    opacity: 1;
     transform: var(--transform);
   }
 }

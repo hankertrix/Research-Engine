@@ -11,8 +11,7 @@ import LoadingIcon from "../components/LoadingIcon";
 const Test: NextPage = () => {
   return (
     <div>
-      <ThemeToggler />
-      <LoadingIcon height="90vh" />
+      <LoadingPage />
     </div>
   );
 };

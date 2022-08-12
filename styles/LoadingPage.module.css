@@ -1,24 +1,139 @@
 /* The styles for the loading page */
 
-.page {
+.flex {
   display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
   justify-content: center;
   align-items: center;
-  opacity: 1;
+}
+
+.page {
+  --light-glow-colour: darkorange;
+  --dark-glow-colour: #506886;
+  --glow-opacity: 0.25;
+  
+  width: 100vw;
+  height: 100vh;
+  font-family: Black Chancery;
+  position: relative;
+  overflow: hidden;
+}
+
+.wrapper {
+  flex-direction: column;
+}
+
+.glow-wrapper {
+  flex-direction: column;
+  z-index: 1;
+  margin-bottom: 2rem;
+}
+
+.themeToggle {
+  z-index: 2;
+  width: clamp(1.5rem, 1.5rem, 1.5rem);
+}
+
+.glow-circle {
+  position: absolute;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  z-index: 1;
+  transform: translateY(-4px);
+}
+
+.glow {
+  position: absolute;
+  width: 30rem;
+  height: 30rem;
+  opacity: var(--glow-opacity);
+  clip-path: polygon(47% 0%, 53% 0%, 100% 100%, 0% 100%);
+  z-index: -1;
+  transform: translateY(14.75rem);
+  overflow: hidden;
+}
+
+.icon {
+  width: 14rem;
+  margin: 0.5rem 0rem;
+}
+
+.text {
+  font-size: 3rem;
+  transform: translateX(-1rem);
+}
+
+.text:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  animation: ellipsis steps(4, end) 3s infinite;
+  content: "…";
+  width: 0rem;
+}
+
+.isInitialLoad {
+  display: none;
+}
+
+
+
+
+/* Animations */
+
+@keyframes ellipsis {
+  to {
+    margin-right: -3rem;
+    width: 3rem;
+  }
+}
+
+
+
+
+/* Light Theme */
+
+.glow-circle-light {
+  background-color: var(--light-glow-colour);
+  opacity: calc(var(--glow-opacity) + 0.30);
+}
+
+.glow-light {
+  background: linear-gradient(var(--light-glow-colour), white);
 }
 
 .page-light {
   background-color: white;
 }
 
-.page-dark {
-  background-color: #1c1c1c;
-  color: white;
+
+
+
+/* Dark Theme */
+
+.glow-circle-dark {
+  background-color: var(--dark-glow-colour);
+  opacity: calc(var(--glow-opacity) + 0.70);
 }
 
-.isInitialLoad {
-  display: none;
+.glow-dark {
+  background: linear-gradient(var(--dark-glow-colour), #1c1c1c);
+}
+
+.page-dark {
+  background-color: #1c1c1c;
+}
+
+.page-dark .text {
+  color: white;
+  opacity: 0.87;
+}
+
+
+
+
+@media only screen and (max-width: 700px) {
+  .glow-dark {
+    opacity: calc(var(--glow-opacity) + 0.20);
+  }
 }
