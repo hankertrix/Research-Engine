@@ -1,0 +1,64 @@
+
+.icon {
+  --dark-background: #121212;
+  --dark-opacity: 0.87;
+  --size: 100%;
+
+  /* To be overwritten on the icon on the main page */
+  --lens1-colour-light: black;
+  --lens2-colour-light: black;
+  --lens3-colour-light: black;
+  --lens1-colour-dark: white;
+  --lens2-colour-dark: white;
+  --lens3-colour-dark: white;
+  
+
+  inline-size: var(--size);
+  block-size: var(--size);
+}
+
+/* Light Theme */
+
+.lens1 > .marker {
+  stroke: var(--lens1-colour-light);
+}
+
+.lens2 > .marker {
+  stroke: var(--lens2-colour-light);
+}
+
+.lens3 > .marker {
+  stroke: var(--lens3-colour-light);
+}
+
+
+
+
+/* Dark Theme */
+
+.icon-dark {
+  --dark-theme-stroke: white;
+
+  opacity: var(--dark-opacity);
+}
+
+.icon-dark :is(rect, path, circle) {
+  stroke: var(--dark-theme-stroke);
+  fill: var(--dark-background);
+}
+
+.icon-dark .special-fill {
+  fill: var(--dark-theme-stroke);
+}
+
+.icon-dark .lens1 > .marker {
+  stroke: var(--lens1-colour-dark);
+}
+
+.icon-dark .lens2 > .marker {
+  stroke: var(--lens2-colour-dark);
+}
+
+.icon-dark .lens3 > .marker {
+  stroke: var(--lens3-colour-dark);
+}

@@ -2,7 +2,7 @@
 
 import type { NextPage } from "next";
 import Image from "next/image";
-import researchIcon from "../public/research.svg";
+import ResearchIcon from "./ResearchIcon";
 import searchIcon from "../public/search.svg";
 import styles from "../styles/SearchBar.module.css";
 import { FormEvent, useContext } from "react";
@@ -46,8 +46,8 @@ const SearchBar: NextPage<{query: string}> = ({ query }) => {
           {/* The logo of the app */}
           <Link href="/">
             <a className={`${styles.flex} ${styles.logo}`} title="Go to the Homepage">
-              <div className={styles.logoIcon} style={{minWidth: logoFontSize * 2}}>
-                <Image src={researchIcon} width={logoFontSize * 2} height={logoFontSize * 2.} priority={true} alt="Research Engine" />
+              <div className={styles.logoIcon} style={{width: `clamp(${logoFontSize * 2}px, ${logoFontSize * 2}px, ${logoFontSize * 2}px)`}}>
+                <ResearchIcon />
               </div>
               <div className={styles.logoName} style={{fontSize: logoFontSize}}>Research Engine</div>
             </a>

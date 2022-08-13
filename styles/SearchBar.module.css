@@ -123,9 +123,6 @@
   opacity: var(--dark-theme-text-opacity);
 }
 
-.searchBar-dark .logoIcon {
-  filter: invert(calc(var(--dark-theme-white-opacity) + 0.1));
-}
 
 @media only screen and (max-width: 700px) {
   

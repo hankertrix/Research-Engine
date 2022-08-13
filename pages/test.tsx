@@ -6,12 +6,13 @@ import SearchBar from "../components/SearchBar";
 import ThemeToggler from "../components/ThemeToggler";
 import LoadingPage from "../components/LoadingPage";
 import LoadingIcon from "../components/LoadingIcon";
+import ResearchIcon from "../components/ResearchIcon";
 
 // The test page
 const Test: NextPage = () => {
   return (
     <div>
-      <LoadingPage />
+      <SearchBar query="" />
     </div>
   );
 };

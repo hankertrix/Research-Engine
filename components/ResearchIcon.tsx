@@ -1,13 +1,13 @@
-// The loading icon
+// The research icon
 
 import type { NextPage } from "next";
-import { useContext, CSSProperties } from "react";
 import { ThemeContext, ThemeContextType } from "../pages/_app";
-import styles from "../styles/LoadingIcon.module.css";
+import { CSSProperties, useContext } from "react";
+import styles from "../styles/ResearchIcon.module.css";
 
-const LoadingIcon: NextPage<{style?: CSSProperties}> = ({ style }) => {
+const ResearchIcon: NextPage<{style?: CSSProperties}> = ({ style }) => {
 
-  // Gets the themeClass function to theme the component
+  // Get the themeClass function
   const { themeClass } = useContext(ThemeContext) as ThemeContextType;
   
   return (
@@ -26,11 +26,7 @@ const LoadingIcon: NextPage<{style?: CSSProperties}> = ({ style }) => {
             <rect id="Rectangle 8" x="29.0618" y="56.7307" width="37" height="9" transform="rotate(30 29.0618 56.7307)" fill="white" stroke="black" strokeWidth="3" strokeLinejoin="round" />
             <rect id="Rectangle 5" x="64.624" y="9.13516" width="23" height="8" transform="rotate(30 64.624 9.13516)" fill="white" stroke="black" strokeWidth="3" strokeLinejoin="round" />
             <circle id="joint" cx="70.7746" cy="48.4819" r="7" transform="rotate(30 70.7746 48.4819)" fill="white" stroke="black" strokeWidth="3" />
-            <g className={`${styles["lens3-1"]} ${styles.lens3}`}>
-              <path id="len3" d="M34.0247 69.9892L28.0321 66.5285L13.7032 74.7905C12.7458 75.3426 12.4176 76.5667 12.9705 77.5237L13.9722 79.2575C14.5246 80.2137 15.7475 80.5412 16.7039 79.989L34.0247 69.9892Z" fill="white" stroke="black" strokeWidth="3" strokeLinejoin="round" />
-              <path className={styles.marker} d="M20.1995 79.7006L17.9484 75.8016L15.6984 71.9072" stroke="black" />
-            </g>
-            <g className={`${styles["lens3-2"]} ${styles.lens3}`}>
+            <g className={styles.lens3}>
               <path id="len3" d="M34.0247 69.9892L28.0321 66.5285L13.7032 74.7905C12.7458 75.3426 12.4176 76.5667 12.9705 77.5237L13.9722 79.2575C14.5246 80.2137 15.7475 80.5412 16.7039 79.989L34.0247 69.9892Z" fill="white" stroke="black" strokeWidth="3" strokeLinejoin="round" />
               <path className={styles.marker} d="M20.1995 79.7006L17.9484 75.8016L15.6984 71.9072" stroke="black" />
             </g>
@@ -38,11 +34,7 @@ const LoadingIcon: NextPage<{style?: CSSProperties}> = ({ style }) => {
               <path id="len2" d="M37.9852 72.2748L43.1814 75.2748L33.1814 92.5954C32.6291 93.5519 31.4059 93.8797 30.4493 93.3274L28.7173 92.3274C27.7607 91.7751 27.4329 90.5519 27.9852 89.5954L37.9852 72.2748Z" fill="white" stroke="black" strokeWidth="3" strokeLinejoin="round" />
               <path className={styles.marker} d="M28.1424 86.3375L35.928 90.8325" stroke="black" />
             </g>
-            <g className={`${styles["lens1-1"]} ${styles.lens1}`}>
-              <path id="len1" d="M47.1474 77.5656L53.1407 81.0249L53.15 97.5652C53.1506 98.6704 52.2547 99.5666 51.1494 99.5663L49.1471 99.5657C48.0428 99.5654 47.1477 98.6701 47.1477 97.5657L47.1474 77.5656Z" fill="white" stroke="black" strokeWidth="3" strokeLinejoin="round" />
-              <path className={styles.marker} d="M45.6496 94.3942L50.1518 94.3942L54.6494 94.3956" stroke="black" />
-            </g>
-            <g className={`${styles["lens1-2"]} ${styles.lens1}`}>
+            <g className={styles.lens1}>
               <path id="len1" d="M47.1474 77.5656L53.1407 81.0249L53.15 97.5652C53.1506 98.6704 52.2547 99.5666 51.1494 99.5663L49.1471 99.5657C48.0428 99.5654 47.1477 98.6701 47.1477 97.5657L47.1474 77.5656Z" fill="white" stroke="black" strokeWidth="3" strokeLinejoin="round" />
               <path className={styles.marker} d="M45.6496 94.3942L50.1518 94.3942L54.6494 94.3956" stroke="black" />
             </g>
@@ -59,4 +51,4 @@ const LoadingIcon: NextPage<{style?: CSSProperties}> = ({ style }) => {
   )
 }
 
-export default LoadingIcon;
+export default ResearchIcon;

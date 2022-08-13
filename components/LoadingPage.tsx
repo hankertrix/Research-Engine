@@ -1,6 +1,6 @@
 // The loading page component
 
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import { useContext, CSSProperties } from "react";
 import { ThemeContext, ThemeContextType } from "../pages/_app";
 import styles from "../styles/LoadingPage.module.css";
