@@ -1,0 +1,96 @@
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.footer {
+  position: absolute;
+  flex-direction: row;
+  justify-content: space-between;
+  bottom: 0px;
+  width: 100vw;
+  font-family: Helvetica;
+  padding: 5px 20px;
+}
+
+.copyleft {
+  font-size: 0.75rem;
+  flex-direction: row;
+}
+
+.symbol {
+  display: inline-block;
+  transform: scale(-1, 1);
+}
+
+.source-wrapper {
+  margin-right: 188px;
+}
+
+.source {
+  color: revert;
+  text-decoration: revert;
+  flex-direction: column;
+  font-size: 11px;
+}
+
+.icon-wrapper {
+  margin-top: 2px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+
+
+/* Light Theme */
+
+.footer-light {
+  background-color: #f2f2f2;
+  color: #70757a;
+}
+
+
+
+
+/* Dark Theme */
+
+.footer-dark {
+  background-color: #121212;
+  color: white;
+}
+
+.footer-dark :is(.copyleft, .theme, .source) {
+  opacity: 0.87;
+}
+
+.footer-dark .source-wrapper {
+  margin-right: 189px;
+}
+
+.footer-dark .source {
+  color: cyan;
+}
+
+
+
+
+@media only screen and (max-width: 700px) {
+  
+  .copyleft {
+    flex-direction: column;
+  }
+  
+  .copyleft > div:nth-of-type(2) {
+    align-self: flex-start;
+  }
+
+  .footer-light .source-wrapper {
+    margin-right: 72px;
+  }
+
+  .footer-dark .source-wrapper {
+    margin-right: 73px;
+  }
+}

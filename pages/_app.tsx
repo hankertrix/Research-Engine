@@ -6,7 +6,8 @@ import LoadingPage from "../components/LoadingPage";
 
 // The theme context type
 export type ThemeContextType = {
-  toggleTheme: () => void
+  theme: string,
+  toggleTheme: () => void,
   themeClass: (style: { readonly [key: string]: string;}, cssClass: string) => string
 }
 
@@ -106,7 +107,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }
   
   return (
-    <ThemeContext.Provider value={{toggleTheme, themeClass}}>
+    <ThemeContext.Provider value={{theme, toggleTheme, themeClass}}>
       {(researching || isInitialLoad) ? (<LoadingPage text="Researching..." isInitialLoad={isInitialLoad}/>) : (<Component {...pageProps} />)}
     </ThemeContext.Provider>
   );
