@@ -38,7 +38,7 @@ const LoadingPage: NextPage<{text?: string, isInitialLoad?: boolean}> = ({ text,
         <div className={styles.text}>{text}</div>
       </div>
     </div>
-  )
+  );
 };
 
 export default LoadingPage;

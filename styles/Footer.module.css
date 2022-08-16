@@ -17,6 +17,8 @@
 .copyleft {
   font-size: 0.75rem;
   flex-direction: row;
+  color: inherit;
+  text-decoration: none;
 }
 
 .symbol {
@@ -29,14 +31,12 @@
 }
 
 .source {
-  color: revert;
-  text-decoration: revert;
   flex-direction: column;
   font-size: 11px;
 }
 
 .icon-wrapper {
-  margin-top: 2px;
+  margin-top: 3px;
   flex-direction: row;
   justify-content: space-between;
 }

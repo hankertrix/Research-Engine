@@ -56,7 +56,7 @@ const LoadingIcon: NextPage<{style?: CSSProperties}> = ({ style }) => {
         </defs>
       </svg>
     </>
-  )
-}
+  );
+};
 
 export default LoadingIcon;

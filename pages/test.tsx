@@ -8,12 +8,16 @@ import LoadingPage from "../components/LoadingPage";
 import LoadingIcon from "../components/LoadingIcon";
 import ResearchIcon from "../components/ResearchIcon";
 import Footer from "../components/Footer";
+import ArrowButton from "../components/ArrowButton";
+import PageSelector from "../components/PageSelector";
 
 // The test page
 const Test: NextPage = () => {
   return (
     <div>
       <SearchBar query="" />
+      <div style={{position: "absolute", backgroundColor: "red", width: "0.1px", height: "100vh", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: "1"}}></div>
+      <PageSelector />
       <Footer />
     </div>
   );

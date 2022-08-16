@@ -40,7 +40,11 @@ export default async function handler(
   }
 
   // Gets the search term and the page number from the parsed query
-  const [searchTerm, pageNumber] = parseQuery(req.query);
+  let [searchTerm, pageNumber] = parseQuery(req.query);
+
+  // Force the variables into the type returned by the function because typescript somehow can't figure it out
+  searchTerm = searchTerm as string;
+  pageNumber = pageNumber as number;
 
   // If the search term is empty then return a message to the user saying that their request is empty
   if (searchTerm.length === 0) {
@@ -63,4 +67,4 @@ export default async function handler(
 
   // Returns the data
   return res.status(200).json({status: "200 OK", message: "Request is successful!", searchTerm: searchTerm, pageNumber: pageNumber, data: data});
-}
+};

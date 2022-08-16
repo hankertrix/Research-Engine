@@ -1,0 +1,30 @@
+
+.btn {
+  --size: 100%;
+  --light-colour: black;
+  --dark-colour: white;
+  --dark-opacity: 0.87;
+
+  block-size: var(--size);
+  inline-size: var(--size);
+  border: 6px solid;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.btn-light {
+  border-color: var(--light-colour);
+}
+
+.btn-light polygon {
+  fill: var(--light-colour);
+}
+
+.btn-dark {
+  border-color: var(--dark-colour);
+  opacity: var(--dark-opacity);
+}
+
+.btn-dark polygon {
+  fill: var(--dark-colour);
+}

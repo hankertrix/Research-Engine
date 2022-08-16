@@ -1,6 +1,7 @@
 // The module containing all the utility functions
 
 import { REMOVE_MARKING_TAG_REGEX } from "./get-results";
+import { ParsedUrlQuery } from "querystring";
 
 // Removes the markup from the sentences in the list of website objects
 export function removeMarkup(websiteObjList: {title: string, sentences: string[], link: string}[]) {
@@ -25,7 +26,7 @@ export function removeMarkup(websiteObjList: {title: string, sentences: string[]
 
 
 // Function to parse a query
-export function parseQuery(query: any) {
+export function parseQuery(query: ParsedUrlQuery) {
   
   // If the query object doesn't have the search term, immediately return an empty string and a page number of 1
   if (!query.q) return ["", 1];
@@ -43,7 +44,7 @@ export function parseQuery(query: any) {
     pageNum = Array.isArray(query.page) ? query.page.join("").trim() : query.page.trim();
 
     // If the page number isn't a valid number, change it to 1
-    if (!/^\d+$/g.test(pageNum)) pageNum = "1";
+    if (!/^\d+$/.test(pageNum)) pageNum = "1";
   }
 
   // If the page number doesn't exist

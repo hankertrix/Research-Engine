@@ -25,26 +25,27 @@ function MyApp({ Component, pageProps }: AppProps) {
   // The loading state
   const [researching, setResearching] = useState(false);
 
-  // The regular expression to check if the URL is a search page
-  const searchPageRegex = /\/search\?(?:q=\S+|page=\d+&q=\S+)$/
-
-  // Function to handle the route starts to change
-  function handleRouteStart(url: string) {
-
-    // If the url is the main search page, set the state to researching
-    if (searchPageRegex.test(url) && !url.includes("api")) setResearching(true);
-
-    // Set researching to false otherwise
-    setResearching(false);
-  }
-
   // Function to set the loading state
   useEffect(() => {
-    router.events.on("routeChangeStart", () => handleRouteStart(router.asPath));
+
+    // The regular expression to check if the URL is a search page
+    const searchPageRegex = /\/search\?(?:q=\S+|page=\d+&q=\S+)$/;
+    
+    // Function to handle the route starts to change
+    function handleRouteStart(url: string) {
+  
+      // If the url is the main search page, set the state to researching
+      if (searchPageRegex.test(url) && !url.includes("api")) setResearching(true);
+  
+      // Set researching to false otherwise
+      setResearching(false);
+    }
+  
+    router.events.on("routeChangeStart", () => handleRouteStart(window.location.href));
     router.events.on("routeChangeComplete", () => setResearching(false));
     router.events.on("routeChangeError", () => setResearching(false));
     return () => {
-      router.events.off("routeChangeStart", () => handleRouteStart(router.asPath));
+      router.events.off("routeChangeStart", () => handleRouteStart(window.location.href));
       router.events.off("routeChangeComplete", () => setResearching(false));
       router.events.off("routeChangeError", () => setResearching(false));
     };

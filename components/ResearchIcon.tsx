@@ -48,7 +48,7 @@ const ResearchIcon: NextPage<{style?: CSSProperties}> = ({ style }) => {
         </defs>
       </svg>
     </>
-  )
-}
+  );
+};
 
 export default ResearchIcon;

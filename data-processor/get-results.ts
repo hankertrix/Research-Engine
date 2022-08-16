@@ -462,14 +462,14 @@ function getAbstract(doc: HTMLElement, hostname: string) {
     default:
 
       // Gets the text content from the page
-      text = doc.querySelector(META_ABSTRACT_CSS_SELECTOR) ? doc.querySelector(META_ABSTRACT_CSS_SELECTOR)!.getAttribute("content") : "";
+      text = doc.querySelector(META_ABSTRACT_CSS_SELECTOR)?.getAttribute("content") ?? "";
       break;
 
     // If the url is a CiteSeerX link
     case "http://citeseerx.ist.psu.edu/":
 
       // Gets the text using this CSS selector
-      text = doc.querySelector('meta[name="description"]') ? doc.querySelector('meta[name="description"]')!.getAttribute("content") : "";
+      text = doc.querySelector('meta[name="description"]')?.getAttribute("content") ?? "";
       break;
 
     // If the url is a Science Direct Link
@@ -498,7 +498,7 @@ function getTextContentOfHTML(html: string, url: string) {
   const doc = parse(html);
 
   // Gets the title of the page
-  const title = doc.querySelector("title") ? doc.querySelector("title")!.text : "Untitled";
+  const title = doc.querySelector("title")?.text ?? "Untitled";
 
   // Calls the get abstract function to get the text of the document
   let text = getAbstract(doc, url.match(engine.HOST_NAME_REGEX)![0]);
@@ -507,7 +507,7 @@ function getTextContentOfHTML(html: string, url: string) {
   if (!text) {
 
     // Use the CSS selectors to pull the content from the webpage
-    text = doc.querySelector(ABSTRACT_CSS_SELECTOR) ? doc.querySelector(ABSTRACT_CSS_SELECTOR)!.text : "";
+    text = doc.querySelector(ABSTRACT_CSS_SELECTOR)?.text ?? "";
   }
 
   // If the text content is still nothing
@@ -523,7 +523,7 @@ function getTextContentOfHTML(html: string, url: string) {
     const article = reader.parse();
 
     // Sets the text to the text content in the html
-    text = article ? article.textContent : "";
+    text = article?.textContent ?? "";
   }
 
   // Returns an object with the url, title and the text content
@@ -589,7 +589,7 @@ function searchRelevantParts(website: ({url: string, title: string, text: string
       tokenMatches = tokenMatches.map(sentence => sentence.trim());
 
       // Joins the search results with the list of relevant sentences
-      relevantSentences = relevantSentences.concat(tokenMatches != null ? tokenMatches : []);
+      relevantSentences = relevantSentences.concat(tokenMatches ?? []);
 
       // Increase the token index by 1
       ++tokenIndex;

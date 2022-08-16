@@ -12,6 +12,11 @@
   width: 100vw;
 }
 
+.searchBar a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .form {
   justify-content: space-between;
 }
@@ -40,6 +45,7 @@
 
 .searchBar-light {
   background-color: white;
+  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
 }
 
 .inputBox {

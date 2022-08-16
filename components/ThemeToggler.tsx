@@ -40,7 +40,7 @@ const ThemeToggler: NextPage<{style?: CSSProperties}> = ({ style }) => {
         
       </button>
     </>
-  )
-}
+  );
+};
 
 export default ThemeToggler;
