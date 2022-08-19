@@ -16,9 +16,8 @@ const Test: NextPage = () => {
   return (
     <div>
       <SearchBar query="" />
-      <div style={{position: "absolute", backgroundColor: "red", width: "0.1px", height: "100vh", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: "1"}}></div>
-      <PageSelector />
-      <Footer />
+      <div style={{position: "absolute", backgroundColor: "red", width: "0.5px", height: "100vh", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: "1"}}></div>
+      <Footer style={{position: "absolute", bottom: 0}} />
     </div>
   );
 };

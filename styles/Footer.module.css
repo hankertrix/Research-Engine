@@ -6,10 +6,11 @@
 
 .footer {
   position: absolute;
+  bottom: 0;
   flex-direction: row;
   justify-content: space-between;
-  bottom: 0px;
   width: 100vw;
+  height: 3.5rem;
   font-family: Helvetica;
   padding: 5px 20px;
 }
@@ -27,7 +28,8 @@
 }
 
 .source-wrapper {
-  margin-right: 188px;
+  --right-margin: 188px;
+  margin-right: var(--right-margin);
 }
 
 .source {
@@ -39,6 +41,10 @@
   margin-top: 3px;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.theme {
+  white-space: nowrap;
 }
 
 
@@ -59,6 +65,7 @@
 .footer-dark {
   background-color: #121212;
   color: white;
+  border-top: 1px solid #333333;
 }
 
 .footer-dark :is(.copyleft, .theme, .source) {
@@ -66,7 +73,7 @@
 }
 
 .footer-dark .source-wrapper {
-  margin-right: 189px;
+  margin-right: calc(var(--right-margin) + 1px);
 }
 
 .footer-dark .source {
@@ -77,7 +84,7 @@
 
 
 @media only screen and (max-width: 700px) {
-  
+
   .copyleft {
     flex-direction: column;
   }
@@ -86,11 +93,15 @@
     align-self: flex-start;
   }
 
-  .footer-light .source-wrapper {
-    margin-right: 72px;
+  .source-wrapper {
+    --right-margin: 72px;
   }
+}
 
-  .footer-dark .source-wrapper {
-    margin-right: 73px;
+
+@media only screen and (max-width: 400px) {
+  
+  .source-wrapper {
+    --right-margin: 65px;
   }
 }

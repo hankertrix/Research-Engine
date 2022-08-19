@@ -109,7 +109,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   
   return (
     <ThemeContext.Provider value={{theme, toggleTheme, themeClass}}>
-      {(researching || isInitialLoad) ? (<LoadingPage text="Researching..." isInitialLoad={isInitialLoad}/>) : (<Component {...pageProps} />)}
+      {(researching || isInitialLoad) ? (<LoadingPage isInitialLoad={isInitialLoad} />) : (<Component {...pageProps} />)}
     </ThemeContext.Provider>
   );
 };

@@ -16,7 +16,8 @@ const PageSelector: NextPage = () => {
 
   // Gets the router
   const router = useRouter();
-
+  
+  
   // Function to parse the page number
   function parsePageNum(page: string | string[] | undefined) {
     
@@ -60,6 +61,11 @@ const PageSelector: NextPage = () => {
       </Link>
     );
 
+    // Otherwise add an empty div to fill up the space
+    else elemList.push(
+      <div className={styles.empty}></div>
+    );
+
     // Gets the starting page
     const startPage = page - 5 < 1 ? 1 : page - 5;
 
@@ -70,12 +76,12 @@ const PageSelector: NextPage = () => {
     for (let i = startPage; i < lastPage; ++i) {
 
       // If the page is the same as the current page, make it display normally instead of a link
-      if (i === page) elemList.push(<div className={styles["page-buttons"]}>{i}</div>);
+      if (i === page) elemList.push(<div className={styles["page-button"]}>{i}</div>);
 
       // Otherwise, adds the page button to the list
       else elemList.push(
         <Link href={`${relativeUrl}${i}`}>
-          <a className={styles["page-buttons"]} title={`Go to page ${i}`}>{i}</a>
+          <a className={styles["page-button"]} title={`Go to page ${i}`}>{i}</a>
         </Link>
       );
     }

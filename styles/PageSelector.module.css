@@ -5,3 +5,26 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.arrow-button, .empty {
+  width: 3em;
+  transform: translateY(4px);
+}
+
+
+
+
+/* Dark Theme */
+
+.selector-dark div.page-button {
+  opacity: 0.87;
+  color: white;
+}
+
+.selector-dark a.page-button:link {
+  color: goldenrod;
+}
+
+.selector-dark a.page-button:link:active {
+  color: yellow;
+}

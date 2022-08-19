@@ -7,12 +7,12 @@
 
   block-size: var(--size);
   inline-size: var(--size);
-  border: 6px solid;
   border-radius: 50%;
-  padding: 10px;
+  padding: 20%;
 }
 
 .btn-light {
+  box-shadow: 0 1px 8px rgba(32, 33, 36, 0.28);
   border-color: var(--light-colour);
 }
 
@@ -21,7 +21,6 @@
 }
 
 .btn-dark {
-  border-color: var(--dark-colour);
   opacity: var(--dark-opacity);
 }
 
