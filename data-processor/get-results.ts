@@ -257,11 +257,11 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
     // 15 results or less
     new engine.ERIC(searchTerm, websitePageNumber),
 
-    // 10 results
-    new engine.CORE(searchTerm, websitePageNumber),
+    // 25 results
+    new engine.CORE(searchTerm, websitePageNumber, 25),
 
-    // 10 results
-    new engine.SemanticScholar(searchTerm, websitePageNumber),
+    // 20 results
+    new engine.SemanticScholar(searchTerm, websitePageNumber, 20),
 
     // 10 results
     new engine.PubMed(searchTerm, websitePageNumber),
@@ -269,11 +269,11 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
     // 10 results or less
     new engine.BASE(searchTerm, websitePageNumber),
 
-    // 10 results
-    new engine.DOAJ(searchTerm, websitePageNumber),
+    // 20 results
+    new engine.DOAJ(searchTerm, websitePageNumber, 20),
 
     // 25 results
-    new engine.Fatcat(searchTerm, websitePageNumber),
+    // new engine.Fatcat(searchTerm, websitePageNumber),
 
     // 10 results
     new engine.CiteSeerX(searchTerm, websitePageNumber),
@@ -281,8 +281,8 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
     // 10 results
     new engine.Paperity(searchTerm, websitePageNumber),
 
-    // 10 results
-    new engine.AMiner(searchTerm, websitePageNumber),
+    // 20 results
+    new engine.AMiner(searchTerm, websitePageNumber, 20),
 
     // 10 results
     new engine.OSTI(searchTerm, websitePageNumber)
@@ -347,7 +347,7 @@ function getWebsiteList(searchEngines: engine.SearchEngineList, pageNumber: numb
   const sliceIndex = ((pageNumber - 1) % 10) * 10;
 
   // Returns 10 websites from the set according to the page number
-  return Array.from(websites).slice(sliceIndex, sliceIndex + 15);
+  return Array.from(websites).slice(sliceIndex, sliceIndex + 20);
 }
 
 
@@ -378,7 +378,7 @@ function markSearchTerm(searchTerm: string, listOfMatchedResults: RegExpMatchArr
   const regex = new RegExp(searchTerm, "gi");
 
   // Returns the array with the matched term marked
-  return listOfMatchedResults.map(result => result.replace(regex, `<${MARKING_TAG}>${searchTerm}</${MARKING_TAG}>`));
+  return listOfMatchedResults.map(result => result.replace(regex, match => `<${MARKING_TAG}>${match}</${MARKING_TAG}>`));
 }
 
 

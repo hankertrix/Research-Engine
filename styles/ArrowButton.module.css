@@ -12,8 +12,12 @@
 }
 
 .btn-light {
-  box-shadow: 0 1px 8px rgba(32, 33, 36, 0.28);
+  box-shadow: 0 2px 5px 1px rgba(64, 60, 67, .24);
   border-color: var(--light-colour);
+}
+
+.btn-light:hover {
+  box-shadow: 0 2px 8px 1px rgba(64, 60, 67, .32);
 }
 
 .btn-light polygon {
@@ -21,6 +25,10 @@
 }
 
 .btn-dark {
+  opacity: calc(var(--dark-opacity) - 0.3);
+}
+
+.btn-dark:hover {
   opacity: var(--dark-opacity);
 }
 

@@ -8,7 +8,7 @@ import LoadingPage from "../components/LoadingPage";
 export type ThemeContextType = {
   theme: string,
   toggleTheme: () => void,
-  themeClass: (style: { readonly [key: string]: string;}, cssClass: string) => string
+  themeClass: (style: { readonly [key: string]: string;}, cssClass: string) => string,
 }
 
 // The theme context
@@ -36,16 +36,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   
       // If the url is the main search page, set the state to researching
       if (searchPageRegex.test(url) && !url.includes("api")) setResearching(true);
-  
-      // Set researching to false otherwise
-      setResearching(false);
     }
   
-    router.events.on("routeChangeStart", () => handleRouteStart(window.location.href));
+    router.events.on("routeChangeStart", handleRouteStart);
     router.events.on("routeChangeComplete", () => setResearching(false));
     router.events.on("routeChangeError", () => setResearching(false));
     return () => {
-      router.events.off("routeChangeStart", () => handleRouteStart(window.location.href));
+      router.events.off("routeChangeStart", handleRouteStart);
       router.events.off("routeChangeComplete", () => setResearching(false));
       router.events.off("routeChangeError", () => setResearching(false));
     };
@@ -109,7 +106,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   
   return (
     <ThemeContext.Provider value={{theme, toggleTheme, themeClass}}>
-      {(researching || isInitialLoad) ? (<LoadingPage isInitialLoad={isInitialLoad} />) : (<Component {...pageProps} />)}
+      {(researching || isInitialLoad) ? (<LoadingPage text={isInitialLoad ? "Loading" : "Researching"} isInitialLoad={isInitialLoad} />) : (<Component {...pageProps} />)}
     </ThemeContext.Provider>
   );
 };

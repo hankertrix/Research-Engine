@@ -90,12 +90,11 @@ export class ERIC extends SearchEngine {
 // The class for CORE
 export class CORE extends SearchEngine {
 
-  numOfResults = 10;
-
-  constructor(searchTerm: string, websitePageNumber: number) {
+  constructor(searchTerm: string, websitePageNumber: number, numOfResults: number) {
     
     // Calls the parent constructor
     super(searchTerm, websitePageNumber);
+    this.numOfResults = numOfResults;
     this.url = `https://api.core.ac.uk/v3/search/works/?api_key=${process.env.CORE_KEY}&q=${this.searchTerm}&offset=${(this.pageNum - 1) * this.numOfResults}&limit=${this.numOfResults}`;
   }
 
@@ -159,12 +158,11 @@ export class CORE extends SearchEngine {
 // The class for Semantic Scholar
 export class SemanticScholar extends SearchEngine {
 
-  numOfResults = 10;
-
-  constructor(searchTerm: string, websitePageNumber: number) {
+  constructor(searchTerm: string, websitePageNumber: number, numOfResults: number) {
     
     // Calls the parent constructor
     super(searchTerm, websitePageNumber);
+    this.numOfResults = numOfResults;
     this.url = `https://api.semanticscholar.org/graph/v1/paper/search?query=${this.searchTerm}&offset=${(this.pageNum - 1) * this.numOfResults}&limit=${this.numOfResults}&fields=url,title,abstract`;
   }
 
@@ -302,12 +300,11 @@ export class BASE extends SearchEngine {
 // The class for the Directory of Open Access Journals
 export class DOAJ extends SearchEngine {
 
-  numOfResults = 10;
-
-  constructor(searchTerm: string, websitePageNumber: number) {
+  constructor(searchTerm: string, websitePageNumber: number, numOfResults: number) {
     
     // Calls the parent constructor
     super(searchTerm, websitePageNumber);
+    this.numOfResults = numOfResults;
     this.url = `https://www.doaj.org/api/search/articles/${this.searchTerm}?page=${this.pageNum}&pageSize=${this.numOfResults}`;
   }
 
@@ -418,12 +415,11 @@ export class Paperity extends SearchEngine {
 // The class for AMiner
 export class AMiner extends SearchEngine {
 
-  numOfResults = 10;
-
-  constructor(searchTerm: string, websitePageNumber: number) {
+  constructor(searchTerm: string, websitePageNumber: number, numOfResults: number) {
 
     // Calls the parent constructor
     super(searchTerm, websitePageNumber);
+    this.numOfResults = numOfResults;
     this.url = `http://api.aminer.org/api/search/pub?query=${this.searchTerm}&offset=${(this.pageNum - 1) * this.numOfResults}&size=${this.numOfResults}`;
   }
 

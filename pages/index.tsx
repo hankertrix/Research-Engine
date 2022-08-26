@@ -17,6 +17,9 @@ const MainPage: NextPage = () => {
   // Gets the router
   const router = useRouter();
   
+  // Gets the themeClass function
+  const { themeClass } = useContext(ThemeContext) as ThemeContextType;
+
   // The function to handle the search form submission
   async function handleSearch (event: FormEvent<HTMLFormElement>) {
     
@@ -26,13 +29,14 @@ const MainPage: NextPage = () => {
     // Gets the search term
     const searchTerm = (event.target as EventTarget & {search: HTMLInputElement}).search.value.trim();
 
-    // If the search term contains a value, search for the term
-    if (searchTerm) return router.push(`/search?q=${searchTerm}`);
+    // If the search term contains a value
+    if (searchTerm) {
+
+      // Search for the value
+      router.push(`/search?q=${searchTerm}`);
+    }
   }
   
-  // Gets the themeClass function
-  const { themeClass } = useContext(ThemeContext) as ThemeContextType;
-
   return (
     <>
 
