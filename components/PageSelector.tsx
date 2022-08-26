@@ -9,39 +9,13 @@ import styles from "../styles/PageSelector.module.css";
 import ArrowButton from "./ArrowButton";
 
 // The page selector
-const PageSelector: NextPage = () => {
+const PageSelector: NextPage<{page: number}> = ({ page }) => {
 
   // Gets the themeClass function
   const { themeClass } = useContext(ThemeContext) as ThemeContextType;
 
   // Gets the router
   const router = useRouter();
-  
-  
-  // Function to parse the page number
-  function parsePageNum(page: string | string[] | undefined) {
-    
-    // Checks if the page number exists
-    if (page) {
-  
-      // Set the page number to it
-      page = Array.isArray(page) ? page.join("").trim() : page.trim();
-  
-      // If the page number isn't a valid number, change it to 1
-      if (!/^\d+$/.test(page)) page = "1";
-    }
-  
-    // If the page number doesn't exist
-    else {
-  
-      // Change the page number to 1
-      page = "1";
-    }
-  
-    // Gets the page number as a number
-    return parseInt(page) < 1 ? 1 : parseInt(page);
-  }
-  
   
   // Function to render the page selector
   function renderPageSelector(page: number) {
@@ -102,7 +76,7 @@ const PageSelector: NextPage = () => {
   
   return (
     <div className={`${styles.selector} ${themeClass(styles, "selector")}`}>
-      {renderPageSelector(parsePageNum(router.query.page))}
+      {renderPageSelector(page)}
     </div>
   );
 };

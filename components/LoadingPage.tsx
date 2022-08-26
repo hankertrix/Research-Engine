@@ -28,7 +28,7 @@ const LoadingPage: NextPage<{text?: string, isInitialLoad?: boolean}> = ({ text,
 
       {/* The title to display when the page is shown */}
       <Head>
-        <title>Researching...</title>
+        <title>{text + "..."}</title>
       </Head>
 
       {/* The page wrapper */}

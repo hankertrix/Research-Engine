@@ -6,7 +6,7 @@ import { removeMarkup, parseQuery } from "../../data-processor/utils";
 
 
 // The data type
-type Data = {
+export type Data = {
   status: string,
   message: string,
   searchTerm?: string,
