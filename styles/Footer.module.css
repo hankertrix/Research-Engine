@@ -13,6 +13,9 @@
   height: 3.5rem;
   font-family: Helvetica;
   padding: 5px 20px;
+  --source-right-margin-normal: 188px;
+  --source-right-margin-700: 72px;
+  --source-right-margin-400: 65px;
 }
 
 .copyleft {
@@ -28,7 +31,7 @@
 }
 
 .source-wrapper {
-  --right-margin: 188px;
+  --right-margin: var(--source-right-margin-normal);
   margin-right: var(--right-margin);
 }
 
@@ -94,7 +97,7 @@
   }
 
   .source-wrapper {
-    --right-margin: 72px;
+    --right-margin: var(--source-right-margin-700);
   }
 }
 
@@ -102,6 +105,6 @@
 @media only screen and (max-width: 400px) {
   
   .source-wrapper {
-    --right-margin: 65px;
+    --right-margin: var(--source-right-margin-400);
   }
 }

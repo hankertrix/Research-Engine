@@ -1,0 +1,218 @@
+
+.page-wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
+.wrapper {
+  margin-left: 230px;
+  margin-right: 110px;
+  padding-top: 150px;
+  padding-bottom: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.spacer {
+  height: 100px;
+}
+
+.page-selector {
+  width: clamp(320px, 50%, 1000px);
+}
+
+.btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 10px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.text-display {
+  font-family: Helvetica;
+  font-size: 16px;
+  color: black;
+  display: var(--text-display);
+}
+
+.top-button {
+  position: fixed;
+  right: 40px;
+  bottom: 4.5rem;
+  width: 2rem;
+  z-index: 1;
+}
+
+
+
+
+/* Light Theme */
+
+.page-wrapper-light .btn {
+  box-shadow: 0 2px 5px 1px rgba(64, 60, 67, .24);
+}
+
+.page-wrapper-light .btn:hover {
+  box-shadow: 0 2px 8px 1px rgba(64, 60, 67, .32);
+}
+
+.main-light {
+  color: black;
+}
+
+
+
+
+/* Dark Theme */
+
+.page-wrapper-dark {
+  background-color: #1c1c1c;
+}
+
+.main-dark > div > div > a:link {
+  color: goldenrod;
+}
+
+.main-dark > div > div > a:link:active {
+  color: yellow;
+}
+
+.main-dark > div > div > ol > :is(div, li) {
+  color: white;
+  opacity: 0.87;
+}
+
+.page-wrapper-dark :is(.btn, .top-button > svg) {
+  background-color: #333333;
+}
+
+.page-wrapper-dark :is(.btn, .top-button > svg):hover {
+  background-color: #414141;
+}
+
+.page-wrapper-dark .text-display {
+  color: white;
+  opacity: 0.87;
+}
+
+
+
+
+/* Loading spinner styles */
+
+.lds-spinner {
+  color: official;
+  display: var(--loading-spinner-display);
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-spinner div {
+  transform-origin: 40px 40px;
+  animation: lds-spinner 1.2s linear infinite;
+}
+
+.lds-spinner div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 37px;
+  width: 6px;
+  height: 18px;
+  border-radius: 20%;
+  background: #737373;
+}
+
+.lds-spinner div:nth-child(1) {
+  transform: rotate(0deg);
+  animation-delay: -1.1s;
+}
+
+.lds-spinner div:nth-child(2) {
+  transform: rotate(30deg);
+  animation-delay: -1s;
+}
+
+.lds-spinner div:nth-child(3) {
+  transform: rotate(60deg);
+  animation-delay: -0.9s;
+}
+
+.lds-spinner div:nth-child(4) {
+  transform: rotate(90deg);
+  animation-delay: -0.8s;
+}
+
+.lds-spinner div:nth-child(5) {
+  transform: rotate(120deg);
+  animation-delay: -0.7s;
+}
+
+.lds-spinner div:nth-child(6) {
+  transform: rotate(150deg);
+  animation-delay: -0.6s;
+}
+
+.lds-spinner div:nth-child(7) {
+  transform: rotate(180deg);
+  animation-delay: -0.5s;
+}
+
+.lds-spinner div:nth-child(8) {
+  transform: rotate(210deg);
+  animation-delay: -0.4s;
+}
+
+.lds-spinner div:nth-child(9) {
+  transform: rotate(240deg);
+  animation-delay: -0.3s;
+}
+
+.lds-spinner div:nth-child(10) {
+  transform: rotate(270deg);
+  animation-delay: -0.2s;
+}
+
+.lds-spinner div:nth-child(11) {
+  transform: rotate(300deg);
+  animation-delay: -0.1s;
+}
+
+.lds-spinner div:nth-child(12) {
+  transform: rotate(330deg);
+  animation-delay: 0s;
+}
+
+@keyframes lds-spinner {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
+
+
+@media only screen and (max-width: 700px) {
+
+  .wrapper {
+    margin-right: 60px;
+    margin-left: 70px;
+  }
+
+  .main > div > div:not(:last-of-type) {
+    margin-bottom: 100px;
+  }
+
+  .top-button {
+    right: 15px;
+  }
+}

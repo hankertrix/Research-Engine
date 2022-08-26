@@ -10,6 +10,7 @@
   top: 0;
   padding: 20px 0px;
   width: 100vw;
+  z-index: 1;
 }
 
 .searchBar a {
