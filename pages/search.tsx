@@ -225,7 +225,7 @@ const Results: NextPage<{initialResults: Result[], searchTerm: string, pageNumbe
         <Footer style={footerStyles} />
 
         {/* The scroll back to the top button */}
-        <a className={styles["top-button"]} href="#top" title="Scroll to the top"><ArrowButton style={{transform: "rotateZ(-90deg)"}} /></a>
+        <a className={styles["top-button"]} href="#top" title="Go to the top"><ArrowButton style={{transform: "rotateZ(-90deg)"}} /></a>
       
       </div>
     </>

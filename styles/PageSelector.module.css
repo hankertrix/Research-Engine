@@ -28,3 +28,11 @@
 .selector-dark a.page-button:link:active {
   color: yellow;
 }
+
+.selector-dark a.page-button:visited {
+  color: saddlebrown;
+}
+
+.selector-dark a.page-button:visited:active {
+  color: coral;
+}
