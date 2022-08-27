@@ -24,14 +24,11 @@
   fill: var(--light-colour);
 }
 
-.btn-dark {
+.btn-dark polygon {
+  fill: var(--dark-colour);
   opacity: calc(var(--dark-opacity) - 0.3);
 }
 
-.btn-dark:hover {
+.btn-dark:hover polygon {
   opacity: var(--dark-opacity);
-}
-
-.btn-dark polygon {
-  fill: var(--dark-colour);
 }
