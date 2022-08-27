@@ -257,11 +257,11 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
     // 15 results or less
     new engine.ERIC(searchTerm, websitePageNumber),
 
-    // 25 results
-    new engine.CORE(searchTerm, websitePageNumber, 25),
+    // 10 results
+    new engine.CORE(searchTerm, websitePageNumber, 10),
 
-    // 20 results
-    new engine.SemanticScholar(searchTerm, websitePageNumber, 20),
+    // 10 results
+    new engine.SemanticScholar(searchTerm, websitePageNumber, 10),
 
     // 10 results
     new engine.PubMed(searchTerm, websitePageNumber),
@@ -269,11 +269,11 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
     // 10 results or less
     new engine.BASE(searchTerm, websitePageNumber),
 
-    // 20 results
-    new engine.DOAJ(searchTerm, websitePageNumber, 20),
+    // 10 results
+    new engine.DOAJ(searchTerm, websitePageNumber, 10),
 
     // 25 results
-    // new engine.Fatcat(searchTerm, websitePageNumber),
+    new engine.Fatcat(searchTerm, websitePageNumber),
 
     // 10 results
     new engine.CiteSeerX(searchTerm, websitePageNumber),
@@ -281,8 +281,8 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
     // 10 results
     new engine.Paperity(searchTerm, websitePageNumber),
 
-    // 20 results
-    new engine.AMiner(searchTerm, websitePageNumber, 20),
+    // 10 results
+    new engine.AMiner(searchTerm, websitePageNumber, 10),
 
     // 10 results
     new engine.OSTI(searchTerm, websitePageNumber)
