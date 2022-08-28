@@ -19,7 +19,7 @@ const Footer: NextPage<{style?: CSSProperties}> = ({ style }) => {
   
   return (
       <footer className={`${styles.footer} ${themeClass(styles, "footer")} ${styles.flex}`} style={style}>
-        <a title="Copyright notice and license" className={`${styles.copyleft} ${styles.flex}`}>
+        <a href="https://replit.com/@hankertrix/Research-Engine?v=1#LICENSE.txt" title="Copyright notice and license" className={`${styles.copyleft} ${styles.flex}`}>
           <div>Copyleft&nbsp;<span className={styles.symbol}>©</span>&nbsp;2022 Hankertrix.&nbsp;</div> <div>All Wrongs Reserved.</div></a>
         <div className={styles["source-wrapper"]}>
           <a href="https://replit.com/@hankertrix/Research-Engine?v=1" className={`${styles.source} ${styles.flex}`} title="View source code on Replit">Source:</a>
