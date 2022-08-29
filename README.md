@@ -5,7 +5,7 @@ link: https://research-engine.vercel.app
 <br>
 
 ### What is it for?
-The Research Engine is a Next.js web application built to facilitate research by forwarding your query to various different search engines that specialise in searching for research papers so that you don't have to spend time scrolling through various different search engines to find what you're looking for.
+The Research Engine is a [Next.js](https://nextjs.org/) web application built to facilitate research by forwarding your query to various different search engines that specialise in searching for research papers so that you don't have to spend time scrolling through various different search engines to find what you're looking for.
 
 ### How does it work?
 The engine forwards your query to 13 different search engines that specialise in research papers and gets the search results from each of them. The engine will then get the abstract of 10 of the results and display the title and the first 3 relevant sentences on the search results page. Do note that it does take some time (simply put, it's quite slow) for the application to get the data from so many different search engines and websites so please be patient. There is not much else I can do to improve the performance of the application given its nature.
