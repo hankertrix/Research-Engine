@@ -14,10 +14,10 @@ interface Dictionary<T> {
 const MAX_NUM_OF_RESULTS = 100;
 
 // The CSS selector to exclude meta content that end with ellipsis or have a dash inside
-const EXCLUDABLES = ':not([content$="..."]):not([content$="…"]):not([content~="-"]):not([content*="|"])'
+const EXCLUDABLES = ':not([content$="..."], [content$="…"], [content~="-"], [content*="|"])';
 
 // The CSS selector to get the abstract from the page
-const META_ABSTRACT_CSS_SELECTOR = `meta[name*=".abstract"]${EXCLUDABLES}, meta[property*=".abstract"]${EXCLUDABLES}, meta[property="og:description"]${EXCLUDABLES}, meta[name*="Description"]${EXCLUDABLES}, meta[name="citation_abstract"]${EXCLUDABLES}`;
+const META_ABSTRACT_CSS_SELECTOR = `:is(meta[name*=".abstract"], meta[property*=".abstract"], meta[property="og:description"], meta[name*="Description"], meta[name="citation_abstract"])${EXCLUDABLES}`;
 
 // The CSS selector to get the main content from the page
 const ABSTRACT_CSS_SELECTOR = [
@@ -71,18 +71,21 @@ const ABSTRACT_CSS_SELECTOR = [
   "div.JournalAbstract > p",
 
   // MATEC Web of Conferences
-  "div#head > p:not(.aff):not(.history):not(.bold)",
+  "div#head > p.bold + p",
 
   // Paperity
-  "div.col-lg-9.col-md-9.col-xs-12 > blockquote"
+  "div.col-lg-9.col-md-9.col-xs-12 > blockquote",
+
+  // IOPscience
+  "div.article-content > div.article-text.wd-jnl-art-abstract.cf > p"
   
 ].join(", ");
 
-// The set of common english words
-const COMMON_WORDS = new Set(["about", "above", "actually", "after", "again", "against", "all", "almost", "also", "although", "always", "am", "an", "and", "any", "are", "as", "at", "be", "became", "become", "because", "been", "before", "being", "below", "between", "both", "but", "by", "can", "could", "did", "do", "does", "doing", "down", "during", "each", "either", "else", "few", "for", "from", "further", "had", "has", "have", "having", "he", "he'd", "he'll", "hence", "he's", "her", "here", "here's", "hers", "herself", "him", "himself", "his", "how", "how's", "I", "I'd", "I'll", "I'm", "I've", "if", "in", "into", "is", "it", "it's", "its", "itself", "just", "let's", "may", "maybe", "me", "might", "mine", "more", "most", "must", "my", "myself", "neither", "nor", "not", "of", "oh", "on", "once", "only", "ok", "or", "other", "ought", "our", "ours", "ourselves", "out", "over", "own", "same", "she", "she'd", "she'll", "she's", "should", "so", "some", "such", "than", "that", "that's", "the", "their", "theirs", "them", "themselves", "then", "there", "there's", "these", "they", "they'd", "they'll", "they're", "they've", "this", "those", "through", "to", "too", "under", "until", "up", "very", "was", "we", "we'd", "we'll", "we're", "we've", "were", "what", "what's", "when", "whenever", "when's", "where", "whereas", "wherever", "where's", "whether", "which", "while", "who", "whoever", "who's", "whose", "whom", "why", "why's", "will", "with", "within", "would", "yes", "yet", "you", "you'd", "you'll", "you're", "you've", "your", "yours", "yourself", "yourselves"]);
+// The list of common English words
+const COMMON_WORDS = ["about", "above", "actually", "after", "again", "against", "all", "almost", "also", "although", "always", "am", "an", "and", "any", "are", "as", "at", "be", "became", "become", "because", "been", "before", "being", "below", "between", "both", "but", "by", "can", "could", "did", "do", "does", "doing", "down", "during", "each", "either", "else", "few", "for", "from", "further", "had", "has", "have", "having", "he", "he'd", "he'll", "hence", "he's", "her", "here", "here's", "hers", "herself", "him", "himself", "his", "how", "how's", "I", "I'd", "I'll", "I'm", "I've", "if", "in", "into", "is", "it", "it's", "its", "itself", "just", "let's", "may", "maybe", "me", "might", "mine", "more", "most", "must", "my", "myself", "neither", "nor", "not", "of", "oh", "on", "once", "only", "ok", "or", "other", "ought", "our", "ours", "ourselves", "out", "over", "own", "same", "she", "she'd", "she'll", "she's", "should", "so", "some", "such", "than", "that", "that's", "the", "their", "theirs", "them", "themselves", "then", "there", "there's", "these", "they", "they'd", "they'll", "they're", "they've", "this", "those", "through", "to", "too", "under", "until", "up", "very", "was", "we", "we'd", "we'll", "we're", "we've", "were", "what", "what's", "when", "whenever", "when's", "where", "whereas", "wherever", "where's", "whether", "which", "while", "who", "whoever", "who's", "whose", "whom", "why", "why's", "will", "with", "within", "would", "yes", "yet", "you", "you'd", "you'll", "you're", "you've", "your", "yours", "yourself", "yourselves"];
 
 // The regular expression to remove these common words
-const REMOVE_COMMON_WORDS_REGEX = new RegExp(Array.from(COMMON_WORDS).join("|"), "g");
+const REMOVE_COMMON_WORDS_REGEX = new RegExp(COMMON_WORDS.join("|"), "g");
 
 // The regular expression to remove non-words characters
 const REMOVE_NON_WORDS_REGEX = /[^\w \-']/g
@@ -285,7 +288,14 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
     new engine.AMiner(searchTerm, websitePageNumber, 10),
 
     // 10 results
-    new engine.OSTI(searchTerm, websitePageNumber)
+    new engine.OSTI(searchTerm, websitePageNumber),
+
+    // 10 results
+    new engine.PLOS_ONE(searchTerm, websitePageNumber, 10),
+
+    // 15 results
+    new engine.InternetArchiveScholar(searchTerm, websitePageNumber)
+    
   ];
 
   // The length of the list of search engines
@@ -324,6 +334,9 @@ function getWebsiteList(searchEngines: engine.SearchEngineList, pageNumber: numb
   // List of the search results from every search engine
   const searchEngineResultList = new Array(engineLen);
 
+  // The list of the number of results for each website
+  const numOfResultsList = new Array(engineLen);
+
   // Iterates the list of search engines
   for (let i = 0; i < engineLen; ++i) {
 
@@ -333,15 +346,39 @@ function getWebsiteList(searchEngines: engine.SearchEngineList, pageNumber: numb
     // Gets the list of websites
     const listOfWebsites: engine.Website[] = engine.parse();
 
-    //console.log(engine.constructor.name);
-    //console.log(listOfWebsites);
+    // console.log(engine.constructor.name);
+    // console.log(listOfWebsites.length);
 
     // Adds the list of websites to the search engine result list
     searchEngineResultList[i] = listOfWebsites;
+
+    // Adds the number of results to the list of the number of results
+    numOfResultsList[i] = listOfWebsites.length;
   }
 
-  // The set of websites created from the search engine results as I don't want duplicate websites
-  const websites: Set<engine.Website> = new Set(([] as engine.Website[]).concat(...searchEngineResultList));
+  // Gets the maximum number of results from the list of search engine results
+  const maxNumOfResults = Math.max(...numOfResultsList);
+
+  // The set of websites
+  const websites = new Set<string | {url: string, title: string, text: string}>();
+
+  // Iterates from zero to the maximum number of results
+  for (let i = 0; i < maxNumOfResults; ++i) {
+
+    // Iterates the list of search engine results
+    for (let j = 0; j < engineLen; ++j) {
+
+      // Gets the search engine results
+      const searchEngineResults = searchEngineResultList[j];
+
+      // Checks if i is less than the length of the list
+      if (i < searchEngineResults.length) {
+
+        // Adds the website to the set of websites to so as to not have duplicate websites
+        websites.add(searchEngineResults[i]);
+      }
+    }
+  }
 
   // The index to start the slice of the array of websites at
   const sliceIndex = ((pageNumber - 1) % 10) * 10;
@@ -784,24 +821,24 @@ export async function createSearchResults(searchTerm: string, pageNumber: number
   // Gets the website page number
   const websitePageNumber = Math.floor(10 * pageNumber / MAX_NUM_OF_RESULTS) + 1
 
-  console.time("searchWebpages");
+  // console.time("searchWebpages");
 
   // Gets the list of search engines
   const searchEngineList = await searchWebpages(searchTerm, websitePageNumber);
 
-  console.timeEnd("searchWebpages");
-  console.time("getWebsiteList");
+  // console.timeEnd("searchWebpages");
+  // console.time("getWebsiteList");
 
   // Gets the list of websites from the list of search enginers
   const websiteList = getWebsiteList(searchEngineList, pageNumber);
 
-  console.timeEnd("getWebsiteList");
-  console.time("getRelevantPartsList");
+  // console.timeEnd("getWebsiteList");
+  // console.time("getRelevantPartsList");
   
   // Gets the list of relevant parts for each website
   const websiteListWithParts = await getRelevantPartsList(websiteList, searchTerm);
 
-  console.timeEnd("getRelevantPartsList");
+  // console.timeEnd("getRelevantPartsList");
 
   // Returns the list of websites with parts
   return websiteListWithParts;

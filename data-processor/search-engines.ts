@@ -3,7 +3,7 @@
 import { parse } from 'node-html-parser';
 
 // The type for the list of search engines
-export type SearchEngineList = (ERIC | CORE | SemanticScholar | PubMed | BASE | DOAJ | Fatcat | CiteSeerX | Paperity | AMiner | OSTI)[];
+export type SearchEngineList = (ERIC | CORE | SemanticScholar | PubMed | BASE | DOAJ | Fatcat | CiteSeerX | Paperity | AMiner | OSTI | PLOS_ONE | InternetArchiveScholar)[];
 
 // The type for the website list
 export type Website = (string | {url: string, title: string, text: string});
@@ -124,20 +124,17 @@ export class CORE extends SearchEngine {
     this.response = await response.json();
   }
 
-  // Function to parse the response and return the list of links
+  // Function to parse the JSON response and return the list of website objects
   parse() {
 
     // The list of results
     const resultList = this.response.results;
 
-    // The length of the list of results
-    const resultLen = resultList.length;
-
     // The list of websites
-    const websiteList: Website[] = new Array(resultLen);
+    const websiteList: Website[] = new Array(this.numOfResults);
 
     // Iterates the list of results
-    for (let i = 0; i < resultLen; ++i) {
+    for (let i = 0; i < this.numOfResults; ++i) {
 
       // Gets the result object
       const result = resultList[i];
@@ -146,7 +143,7 @@ export class CORE extends SearchEngine {
       const url = `https://core.ac.uk/works/${result.id}`;
 
       // Adds website object to the list of urls
-      websiteList[i] = {"url": url, "title" : result.title, "text": result.abstract};
+      websiteList[i] = {"url": url, "title": result.title.trim(), "text": result.abstract.trim()};
     }
 
     // Returns the list of website objects
@@ -193,20 +190,17 @@ export class SemanticScholar extends SearchEngine {
     this.response = await response.json();
   }
 
-  // Function to parse JSON and return the html links
+  // Function to parse the JSON response and return the list of website objects
   parse() {
 
     // The list of results
     const resultList = this.response.data;
 
-    // The length of the list of results
-    const resultLen = resultList.length;
-
     // The list of websites
-    const websiteList: Website[] = new Array(resultLen);
+    const websiteList: Website[] = new Array(this.numOfResults);
 
     // Iterates the objects returned
-    for (let i = 0; i < resultLen; ++i) {
+    for (let i = 0; i < this.numOfResults; ++i) {
 
       // Gets the paper object
       const paper = resultList[i];
@@ -215,14 +209,14 @@ export class SemanticScholar extends SearchEngine {
       if (paper.abstract != null) {
 
           // Adds the website object to the list of websites
-        websiteList[i] = {"url": paper.url, "title" : paper.title, "text" : paper.abstract};
+        websiteList[i] = {"url": paper.url, "title": paper.title.trim(), "text": paper.abstract.trim()};
       }
 
       // Otherwise just add the website to the list
       else websiteList[i] = paper.url;
     }
 
-    // Returns the list of websites
+    // Returns the list of website objects
     return websiteList;
   }
 }
@@ -313,20 +307,17 @@ export class DOAJ extends SearchEngine {
     this.response = await response.json();
   }
 
-  // Function to parse the DOM of the HTML and return the list of links
+  // Function to parse the JSON response and return the list of website objects
   parse() {
 
     // The list of results
     const resultList = this.response.results;
 
-    // The length of the list of results
-    const resultLen = resultList.length;
-
     // The list of websites
-    const websiteList: Website[] = new Array(resultLen);
+    const websiteList: Website[] = new Array(this.numOfResults);
 
     // Iterate the list of results
-    for (let i = 0; i < resultLen; ++i) {
+    for (let i = 0; i < this.numOfResults; ++i) {
 
       // Gets the result object
       const result = resultList[i];
@@ -338,7 +329,7 @@ export class DOAJ extends SearchEngine {
       if (result.bibjson.abstract) {
 
         // Adds the url to the list of websites
-        websiteList[i] = {"url" : url, "title" : result.bibjson.title, "text" : result.bibjson.abstract};
+        websiteList[i] = {"url": url, "title": result.bibjson.title.trim(), "text": result.bibjson.abstract.trim()};
       }
 
       // Otherwise just add the website to the list
@@ -428,20 +419,17 @@ export class AMiner extends SearchEngine {
     this.response = await response.json();
   }
 
-  // Function to parse the JSON response and return the website object
+  // Function to parse the JSON response and return the list of website objects
   parse() {
 
     // The list of results
     const resultList = this.response.result;
 
-    // The length of the list of results
-    const resultLen = resultList.length;
-
     // The list of websites
     const websiteList: Website[] = [];
     
     // Iterates the results
-    for (let i = 0; i < resultLen; ++i) {
+    for (let i = 0; i < this.numOfResults; ++i) {
 
       // Gets the result object
       const result = resultList[i];
@@ -453,7 +441,7 @@ export class AMiner extends SearchEngine {
       else if (result.abstract) {
 
         // Add the website object to the list of websites
-        websiteList.push({"url" : result.urls[0], "title" : result.title, "text" : result.abstract});
+        websiteList.push({"url": result.urls[0], "title": result.title.trim(), "text": result.abstract.trim()});
       }
 
       // If the abstract doesn't contain any text then just add the url
@@ -481,6 +469,68 @@ export class OSTI extends SearchEngine {
 
     // Calls the general parser function and returns the result
     return parseSearchEngineResults(this.url, this.response, "h2.title > a", "href", true);
+  }
+}
+
+
+// The class for PLOS ONE
+export class PLOS_ONE extends SearchEngine {
+
+  constructor(searchTerm: string, websitePageNumber: number, numOfResults: number) {
+
+    // Calls the parent constructor
+    super(searchTerm, websitePageNumber);
+    this.numOfResults = numOfResults;
+    this.url = `https://api.plos.org/search?q=everything:${this.searchTerm}&start=${(this.pageNum - 1) * this.numOfResults}&rows=${this.numOfResults}&wt=json`;
+  }
+
+  // Function to set the response
+  async setResponse(response: Response) {
+    this.response = await response.json();
+  }
+  
+  // Function to parse the JSON response and return the list of website objects
+  parse() {
+
+    // Gets the search results
+    const resultList = this.response.response.docs;
+
+    // The list of websites
+    const websiteList = new Array(this.numOfResults);
+
+    // Iterates the search results
+    for (let i = 0; i < this.numOfResults; ++i) {
+
+      // Gets the current result
+      const result = resultList[i];
+
+      // Adds the website object to the list
+      websiteList[i] = {"url": `https://doi.org/${result.id}`, "title": result.title_display.trim(), "text": result.abstract.join("\n").trim()};
+    }
+
+    // Returns the list of website objects
+    return websiteList;
+  }
+}
+
+
+// The class for Internet Archive Scholar
+export class InternetArchiveScholar extends SearchEngine {
+
+  numOfResults = 15;
+
+  constructor(searchTerm: string, websitePageNumber: number) {
+
+    // Calls the parent constructor
+    super(searchTerm, websitePageNumber);
+    this.url = `https://scholar.archive.org/search?q=${this.searchTerm}&offset=${(this.pageNum - 1) * this.numOfResults}`;
+  }
+
+  // Function to parse the DOM of the HTML and return the list of links
+  parse() {
+
+    // Calls the general parser function and returns the result
+    return parseSearchEngineResults(this.url, this.response, "div.three.wide.left.aligned.column.serp-right-col > a:nth-of-type(2)", "href", false);
   }
 }
 
