@@ -30,7 +30,7 @@ Office of Scientific and Technical Information)](https://www.osti.gov/)
 
 <br>
 
-### iOS Shortcut helper
+### iOS Shortcuts helper
 There are two iOS shortcuts to help you interact with the API on the Research Engine and provide you with the information directly on your notes app. One of them is the main shortcut and the other one is simply a wrapper, adding a variable to the shortcut so it'll run automatically and skip the user interaction part. This automated wrapper is meant to be run as an automation so that you'll get new results on a regular basis.
 
 The main shortcut: https://www.icloud.com/shortcuts/d37c48ea3926407a89f1241ea2cca517
@@ -62,7 +62,7 @@ q: Your search term.
 
 page: The page that you want. Note that there are 10 results per page.
 
-rich: Set this to true if you want the search term within the relevant sentences to be bold.
+rich: Set this to true if you want the search term within the relevant sentences to be bold and omit it otherwise.
 ```
 
 <br>
@@ -84,7 +84,17 @@ JSON response data type:
 
 <br>
 
-Example JSON response:
+Example of a failed JSON response:
+```
+{
+  "status": "400 Bad Request",
+  "message": "Request failed. The request to the API should be a GET request with a query string behind.\n\nExample request url: https://re-search-engine.herokuapp.com/api/search?q=your+search+term&page=1&rich=true\n\nQuery parameters:\n- q: Your URL encoded search term (required).\n- page: The page number that you want (optional, defaults to 1).\n- rich: Set it to \"true\" if you want html formatted text and \"false\" if you want plain text (optional, defaults to false)."
+}
+```
+
+<br>
+
+Example of a successful JSON response:
 ```
 {
   "status": "200 OK",
