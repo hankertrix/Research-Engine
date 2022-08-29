@@ -31,7 +31,7 @@ Office of Scientific and Technical Information)](https://www.osti.gov/)
 <br>
 
 ### iOS Shortcut helper
-There are two iOS shortcuts to help you interact with the API on the Research Engine and provide you with the information directly on your notes app. One of them is the main shortcut, the other one is simply a wrapper, adding a variable to shortcut so it'll run automatically and skip the user interaction part. This automated wrapper is meant to be run as an automation so that you'll get new results on a regular basis.
+There are two iOS shortcuts to help you interact with the API on the Research Engine and provide you with the information directly on your notes app. One of them is the main shortcut, the other one is simply a wrapper, adding a variable to the shortcut so it'll run automatically and skip the user interaction part. This automated wrapper is meant to be run as an automation so that you'll get new results on a regular basis.
 
 The main shortcut: https://www.icloud.com/shortcuts/d37c48ea3926407a89f1241ea2cca517
 
