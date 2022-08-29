@@ -8,7 +8,7 @@ link: https://re-search-engine.herokuapp.com
 The Research Engine is a [Next.js](https://nextjs.org/) web application built to facilitate research by forwarding your query to various different search engines that specialise in searching for research papers so that you don't have to spend time scrolling through various different search engines to find what you're looking for.
 
 ### How does it work?
-The engine forwards your query to 13 different search engines that specialise in research papers and gets the search results from each of them. The engine will then get the abstract of 10 of the results and display the title and the first 3 relevant sentences on the search results page. Do note that it does take some time (simply put, it's quite slow) for the application to get the data from so many different search engines and websites so please be patient. There is not much else I can do to improve the performance of the application given its nature.
+The engine forwards your query to 13 different search engines that specialise in research papers and gets the search results from each of them. The engine will then get the abstract of 10 of the results and display the title and the first 3 relevant sentences on the search results page. Do note that it does take some time (simply put, it's quite slow) for the application to get the data from so many different search engines and websites so please be patient. There isn't much else I can do to improve the performance of the application given its nature so cut me some slack yeah.
 
 <br>
 
@@ -31,7 +31,7 @@ Office of Scientific and Technical Information)](https://www.osti.gov/)
 <br>
 
 ### iOS Shortcut helper
-There are two iOS shortcuts to help you interact with the API on the Research Engine and provide you with the information directly on your notes app. One of them is the main shortcut, the other one is simply a wrapper, adding a variable to the shortcut so it'll run automatically and skip the user interaction part. This automated wrapper is meant to be run as an automation so that you'll get new results on a regular basis.
+There are two iOS shortcuts to help you interact with the API on the Research Engine and provide you with the information directly on your notes app. One of them is the main shortcut and the other one is simply a wrapper, adding a variable to the shortcut so it'll run automatically and skip the user interaction part. This automated wrapper is meant to be run as an automation so that you'll get new results on a regular basis.
 
 The main shortcut: https://www.icloud.com/shortcuts/d37c48ea3926407a89f1241ea2cca517
 
