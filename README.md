@@ -50,9 +50,9 @@ This web application is licensed under the GNU AGPL v3 license. For the full lic
 
 ## API Documentation
 
-API endpoint: https://research-engine.vercel.app/api/search
+API endpoint: https://re-search-engine.herokuapp.com/api/search
 
-Example API request: https://research-engine.vercel.app/api/search?q=animals&page=1&rich=true
+Example API request: https://re-search-engine.herokuapp.com/api/search?q=animals&page=1&rich=true
 
 <br>
 
