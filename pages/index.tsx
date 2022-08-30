@@ -57,7 +57,7 @@ const MainPage: NextPage = () => {
               <div className={styles.icon}>
                 <ResearchIcon />
               </div>
-              <div className={styles.name}>Research Engine</div>
+              <div className={styles.name}><span>Research</span><span>Engine</span></div>
             </div>
           
             {/* The search bar part */}

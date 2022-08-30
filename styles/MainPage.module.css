@@ -32,6 +32,13 @@
   margin-right: 20px;
 }
 
+.name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 0.25em;
+}
+
 .themeToggle {
   width: 20px;
   transform: translateY(1.5px);
@@ -139,5 +146,13 @@
   .icon-wrapper {
     flex-direction: column;
     padding-right: 0;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+
+  .name {
+    flex-direction: column;
+    column-gap: 0px;
   }
 }
