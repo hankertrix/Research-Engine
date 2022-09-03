@@ -1,6 +1,6 @@
-# [Research Engine](https://re-search-engine.herokuapp.com)
+# [Research Engine](https://research-engine.onrender.com)
 
-link: https://re-search-engine.herokuapp.com
+link: https://research-engine.onrender.com
 
 <br>
 
@@ -33,7 +33,7 @@ Office of Scientific and Technical Information)](https://www.osti.gov/)
 ### iOS Shortcuts helper
 There are two iOS shortcuts to help you interact with the API on the Research Engine and provide you with the information directly on your notes app. One of them is the main shortcut and the other one is simply a wrapper, adding a variable to the shortcut so it'll run automatically and skip the user interaction part. This automated wrapper is meant to be run as an automation so that you'll get new results on a regular basis.
 
-The main shortcut: https://www.icloud.com/shortcuts/d37c48ea3926407a89f1241ea2cca517
+The main shortcut: https://www.icloud.com/shortcuts/b66b3756c8bc49669d2427d2fd2e901a
 
 The automated wrapper shortcut: https://www.icloud.com/shortcuts/51f2ebce34a14c6a9c1f99f946a9957e
 
@@ -50,9 +50,9 @@ This web application is licensed under the GNU AGPL v3 license. For the full lic
 
 ## API Documentation
 
-API endpoint: https://re-search-engine.herokuapp.com/api/search
+API endpoint: https://research-engine.onrender.com/api/search
 
-Example API request: https://re-search-engine.herokuapp.com/api/search?q=animals&page=1&rich=true
+Example API request: https://research-engine.onrender.com/api/search?q=animals&page=1&rich=true
 
 <br>
 
@@ -88,7 +88,7 @@ Example of a failed JSON response:
 ```
 {
   "status": "400 Bad Request",
-  "message": "Request failed. The request to the API should be a GET request with a query string behind.\n\nExample request url: https://re-search-engine.herokuapp.com/api/search?q=your+search+term&page=1&rich=true\n\nQuery parameters:\n- q: Your URL encoded search term (required).\n- page: The page number that you want (optional, defaults to 1).\n- rich: Set it to \"true\" if you want html formatted text and \"false\" if you want plain text (optional, defaults to false)."
+  "message": "Request failed. The request to the API should be a GET request with a query string behind.\n\nExample request url: https://research-engine.onrender.com/api/search?q=your+search+term&page=1&rich=true\n\nQuery parameters:\n- q: Your URL encoded search term (required).\n- page: The page number that you want (optional, defaults to 1).\n- rich: Set it to \"true\" if you want html formatted text and \"false\" if you want plain text (optional, defaults to false)."
 }
 ```
 

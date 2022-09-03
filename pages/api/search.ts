@@ -21,7 +21,7 @@ export type Data = {
 // The invalid request message
 const INVALID_REQ_MSG = `Request failed. The request to the API should be a GET request with a query string behind.
 
-Example request url: https://re-search-engine.herokuapp.com/api/search?q=your+search+term&page=1&rich=true
+Example request url: https://research-engine.onrender.com/api/search?q=your+search+term&page=1&rich=true
 
 Query parameters:
 - q: Your URL encoded search term (required).
