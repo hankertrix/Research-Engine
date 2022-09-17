@@ -146,8 +146,21 @@ async function fetchAll(requests: {url?: string, method: string, redirect: strin
     }
   }
 
-  // Returns the responses
-  return await Promise.all(promisesList);
+  // Gets the responses
+  const responses = await Promise.allSettled(promisesList);
+
+  // The final list of responses
+  const successfulResponses = [];
+
+  // Iterate the responses
+  for (const response of responses) {
+
+    // Adds the response to the list of successful responses if the response was successful
+    if (response.status === "fulfilled") successfulResponses.push(response.value);
+  }
+
+  // Returns the list of successful responses
+  return successfulResponses;
 }
 
 
@@ -415,7 +428,7 @@ function markSearchTerm(searchTerm: string, listOfMatchedResults: RegExpMatchArr
   const regex = new RegExp(searchTerm, "gi");
 
   // Returns the array with the matched term marked
-  return listOfMatchedResults.map(result => result.replace(regex, match => `<${MARKING_TAG}>${match}</${MARKING_TAG}>`));
+  return listOfMatchedResults.map(result => result.replace(regex, match => `<${MARKING_TAG}>${match}</${MARKING_TAG}>`).trim());
 }
 
 
@@ -592,9 +605,6 @@ function searchRelevantParts(website: ({url: string, title: string, text: string
   // Gets the relevant sentences
   let relevantSentences = markSearchTerm(searchTerm, text!.match(searchTermRegex));
 
-  // Removes all the weirdness from the sentence
-  relevantSentences = relevantSentences.map(sentence => sentence.trim());
-
   // The index of the token being iterated
   let tokenIndex = 0;
 
@@ -636,8 +646,8 @@ function searchRelevantParts(website: ({url: string, title: string, text: string
     else break;
   }
 
-  // Slice the array of relevant parts so that there are only 3 relevant parts
-  relevantSentences = relevantSentences.slice(0, 3);
+  // Slice the array of relevant parts so that there are only 3 relevant parts and remove all the duplicates
+  relevantSentences = [...new Set(relevantSentences.slice(0, 3))];
 
   // Returns an object containing the array and the title of the page
   return {"title" : websiteObj.title, "link" : websiteObj.url, "sentences" : relevantSentences};

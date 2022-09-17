@@ -131,19 +131,29 @@ export class CORE extends SearchEngine {
     const resultList = this.response.results;
 
     // The list of websites
-    const websiteList: Website[] = new Array(this.numOfResults);
+    const websiteList: Website[] = [];
 
     // Iterates the list of results
     for (let i = 0; i < this.numOfResults; ++i) {
 
       // Gets the result object
       const result = resultList[i];
+
+      // Continues the loop if the result has no id
+      if (result.id == undefined) continue;
       
       // Builds a url from the id
       const url = `https://core.ac.uk/works/${result.id}`;
 
-      // Adds website object to the list of urls
-      websiteList[i] = {"url": url, "title": result.title.trim(), "text": result.abstract.trim()};
+      // Checks if the result has an abstract
+      if (result.abstract) {
+      
+        // Adds website object to the list of urls
+        websiteList.push({"url": url, "title": result.title?.trim() ?? "", "text": result.abstract.trim()});
+      }
+
+      // Otherwise just add the url to the list
+      else websiteList.push(url);
     }
 
     // Returns the list of website objects
@@ -197,7 +207,7 @@ export class SemanticScholar extends SearchEngine {
     const resultList = this.response.data;
 
     // The list of websites
-    const websiteList: Website[] = new Array(this.numOfResults);
+    const websiteList: Website[] = [];
 
     // Iterates the objects returned
     for (let i = 0; i < this.numOfResults; ++i) {
@@ -205,15 +215,18 @@ export class SemanticScholar extends SearchEngine {
       // Gets the paper object
       const paper = resultList[i];
 
+      // If the paper doesn't have any url, continue the loop
+      if (paper.url == undefined) continue;
+
       // Checks if the abstract exists
       if (paper.abstract != null) {
 
           // Adds the website object to the list of websites
-        websiteList[i] = {"url": paper.url, "title": paper.title.trim(), "text": paper.abstract.trim()};
+        websiteList.push({"url": paper.url, "title": paper.title?.trim() ?? "", "text": paper.abstract.trim()});
       }
 
       // Otherwise just add the website to the list
-      else websiteList[i] = paper.url;
+      else websiteList.push(paper.url);
     }
 
     // Returns the list of website objects
@@ -314,7 +327,7 @@ export class DOAJ extends SearchEngine {
     const resultList = this.response.results;
 
     // The list of websites
-    const websiteList: Website[] = new Array(this.numOfResults);
+    const websiteList: Website[] = [];
 
     // Iterate the list of results
     for (let i = 0; i < this.numOfResults; ++i) {
@@ -325,15 +338,18 @@ export class DOAJ extends SearchEngine {
       // Gets the website url
       const url = result.bibjson.link[0].url;
 
+      // If the url doesn't exist, continue the loop
+      if (url == undefined) continue;
+
       // Checks if the abstract has text
       if (result.bibjson.abstract) {
 
         // Adds the url to the list of websites
-        websiteList[i] = {"url": url, "title": result.bibjson.title.trim(), "text": result.bibjson.abstract.trim()};
+        websiteList.push({"url": url, "title": result.bibjson.title?.trim() ?? "", "text": result.bibjson.abstract.trim()});
       }
 
       // Otherwise just add the website to the list
-      else websiteList[i] = url;
+      else websiteList.push(url);
     }
 
     // Returns the list of websites
@@ -441,7 +457,7 @@ export class AMiner extends SearchEngine {
       else if (result.abstract) {
 
         // Add the website object to the list of websites
-        websiteList.push({"url": result.urls[0], "title": result.title.trim(), "text": result.abstract.trim()});
+        websiteList.push({"url": result.urls[0], "title": result.title?.trim() ?? "", "text": result.abstract.trim()});
       }
 
       // If the abstract doesn't contain any text then just add the url
@@ -496,7 +512,7 @@ export class PLOS_ONE extends SearchEngine {
     const resultList = this.response.response.docs;
 
     // The list of websites
-    const websiteList = new Array(this.numOfResults);
+    const websiteList = [];
 
     // Iterates the search results
     for (let i = 0; i < this.numOfResults; ++i) {
@@ -504,8 +520,21 @@ export class PLOS_ONE extends SearchEngine {
       // Gets the current result
       const result = resultList[i];
 
-      // Adds the website object to the list
-      websiteList[i] = {"url": `https://doi.org/${result.id}`, "title": result.title_display.trim(), "text": result.abstract.join("\n").trim()};
+      // If the result doesn't have an id, continue the loop
+      if (result.id == undefined) continue;
+
+      // Generate the url from the id
+      const url = `https://doi.org/${result.id}`;
+
+      // If the result has an abstract
+      if (result.abstract) {
+        
+        // Adds the website object to the list
+        websiteList.push({"url": url, "title": result.title_display?.trim() ?? "", "text": result.abstract.join("\n").trim()});
+      }
+
+      // Otherwise just add the website url to the list
+      else websiteList.push(url);
     }
 
     // Returns the list of website objects

@@ -54,13 +54,13 @@ export default async function handler(
   // Gets the rich text option from the query string
   const richText = req.query.rich === "true" ? true : false;
 
-  console.time("createSearchResults");
+  // console.time("createSearchResults");
 
   // Gets the data from the websites
   let data = await createSearchResults(searchTerm, pageNumber);
 
-  console.timeEnd("createSearchResults");
-  console.log("----------------------------");
+  // console.timeEnd("createSearchResults");
+  // console.log("----------------------------");
 
   // Convert the data to one without markdown if the rich text isn't wanted
   if (!richText) data = removeMarkup(data);
