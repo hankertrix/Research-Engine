@@ -611,39 +611,43 @@ function searchRelevantParts(website: ({url: string, title: string, text: string
   // Gets the list of tokens
   const tokens = tokenise(searchTerm);
 
-  // Iterate while the list of relevant sentences is less than 3
-  while (relevantSentences.length < 3) {
+  // Checks if the length of the list of tokens is not 1 and the token is not the same as the search term
+  if (tokens.length !== 1 && tokens[0] !== searchTerm) {
 
-    // Check if the index of the token is less than the length of the list of tokens
-    if (tokenIndex < tokens.length) {
-
-      // Gets the token
-      const token = tokens[tokenIndex].trim();
-
-      // Gets the regex string for the sentence the search token is in
-      const tokenSentenceRegexStr = String.raw`(?:(?<=[\.\?!] ?|\n|^)[^\n\.\?!]*?(?<!\w)${token}(?!\w)[^\n\.\?!]*?[\.\?!]\s?)`;
-
-      // Gets the regex string to search the sentences around the sentence containing the token
-      const tokenRegexStr = String.raw`${MATCH_SENTENCE_REGEX_STR}${tokenSentenceRegexStr}${MATCH_SENTENCE_REGEX_STR}|${tokenSentenceRegexStr}${MATCH_SENTENCE_REGEX_STR}{0,2}|${MATCH_SENTENCE_REGEX_STR}{0,2}${tokenSentenceRegexStr}`;
-
-      // Gets the regular expression to search for the sentences around the sentence containing the token
-      const tokenRegex = new RegExp(tokenRegexStr, "gmi");
-
-      // Gets the search results
-      let tokenMatches = markSearchTerm(token, text!.match(tokenRegex));
-
-      // Removes all the weirdness from the sentences
-      tokenMatches = tokenMatches.map(sentence => sentence.trim());
-
-      // Joins the search results with the list of relevant sentences
-      relevantSentences = relevantSentences.concat(tokenMatches ?? []);
-
-      // Increase the token index by 1
-      ++tokenIndex;
+    // Iterate while the list of relevant sentences is less than 3
+    while (relevantSentences.length < 3) {
+  
+      // Check if the index of the token is less than the length of the list of tokens
+      if (tokenIndex < tokens.length) {
+  
+        // Gets the token
+        const token = tokens[tokenIndex].trim();
+  
+        // Gets the regex string for the sentence the search token is in
+        const tokenSentenceRegexStr = String.raw`(?:(?<=[\.\?!] ?|\n|^)[^\n\.\?!]*?(?<!\w)${token}(?!\w)[^\n\.\?!]*?[\.\?!]\s?)`;
+  
+        // Gets the regex string to search the sentences around the sentence containing the token
+        const tokenRegexStr = String.raw`${MATCH_SENTENCE_REGEX_STR}${tokenSentenceRegexStr}${MATCH_SENTENCE_REGEX_STR}|${tokenSentenceRegexStr}${MATCH_SENTENCE_REGEX_STR}{0,2}|${MATCH_SENTENCE_REGEX_STR}{0,2}${tokenSentenceRegexStr}`;
+  
+        // Gets the regular expression to search for the sentences around the sentence containing the token
+        const tokenRegex = new RegExp(tokenRegexStr, "gmi");
+  
+        // Gets the search results
+        let tokenMatches = markSearchTerm(token, text!.match(tokenRegex));
+  
+        // Removes all the weirdness from the sentences
+        tokenMatches = tokenMatches.map(sentence => sentence.trim());
+  
+        // Joins the search results with the list of relevant sentences
+        relevantSentences = relevantSentences.concat(tokenMatches ?? []);
+  
+        // Increase the token index by 1
+        ++tokenIndex;
+      }
+  
+      // If the index of the token is more than the length of the list of tokens, breaks the loop
+      else break;
     }
-
-    // If the index of the token is more than the length of the list of tokens, breaks the loop
-    else break;
   }
 
   // Slice the array of relevant parts so that there are only 3 relevant parts and remove all the duplicates
