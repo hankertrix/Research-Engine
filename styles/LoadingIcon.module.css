@@ -17,8 +17,8 @@
 }
 
 .scope {
-  transform-box: fill-box;
-  transform-origin: 59.6px 40px;
+  transform-box: border-box;
+  transform-origin: 71px 49px;
   animation: rotate-scope var(--animation-duration) var(--easing) var(--repeat);
 }
 
@@ -567,5 +567,15 @@ Waiting for the scope animation to complete.
   }
   65%, 75% {
     transform: translateX(-0.75px) translateY(1.25px) scale(1.1);
+  }
+}
+
+
+/* Safari specific styles */
+@supports (background: -webkit-named-image(i)) {
+  
+  .scope {
+    transform-box: fill-box;
+    transform-origin: 59.6px 40px;
   }
 }

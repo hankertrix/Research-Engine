@@ -137,3 +137,12 @@
     opacity: calc(var(--glow-opacity) + 0.20);
   }
 }
+
+
+/* Firefox specific styles */
+@-moz-document url-prefix() {
+  
+  .glow-circle {
+    transform: none;
+  }
+}
