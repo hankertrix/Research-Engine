@@ -35,9 +35,30 @@ const Results: NextPage<{initialResults: Result[], searchTerm: string, pageNumbe
   // Gets a reference to the intersection observer to observe the results page
   const pageObserver = useRef<IntersectionObserver | null>(null);
 
+  // The scroll up button
+  const scrollUpBtn = useRef<HTMLAnchorElement | null>(null);
 
-  // Creates a new intersection observer
+
+  // Adds an event listener on the scroll event and create a new intersection observer
   useEffect(() => {
+
+    // Adds an event listener for the scroll event
+    document.addEventListener("scroll", () => {
+
+      // Checks if the scroll position is more than 200px downwards
+      if (window.scrollY >= 200) {
+
+        // Makes the scroll up button visible
+        scrollUpBtn.current!.style.opacity = "1";
+      }
+
+      // If the scroll position is less than 200
+      else {
+
+        // Makes the scroll up button invisible
+        scrollUpBtn.current!.style.opacity = "0";
+      }
+    });
 
     // The callback function for the intersection observer
     const checkOnScreen: IntersectionObserverCallback = (entries) => {
@@ -78,7 +99,7 @@ const Results: NextPage<{initialResults: Result[], searchTerm: string, pageNumbe
 
     // Sets the page observer reference to the current observer
     pageObserver.current = observer;
-    
+
   }, []);
 
   
@@ -225,7 +246,7 @@ const Results: NextPage<{initialResults: Result[], searchTerm: string, pageNumbe
         <Footer style={footerStyles} />
 
         {/* The scroll back to the top button */}
-        <a className={styles["top-button"]} href="#top" title="Go to the top"><ArrowButton style={{transform: "rotateZ(-90deg)"}} /></a>
+        <a className={styles["top-button"]} href="#top" title="Go to the top" ref={scrollUpBtn}><ArrowButton style={{transform: "rotateZ(-90deg)"}} /></a>
       
       </div>
     </>
