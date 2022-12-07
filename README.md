@@ -40,7 +40,7 @@ The automated wrapper shortcut: https://www.icloud.com/shortcuts/51f2ebce34a14c6
 <br>
 
 ### Regarding privacy and cookies
-This web application is fully open source and does not collect any user data or set any cookies. You can use it to avoid being tracked by the search engines above by using this application as most of them do set cookies in order for you to use the site.
+This web application is fully open source and does not collect any user data or set any cookies. You can use it to avoid being tracked by the search engines above by using this application as most of them do set cookies in order for you to use the site. The site only uses local storage to store your theme.
 
 ### License and copyright information
 This web application is licensed under the GNU AGPL v3 license. For the full license, look at the [LICENSE.txt](#LICENSE.txt) file.
