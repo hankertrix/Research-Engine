@@ -52,7 +52,8 @@ const PageSelector: NextPage<{page: number}> = ({ page }) => {
 
       // Otherwise, adds the page button to the list
       else elemList.push(
-        <Link href={`${relativeUrl}${i}`} className={styles["page-button"]} title={`Go to page ${i}`} key={i}>{i}
+        <Link href={`${relativeUrl}${i}`} className={styles["page-button"]} title={`Go to page ${i}`} key={i}>
+          {i}
         </Link>
       );
     }
