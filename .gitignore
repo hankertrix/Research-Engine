@@ -37,3 +37,7 @@ yarn-error.log*
 # replit
 .replit
 replit.nix
+
+# package lock files
+package-lock.json
+yarn.lock
