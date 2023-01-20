@@ -44,13 +44,11 @@ const SearchBar: NextPage<{query: string}> = ({ query }) => {
       <div className={`${themeClass(styles, "searchBar")} ${styles.flex} ${styles.searchBar}`}>
         
           {/* The logo of the app */}
-          <Link href="/">
-            <a className={`${styles.flex} ${styles.logo}`} title="Go to the Homepage">
-              <div className={styles.logoIcon} style={{width: `clamp(${logoFontSize * 2}px, ${logoFontSize * 2}px, ${logoFontSize * 2}px)`}}>
-                <ResearchIcon />
-              </div>
-              <div className={styles.logoName} style={{fontSize: logoFontSize}}>Research Engine</div>
-            </a>
+          <Link href="/" className={`${styles.flex} ${styles.logo}`} title="Go to the Homepage">
+            <div className={styles.logoIcon} style={{width: `clamp(${logoFontSize * 2}px, ${logoFontSize * 2}px, ${logoFontSize * 2}px)`}}>
+              <ResearchIcon />
+            </div>
+            <div className={styles.logoName} style={{fontSize: logoFontSize}}>Research Engine</div>
           </Link>
     
           {/* The search bar part */}

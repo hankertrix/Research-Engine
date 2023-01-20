@@ -1,9 +1,10 @@
 // Module that contains the search engine classes
 
-import { parse } from 'node-html-parser';
+import { parse } from "node-html-parser";
+import translatedScientificCategories from "./index-copernicus-categories";
 
 // The type for the list of search engines
-export type SearchEngineList = (ERIC | CORE | SemanticScholar | PubMed | BASE | DOAJ | Fatcat | CiteSeerX | Paperity | AMiner | OSTI | PLOS_ONE | InternetArchiveScholar)[];
+export type SearchEngineList = (ERIC | CORE | SemanticScholar | PubMed | BASE | DOAJ | Fatcat | AMiner | OSTI | PLOS_ONE | InternetArchiveScholar | IOPScience | ArXiv | SciElo | IndexCopernicus | IEEE_Xplore)[];
 
 // The type for the website list
 export type Website = (string | {url: string, title: string, text: string});
@@ -11,13 +12,16 @@ export type Website = (string | {url: string, title: string, text: string});
 // Regular expression to get a website's hostname
 export const HOST_NAME_REGEX = /https?:\/\/.*?(?=\/)/g;
 
+// The user agent to use for every request
+export const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36";
+
 // The headers to use for every GET request
 export const HEADERS = {
   "Accept" : "text/html",
   "Accept-Language": "en-US,en;q=0.9",
   "DNT" : "1",
   "Referer" : "https://www.google.com",
-  "User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+  "User-Agent" : USER_AGENT
 }
 
 // Abstract base class for to represent a search engine
@@ -110,7 +114,7 @@ export class CORE extends SearchEngine {
         "Content-Type" : "application/json",
         "DNT" : "1",
         "Referer" : "https://www.google.com",
-        "User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+        "User-Agent" : USER_AGENT
       }
     }
 
@@ -187,7 +191,7 @@ export class SemanticScholar extends SearchEngine {
         "Content-Type" : "application/json",
         "DNT" : "1",
         "Referer" : "https://www.google.com",
-        "User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+        "User-Agent" : USER_AGENT
       }
     }
 
@@ -379,46 +383,6 @@ export class Fatcat extends SearchEngine {
 }
 
 
-// The class for CiteSeerX
-export class CiteSeerX extends SearchEngine {
-
-  constructor(searchTerm: string, websitePageNumber: number) {
-    
-    // Calls the parent constructor
-    super(searchTerm, websitePageNumber);
-    this.url = `http://citeseerx.ist.psu.edu/search?q=${this.searchTerm}&t=doc&sort=rlv&start=${(this.pageNum - 1) * this.numOfResults}`;
-  }
-
-  // Function to parse the DOM of the HTML and return the list of links
-  parse() {
-
-    // Calls the general parser function and returns the result
-    return parseSearchEngineResults(this.url, this.response, "a.remove.doc_details", "href", true);
-  }
-}
-
-
-// The class for Paperity
-export class Paperity extends SearchEngine {
-
-  numOfResults = 20;
-
-  constructor(searchTerm: string, websitePageNumber: number) {
-
-    // Calls the parent constructor
-    super(searchTerm, websitePageNumber);
-    this.url = `https://paperity.org/search/${this.pageNum}?q=${this.searchTerm}`;
-  }
-
-  // Function to parse the DOM of the HTML and return the list of links
-  parse() {
-
-    // Calls the general parser function and returns the result
-    return parseSearchEngineResults(this.url, this.response, "div.panel.panel-body.panel-content.bg-white > div.row > div > h4 > a", "href", true);
-  }
-}
-
-
 // The class for AMiner
 export class AMiner extends SearchEngine {
 
@@ -559,10 +523,241 @@ export class InternetArchiveScholar extends SearchEngine {
   parse() {
 
     // Calls the general parser function and returns the result
-    return parseSearchEngineResults(this.url, this.response, "div.three.wide.left.aligned.column.serp-right-col > a:nth-of-type(2)", "href", false);
+    return parseSearchEngineResults(this.url, this.response, 'div.three.wide.left.aligned.column.serp-right-col > a:not(a[href$=".pdf"])', "href", false);
   }
 }
 
+
+// The class for IOPScience
+export class IOPScience extends SearchEngine {
+
+  constructor(searchTerm: string, websitePageNumber: number, numOfResults: number) {
+
+    // Calls the parent constructor
+    super(searchTerm, websitePageNumber);
+    this.numOfResults = numOfResults;
+    this.url = `https://iopscience.iop.org/nsearch?terms=${this.searchTerm}&currentPage=${this.pageNum}`;
+  }
+  
+  // Function to parse the DOM of the HTML and return the list of links
+  parse() {
+
+    // Calls the general parser function and returns the result
+    return parseSearchEngineResults(this.url, this.response, "h2.art-list-item-title > a:first-of-type", "href", true);
+  }
+}
+
+
+// The class for ArXiv
+export class ArXiv extends SearchEngine {
+
+  numOfResults = 50;
+
+  constructor(searchTerm: string, websitePageNumber: number) {
+
+    // Calls the parent constructor
+    super(searchTerm, websitePageNumber);
+    this.url = `https://arxiv.org/search/?query=${this.searchTerm}&searchtype=all&source=header&start=${(this.pageNum - 1) * this.numOfResults}`;
+  }
+  
+  // Function to parse the DOM of the HTML and return the list of links
+  parse() {
+
+    // Calls the general parser function and returns the result
+    return parseSearchEngineResults(this.url, this.response, "p.list-title.is-inline-block > a", "href", false);
+  }
+}
+
+
+// The class for SciElo
+export class SciElo extends SearchEngine {
+
+  constructor(searchTerm: string, websitePageNumber: number, numOfResults: number) {
+
+    // Calls the parent constructor
+    super(searchTerm, websitePageNumber);
+    this.numOfResults = numOfResults;
+    this.url = `https://search.scielo.org/?lang=en&q=${this.searchTerm}&count=${this.numOfResults}&from=${(this.pageNum - 1) * this.numOfResults + 1}`;
+  }
+  
+  // Function to parse the DOM of the HTML and return the list of links
+  parse() {
+
+    // Calls the general parser function and returns the result
+    return parseSearchEngineResults(this.url, this.response, "div.results > div.item > div > div.line > img + a", "href", false);
+  }
+}
+
+
+// The class for Index Copernicus
+export class IndexCopernicus extends SearchEngine {
+
+  constructor(searchTerm: string, websitePageNumber: number, numOfResults: number) {
+
+    // Calls the parent constructor
+    super(searchTerm, websitePageNumber);
+    this.numOfResults = numOfResults;
+    this.url = `https://journals.indexcopernicus.com/api/solrArticles/fullSearchByData`;
+  }
+
+  // Function to make the request
+  makeRequest() {
+
+    // Gets the payload to send to the server
+    const payload = {
+      "language": "all",
+      "journal": {
+        "scientificCategories": []
+      },
+      "journalWarningCodes": [],
+      "hasMnisw": false,
+      "journalMNISWYear": null,
+      "journalMNISW": null,
+      "translatedScientificCategories": translatedScientificCategories,
+      "authorNames": "",
+      "keywords": this.searchTerm,
+      "pageNumber": this.pageNum,
+      "size": this.numOfResults
+    };
+
+    // Creates the request object
+    const request = {
+      "url" : this.url,
+      "method" : "POST",
+      "redirect" : "follow",
+      "body": JSON.stringify(payload),
+      "headers" : {
+        "Accept" : "application/json",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Content-Type" : "application/json",
+        "DNT" : "1",
+        "Referer" : "https://www.google.com",
+        "User-Agent" : USER_AGENT
+      }
+    };
+
+    // Returns the request object
+    return request;
+  }
+
+  // Function to set the response
+  async setResponse(response: Response) {
+    this.response = await response.json();
+  }
+  
+  // Function to parse the JSON response and return the list of website objects
+  parse() {
+
+    // Gets the search results
+    const resultList = this.response.metadatas;
+
+    // The list of websites
+    const websiteList = [];
+
+    // Iterates the search results
+    for (let i = 0; i < this.numOfResults; ++i) {
+
+      // Gets the current result
+      const result = resultList[i];
+
+      // If the result doesn't have an id, continue the loop
+      if (result.id == undefined) continue;
+
+      // Generate the url from the id
+      const url = `https://journals.indexcopernicus.com/search/article?articleId=${result.id}`;
+
+      // Add the website's url to the list
+      websiteList.push(url);
+    }
+
+    // Returns the list of urls
+    return websiteList;
+  }
+}
+
+
+// The class for IEEE Xplore
+export class IEEE_Xplore extends SearchEngine {
+
+  constructor(searchTerm: string, websitePageNumber: number, numOfResults: number) {
+
+    // Calls the parent constructor
+    super(searchTerm, websitePageNumber);
+    this.numOfResults = numOfResults;
+    this.url = `https://ieeexplore.ieee.org/rest/search`;
+  }
+
+  // Function to make the request
+  makeRequest() {
+
+    // Gets the payload to send to the server
+    const payload = {
+      "newsearch": true,
+      "queryText": this.searchTerm,
+      "highlight": true,
+      "returnType": "SEARCH",
+      "matchPubs": true,
+      "pageNumber": this.pageNum,
+      "rowsPerPage": this.numOfResults,
+      "returnFacets": [
+        "ALL"
+      ]
+    };
+
+    // Creates the request object
+    const request = {
+      "url" : this.url,
+      "method" : "POST",
+      "redirect" : "follow",
+      "body": JSON.stringify(payload),
+      "headers" : {
+        "Accept" : "application/json",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Content-Type" : "application/json",
+        "DNT" : "1",
+        "Referer" : `https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=${this.searchTerm}`,
+        "User-Agent" : USER_AGENT
+      }
+    };
+
+    // Returns the request object
+    return request;
+  }
+
+  // Function to set the response
+  async setResponse(response: Response) {
+    this.response = await response.json();
+  }
+  
+  // Function to parse the JSON response and return the list of website objects
+  parse() {
+
+    // Gets the search results
+    const resultList = this.response.records;
+
+    // The list of websites
+    const websiteList = [];
+
+    // Iterates the search results
+    for (let i = 0; i < this.numOfResults; ++i) {
+
+      // Gets the current result
+      const result = resultList[i];
+
+      // If the result doesn't have a document link, continue the loop
+      if (!result.documentLink) continue;
+
+      // Generate the url from the id
+      const url = `https://ieeexplore.ieee.org${result.documentLink}`;
+
+      // Add the website's url to the list
+      websiteList.push(url);
+    }
+
+    // Returns the list of urls
+    return websiteList;
+  }
+}
 
 
 
