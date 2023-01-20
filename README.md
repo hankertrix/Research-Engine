@@ -8,7 +8,7 @@ Link: https://research-engine.onrender.com
 The Research Engine is a [Next.js](https://nextjs.org/) web application built to facilitate research by forwarding your query to various different search engines that specialise in searching for research papers so that you don't have to spend time scrolling through various different search engines to find what you're looking for.
 
 ### How does it work?
-The engine forwards your query to 13 different search engines that specialise in research papers and gets the search results from each of them. The engine will then get the abstract of 10 of the results and display the title and the first 3 relevant sentences on the search results page. Do note that it does take some time (simply put, it's quite slow) for the application to get the data from so many different search engines and websites so please be patient. There isn't much else I can do to improve the performance of the application given its nature so cut me some slack yeah.
+The engine forwards your query to 16 different search engines that specialise in research papers and gets the search results from each of them. The engine will then get the abstract of 10 of the results and display the title and the first 3 relevant sentences on the search results page. Do note that it does take some time (simply put, it's quite slow) for the application to get the data from so many different search engines and websites so please be patient. There isn't much else I can do to improve the performance of the application given its nature so cut me some slack yeah.
 
 <br>
 
@@ -20,13 +20,16 @@ The engine forwards your query to 13 different search engines that specialise in
 5. [BASE (Bielefeld Academic Search Engine)](https://www.base-search.net/)
 6. [DOAJ (Directory of Open Access Journals)](https://doaj.org/)
 7. [fatcat!](https://fatcat.wiki/)
-8. [CiteSeerX](https://citeseerx.ist.psu.edu/)
-9. [Paperity](https://paperity.org/)
-10. [AMiner](https://www.aminer.org/)
-11. [OSTI (U.S. Department of Energy
+8. [AMiner](https://www.aminer.org/)
+9. [OSTI (U.S. Department of Energy
 Office of Scientific and Technical Information)](https://www.osti.gov/)
-12. [PLOS ONE](https://journals.plos.org/plosone/)
-13. [Internet Archive Scholar](https://scholar.archive.org/)
+10. [PLOS ONE](https://journals.plos.org/plosone/)
+11. [Internet Archive Scholar](https://scholar.archive.org/)
+12. [IOP Science](https://iopscience.iop.org/)
+13. [arXiv](https://arxiv.org/)
+14. [SciElo](https://www.scielo.org/)
+15. [Index Copernicus](https://journals.indexcopernicus.com/article/search)
+16. [IEEE Xplore](https://ieeexplore.ieee.org/)
 
 <br>
 

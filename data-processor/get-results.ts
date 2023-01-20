@@ -31,9 +31,6 @@ const ABSTRACT_CSS_SELECTOR = [
   // Wiley Online Library, British Educational Research Association (BERA)
   "div.article-section__content.en.main",
 
-  // IOP Science
-  "div.article-text.wd-jnl-art-abstract.cf",
-
   // CORE
   "section#abstract > p",
 
@@ -76,8 +73,14 @@ const ABSTRACT_CSS_SELECTOR = [
   // Paperity
   "div.col-lg-9.col-md-9.col-xs-12 > blockquote",
 
-  // IOPscience
-  "div.article-content > div.article-text.wd-jnl-art-abstract.cf > p"
+  // IOPScience
+  "div.article-content > div.article-text.wd-jnl-art-abstract.cf > p",
+
+  // ArXiv
+  "blockquote.abstract",
+
+  // Index Copernicus
+  "p.text-justify.ng-binding",
   
 ].join(", ");
 
@@ -147,26 +150,16 @@ async function fetchAll(requests: {url?: string, method: string, redirect: strin
   }
 
   // Gets the responses
-  const responses = await Promise.allSettled(promisesList);
+  const responses: PromiseSettledResult<Response>[] = await Promise.allSettled(promisesList);
 
-  // The final list of responses
-  const successfulResponses = [];
-
-  // Iterate the responses
-  for (const response of responses) {
-
-    // Adds the response to the list of successful responses if the response was successful
-    if (response.status === "fulfilled") successfulResponses.push(response.value);
-  }
-
-  // Returns the list of successful responses
-  return successfulResponses;
+  // Returns all the responses
+  return responses;
 }
 
 
 // Not in use currently
 // Function to retry getting the webpage
-async function retryRequestsForSearchEngines(listOfResponses: Response[], searchEngines: engine.SearchEngineList) {
+async function retryRequestsForSearchEngines(listOfResponses: PromiseSettledResult<Response>[], searchEngines: engine.SearchEngineList) {
 
   // Length of the list of responses
   const resLen = listOfResponses.length;
@@ -181,7 +174,7 @@ async function retryRequestsForSearchEngines(listOfResponses: Response[], search
   for (let i = 0; i < resLen; ++i) {
 
     // Gets the response object
-    let response = listOfResponses[i];
+    const response = listOfResponses[i];
 
     // The number of tries
     let tries = 0;
@@ -194,25 +187,28 @@ async function retryRequestsForSearchEngines(listOfResponses: Response[], search
 
     // Deletes the url from the request object
     delete request.url;
+
+    // Initialise the variable to store the new response
+    let newResponse = new Response(null, { status: 400 });
     
     // While loop to iterate try 3 times if the response is not ok
-    while (response.status >= 400 && tries < 3) {
+    while (response.status === "fulfilled" && response.value.status >= 400 && tries < 3) {
 
       // Gets the website again
-      response = await fetch(url, request as RequestInit);
+      newResponse = await fetch(url, request as RequestInit);
 
       // Breaks out of the loop if the response is ok
-      if (response.status < 400) break;
+      if (newResponse.status < 400) break;
 
       // Increment the number of tries
       ++tries;
     }
 
-    // Checks if the response is ok
-    if (response.status < 400) {
+    // Checks if the new response is ok
+    if (newResponse.status < 400) {
 
       // Adds the set response function to the list of tasks
-      tasks[i] = searchEngines[i].setResponse(response);
+      tasks[i] = searchEngines[i].setResponse(newResponse);
 
       // Adds the search engine to the list of search engines
       responsedEngines[i] = searchEngines[i];
@@ -228,7 +224,7 @@ async function retryRequestsForSearchEngines(listOfResponses: Response[], search
 
 
 // Function to remove the list of search engines that have invalid responses
-async function filterSearchEngines(responses: Response[], searchEngines: engine.SearchEngineList) {
+async function filterSearchEngines(responses: PromiseSettledResult<Response>[], searchEngines: engine.SearchEngineList) {
 
   // The new list of search engines
   const responsedEngines = [];
@@ -245,14 +241,16 @@ async function filterSearchEngines(responses: Response[], searchEngines: engine.
     // The html response
     const response = responses[i];
 
+    // console.log(engine.constructor.name, response.value?.status)
+    
     // Checks if the response of the search engine is a successful one
-    if (response.status < 400) {
+    if (response.status === "fulfilled" && response.value.status < 400) {
 
       // Adds the search engine to the list
       responsedEngines.push(engine);
 
       // Adds the task to set the response the list
-      tasks.push(engine.setResponse(response));
+      tasks.push(engine.setResponse(response.value));
     }
   }
 
@@ -292,22 +290,31 @@ async function searchWebpages(searchTerm: string, websitePageNumber: number) {
     new engine.Fatcat(searchTerm, websitePageNumber),
 
     // 10 results
-    new engine.CiteSeerX(searchTerm, websitePageNumber),
-
-    // 10 results
-    new engine.Paperity(searchTerm, websitePageNumber),
-
-    // 10 results
     new engine.AMiner(searchTerm, websitePageNumber, 10),
 
     // 10 results
-    new engine.OSTI(searchTerm, websitePageNumber),
+    // new engine.OSTI(searchTerm, websitePageNumber),
 
     // 10 results
     new engine.PLOS_ONE(searchTerm, websitePageNumber, 10),
 
     // 15 results
-    new engine.InternetArchiveScholar(searchTerm, websitePageNumber)
+    new engine.InternetArchiveScholar(searchTerm, websitePageNumber),
+
+    // 10 results
+    new engine.IOPScience(searchTerm, websitePageNumber, 10),
+
+    // 50 results
+    new engine.ArXiv(searchTerm, websitePageNumber),
+
+    // 15 results
+    new engine.SciElo(searchTerm, websitePageNumber, 15),
+
+    // 10 results
+    new engine.IndexCopernicus(searchTerm, websitePageNumber, 10),
+
+    // 25 results
+    new engine.IEEE_Xplore(searchTerm, websitePageNumber, 25),
     
   ];
 
