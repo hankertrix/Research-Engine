@@ -157,6 +157,24 @@ async function fetchAll(requests: {url?: string, method: string, redirect: strin
 }
 
 
+// Function to get the list of fulfilled promises
+function getFulfilledPromises(settledPromises: PromiseSettledResult<any>[]) {
+
+  // Initialise the list of fulfilled promises
+  const fulfilledPromises = [];
+
+  // Iterates the list of settled promises
+  for (const promise of settledPromises) {
+
+    // If the promise status is fulfilled, adds the value to the list of fufilled promises
+    if (promise.status === "fulfilled") fulfilledPromises.push(promise.value);
+  }
+
+  // Returns the list of fulfilled promises
+  return fulfilledPromises;
+}
+
+
 // Not in use currently
 // Function to retry getting the webpage
 async function retryRequestsForSearchEngines(listOfResponses: PromiseSettledResult<Response>[], searchEngines: engine.SearchEngineList) {
@@ -766,9 +784,12 @@ async function getRelevantPartsList(websiteList: (string | {url: string, title: 
   }
 
   // Gets all the websites in the website list
-  const responses = await fetchAll(websitesToBeFetched);
-  
-  // Retry getting all the failed websites
+  const settledPromises = await fetchAll(websitesToBeFetched);
+
+  // Gets the list of responses from the list settled promises
+  const responses = getFulfilledPromises(settledPromises);
+
+  // Filters out all the websites that failed to connect
   const websiteObjs = filterWebsiteList(responses, websitesToBeFetched);
   
   // Gets the html from the responses
