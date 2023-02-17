@@ -50,7 +50,7 @@ const ResultPage: NextPage<{results: Result[], page: number, observer: Intersect
       // Adds the individual result to the list of elements
       elemList.push(
         <div key={`${result.title || "Untitled"}|${result.link}`}>
-          <a href={result.link} title={result.link}>{result.title || "Untitled"}</a>
+          <a href={result.link} title={result.link} rel="noopener noreferrer">{result.title || "Untitled"}</a>
           <ol>
             {sentences.length !== 0 ? <div style={{marginBottom: "5px", textDecoration: "underline"}}>Relevant Sentences:</div> : <div style={{marginBottom: "20px"}}>No relevant sentences found.</div>}
             {sentences}
