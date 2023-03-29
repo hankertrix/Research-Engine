@@ -138,10 +138,7 @@ export class CORE extends SearchEngine {
     const websiteList: Website[] = [];
 
     // Iterates the list of results
-    for (let i = 0; i < this.numOfResults; ++i) {
-
-      // Gets the result object
-      const result = resultList[i];
+    for (const result of resultList) {
 
       // Continues the loop if the result has no id
       if (result.id == undefined) continue;
@@ -214,23 +211,20 @@ export class SemanticScholar extends SearchEngine {
     const websiteList: Website[] = [];
 
     // Iterates the objects returned
-    for (let i = 0; i < this.numOfResults; ++i) {
+    for (const result of resultList) {
 
-      // Gets the paper object
-      const paper = resultList[i];
-
-      // If the paper doesn't have any url, continue the loop
-      if (paper.url == undefined) continue;
+      // If the result doesn't have any url, continue the loop
+      if (result.url == undefined) continue;
 
       // Checks if the abstract exists
-      if (paper.abstract != null) {
+      if (result.abstract != null) {
 
           // Adds the website object to the list of websites
-        websiteList.push({"url": paper.url, "title": paper.title?.trim() ?? "", "text": paper.abstract.trim()});
+        websiteList.push({"url": result.url, "title": result.title?.trim() ?? "", "text": result.abstract.trim()});
       }
 
       // Otherwise just add the website to the list
-      else websiteList.push(paper.url);
+      else websiteList.push(result.url);
     }
 
     // Returns the list of website objects
@@ -240,7 +234,7 @@ export class SemanticScholar extends SearchEngine {
 
 
 // The class for PubMed
- export class PubMed extends SearchEngine {
+export class PubMed extends SearchEngine {
 
   constructor(searchTerm: string, websitePageNumber: number) {
     
@@ -334,10 +328,7 @@ export class DOAJ extends SearchEngine {
     const websiteList: Website[] = [];
 
     // Iterate the list of results
-    for (let i = 0; i < this.numOfResults; ++i) {
-
-      // Gets the result object
-      const result = resultList[i];
+    for (const result of resultList) {
 
       // Gets the website url
       const url = result.bibjson.link[0].url;
@@ -409,10 +400,7 @@ export class AMiner extends SearchEngine {
     const websiteList: Website[] = [];
     
     // Iterates the results
-    for (let i = 0; i < this.numOfResults; ++i) {
-
-      // Gets the result object
-      const result = resultList[i];
+    for (const result of resultList) {
 
       // If the length of the urls array is 0, continue the loop
       if (result.urls.length === 0) continue;
@@ -479,10 +467,7 @@ export class PLOS_ONE extends SearchEngine {
     const websiteList = [];
 
     // Iterates the search results
-    for (let i = 0; i < this.numOfResults; ++i) {
-
-      // Gets the current result
-      const result = resultList[i];
+    for (const result of resultList) {
 
       // If the result doesn't have an id, continue the loop
       if (result.id == undefined) continue;
@@ -655,10 +640,7 @@ export class IndexCopernicus extends SearchEngine {
     const websiteList = [];
 
     // Iterates the search results
-    for (let i = 0; i < this.numOfResults; ++i) {
-
-      // Gets the current result
-      const result = resultList[i];
+    for (const result of resultList) {
 
       // If the result doesn't have an id, continue the loop
       if (result.id == undefined) continue;
@@ -739,10 +721,7 @@ export class IEEE_Xplore extends SearchEngine {
     const websiteList = [];
 
     // Iterates the search results
-    for (let i = 0; i < this.numOfResults; ++i) {
-
-      // Gets the current result
-      const result = resultList[i];
+    for (const result of resultList) {
 
       // If the result doesn't have a document link, continue the loop
       if (!result.documentLink) continue;
