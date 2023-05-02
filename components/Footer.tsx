@@ -20,7 +20,7 @@ const Footer: NextPage<{style?: CSSProperties}> = ({ style }) => {
   return (
       <footer className={`${styles.footer} ${themeClass(styles, "footer")} ${styles.flex}`} style={style}>
         <a href="https://github.com/hankertrix/Research-Engine/blob/main/LICENSE.txt" title="Copyright notice and license" className={`${styles.copyleft} ${styles.flex}`} rel="noopener noreferrer">
-          <div>Copyleft&nbsp;<span className={styles.symbol}>©</span>&nbsp;2022 Hankertrix.&nbsp;</div> <div>All Wrongs Reserved.</div></a>
+          <div>Copyleft&nbsp;<span className={styles.symbol}>©</span>&nbsp;2023 Hankertrix.&nbsp;</div> <div>All Wrongs Reserved.</div></a>
         <div className={styles["source-wrapper"]}>
           <a href="https://github.com/hankertrix/Research-Engine" className={`${styles.source} ${styles.flex}`} title="View source code on GitHub" rel="noopener noreferrer">Source:</a>
           <div className={`${styles["icon-wrapper"]} ${styles.flex}`}>
