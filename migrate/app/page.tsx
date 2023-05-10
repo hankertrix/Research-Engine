@@ -4,8 +4,9 @@
 "use client";
 
 import type { NextPage } from "next";
+import Head from "next/head";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useContext, FormEvent } from "react";
 import { ThemeContext, ThemeContextType } from "../components/ThemeContextProvider";
 import searchIcon from "../public/search.svg";
@@ -14,22 +15,14 @@ import Footer from "../components/Footer";
 import ThemeToggler from "../components/ThemeToggler";
 import styles from "../styles/MainPage.module.css";
 
-// The headers for the page
-export const headers = {
-  title: "Research Engine",
-  description: "The main page of the Research Engine"
-};
 
 const MainPage: NextPage = () => {
 
-  // Gets the router
-  const router = useRouter();
-  
   // Gets the themeClass function
   const { themeClass } = useContext(ThemeContext) as ThemeContextType;
 
   // The function to handle the search form submission
-  async function handleSearch (event: FormEvent<HTMLFormElement>) {
+  async function handleSearch(event: FormEvent<HTMLFormElement>) {
     
     // Prevents the default behaviour
     event.preventDefault();
@@ -41,12 +34,18 @@ const MainPage: NextPage = () => {
     if (searchTerm) {
 
       // Search for the value
-      router.push(`/search?q=${searchTerm}`);
+      redirect(`/search?q=${searchTerm}`);
     }
   }
   
   return (
     <>
+
+      {/* Header */}
+      <Head>
+        <title>Research Engine</title>
+        <meta name="description" content="The main page of the Research Engine" />
+      </Head>
 
       <div className={styles["page-wrapper"]}>
   
