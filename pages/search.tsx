@@ -18,7 +18,7 @@ const Results: NextPage<{initialResults: Result[], searchTerm: string, pageNumbe
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
   // Gets the search parameters from the query
-  const { searchParams } = new URL(req.url);
+  const { searchParams } = new URL(req.url as string);
 
   // Gets the search term and the page number
   let [searchTerm, pageNumber] = parseQuery(searchParams);
