@@ -1,8 +1,11 @@
 // The main page of the application
 
+// Set the main page as a client component
+"use client";
+
 import type { NextPage } from "next";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useContext, FormEvent } from "react";
 import { ThemeContext, ThemeContextType } from "../components/ThemeContextProvider";
 import searchIcon from "../public/search.svg";
