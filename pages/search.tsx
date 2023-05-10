@@ -17,8 +17,11 @@ const Results: NextPage<{initialResults: Result[], searchTerm: string, pageNumbe
 // The function to get the results for the search term
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
+  // Gets the search parameters from the query
+  const { searchParams } = new URL(query.url);
+
   // Gets the search term and the page number
-  let [searchTerm, pageNumber] = parseQuery(query);
+  let [searchTerm, pageNumber] = parseQuery(searchParams);
 
   // If the search term is empty, redirects the user to the main page
   if (searchTerm.length === 0) return {redirect: {destination: "/", permanent: false}};
