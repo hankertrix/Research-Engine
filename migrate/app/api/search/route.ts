@@ -1,8 +1,8 @@
 // The api page to receive a post request and return the search results
 
 import type { NextRequest, NextResponse } from "next/server";
-import { createSearchResults } from "../../data-processor/get-results";
-import { removeMarkup, parseQuery } from "../../data-processor/utils";
+import { createSearchResults } from "../../../data-processor/get-results";
+import { removeMarkup, parseQuery } from "../../../data-processor/utils";
 
 
 // The data type
