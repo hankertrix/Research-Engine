@@ -11,7 +11,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={blackChancery.className}>
+    <html lang="en">
       <body>
         <ThemeContextProvider>{children}</ThemeContextProvider>
       </body>
