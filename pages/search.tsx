@@ -1,6 +1,7 @@
 // The page to display the results of a search
 
 import type { NextPage, GetServerSideProps } from "next";
+import type { Result } from "../components/ResultPage";
 import { parseQuery } from "../data-processor/utils";
 import SearchPage from "../components/SearchPage";
 import { createSearchResults } from "../data-processor/get-results";
