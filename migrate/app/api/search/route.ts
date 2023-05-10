@@ -1,6 +1,6 @@
 // The api page to receive a post request and return the search results
 
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextRequest, NextResponse } from "next/server";
 import { createSearchResults } from "../../data-processor/get-results";
 import { removeMarkup, parseQuery } from "../../data-processor/utils";
 
@@ -29,15 +29,10 @@ Query parameters:
 - rich: Set it to "true" if you want html formatted text and "false" if you want plain text (optional, defaults to false).`;
 
 // The function to return the actual data
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
+export async function GET(
+  req: NextRequest,
+  res: NextResponse<Data>
 ) {
-
-  // If the request is not a GET request or has no query string, returns a message to the user telling them the issue
-  if (req.method !== 'GET' || !req.query.q) {
-    return res.status(400).json({status: "400 Bad Request", message: INVALID_REQ_MSG});
-  }
 
   // Gets the search term and the page number from the parsed query
   let [searchTerm, pageNumber] = parseQuery(req.query);
@@ -62,5 +57,5 @@ export default async function handler(
   if (!richText) data = removeMarkup(data);
 
   // Returns the data
-  return res.status(200).json({status: "200 OK", message: "Request is successful!", searchTerm: searchTerm, pageNumber: pageNumber, data: data});
+  return NextResponse.json({status: "200 OK", message: "Request is successful!", searchTerm: searchTerm, pageNumber: pageNumber, data: data});
 };

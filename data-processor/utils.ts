@@ -26,7 +26,7 @@ export function removeMarkup(websiteObjList: {title: string, sentences: string[]
 
 
 // Function to parse a query
-export function parseQuery(query: ParsedUrlQuery) {
+export function parseQuery(query: ParsedUrlQuery): [string, number] {
   
   // If the query object doesn't have the search term, immediately return an empty string and a page number of 1
   if (!query.q) return ["", 1];
