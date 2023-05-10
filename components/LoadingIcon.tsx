@@ -1,8 +1,11 @@
 // The loading icon
 
+// Marks this as a client component
+"use client";
+
 import type { NextPage } from "next";
 import { useContext, CSSProperties } from "react";
-import { ThemeContext, ThemeContextType } from "../pages/_app";
+import { ThemeContext, ThemeContextType } from "./ThemeContextProvider";
 import styles from "../styles/LoadingIcon.module.css";
 
 const LoadingIcon: NextPage<{style?: CSSProperties}> = ({ style }) => {

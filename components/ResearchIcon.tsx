@@ -1,7 +1,10 @@
 // The research icon
 
+// Marks this as a client component
+"use client";
+
 import type { NextPage } from "next";
-import { ThemeContext, ThemeContextType } from "../pages/_app";
+import { ThemeContext, ThemeContextType } from "./ThemeContextProvider";
 import { CSSProperties, useContext } from "react";
 import styles from "../styles/ResearchIcon.module.css";
 

@@ -1,5 +1,8 @@
 // The component to display the results using the data given
 
+// Marks this as a client component
+"use client";
+
 import type { NextPage } from "next";
 import { useState, useEffect } from "react";
 

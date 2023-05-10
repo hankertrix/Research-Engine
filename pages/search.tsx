@@ -11,7 +11,7 @@ import { parseQuery } from "../data-processor/utils";
 import type { Result } from "../components/ResultPage";
 import ResultPage from "../components/ResultPage";
 import { createSearchResults } from "../data-processor/get-results";
-import { ThemeContext, ThemeContextType } from "./_app";
+import { ThemeContext, ThemeContextType } from "../components/ThemeContextProvider";
 import styles from "../styles/SearchPage.module.css";
 
 // The results page

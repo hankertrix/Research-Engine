@@ -1,5 +1,8 @@
 // The search bar component and the top of the page
 
+// Marks this as a client component
+"use client";
+
 import type { NextPage } from "next";
 import Image from "next/image";
 import ResearchIcon from "./ResearchIcon";
@@ -7,7 +10,7 @@ import searchIcon from "../public/search.svg";
 import styles from "../styles/SearchBar.module.css";
 import { FormEvent, useContext } from "react";
 import { useRouter } from "next/router";
-import { ThemeContext, ThemeContextType } from "../pages/_app";
+import { ThemeContext, ThemeContextType } from "./ThemeContextProvider";
 import ThemeToggler from "./ThemeToggler";
 import Link from "next/link";
 

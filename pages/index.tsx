@@ -5,7 +5,7 @@ import Image from "next/image";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, FormEvent } from "react";
-import { ThemeContext, ThemeContextType } from "./_app";
+import { ThemeContext, ThemeContextType } from "../components/ThemeContextProvider";
 import searchIcon from "../public/search.svg";
 import ResearchIcon from "../components/ResearchIcon";
 import Footer from "../components/Footer";

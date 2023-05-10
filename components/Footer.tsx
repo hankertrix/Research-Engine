@@ -1,9 +1,12 @@
 // The footer element that appears on all pages
 
+// Marks this as a client component
+"use client";
+
 import type { NextPage } from "next";
 import Image from "next/image";
 import { CSSProperties, useContext } from "react";
-import { ThemeContext, ThemeContextType } from "../pages/_app";
+import { ThemeContext, ThemeContextType } from "./ThemeContextProvider";
 import replitIcon from "../public/replit.png";
 import githubIcon from "../public/github.png";
 import styles from "../styles/Footer.module.css";

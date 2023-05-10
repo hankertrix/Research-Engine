@@ -3,7 +3,7 @@
 // Marks this as a client component
 "use client";
 
-import { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 // The theme context type
 export type ThemeContextType = {
@@ -25,27 +25,34 @@ export const ThemeContextProvider = ({
   // The theme state for the application
   const [theme, setTheme] = useState("light");
 
-  // Gets the media query for the user's system theme
-  const themeMq = window.matchMedia("(prefers-color-scheme: dark)");
+    // The function to check the user's system theme and the local storage for the theme and set the theme to their preference when the component is mounted
+  useEffect(() => {
 
-  // Gets the media query listener
-  const mqListener = (e: MediaQueryListEvent) => setTheme(e.matches ? "dark" : "light");
+    // Gets the media query for the user's system theme
+    const themeMq = window.matchMedia("(prefers-color-scheme: dark)");
 
-  // Gets the theme in the local storage
-  let themeState: string | null = window.localStorage.getItem("theme");
+    // Gets the media query listener
+    const mqListener = (e: MediaQueryListEvent) => setTheme(e.matches ? "dark" : "light");
+    
+    // Gets the theme in the local storage
+    let themeState: string | null = window.localStorage.getItem("theme");
 
-  // If the theme can't be found
-  if (themeState == null) {
+    // If the theme can't be found
+    if (themeState == null) {
 
-    // Gets the theme from the user's system preferences
-    themeState = themeMq.matches ? "dark" : "light";
-  }
+      // Gets the theme from the user's system preferences
+      themeState = themeMq.matches ? "dark" : "light";
+    }
 
-  // Sets the theme to the theme obtained from their system or the local storage
-  setTheme(themeState);
+    // Sets the theme to the theme obtained from their system or the local storage
+    setTheme(themeState);
 
-  // Attach an event listener to the user's system theme
-  themeMq.addEventListener("change", mqListener);
+    // Attach an event listener to the user's system theme
+    themeMq.addEventListener("change", mqListener);
+    
+    // Returns the function to remove the event listener
+    return () => themeMq.removeEventListener("change", mqListener);
+  }, []);
   
   // Function to toggle the theme
   const toggleTheme = () => {

@@ -1,8 +1,11 @@
 // The arrow button to go to the next page or the previous page
 
+// Marks this as a client component
+"use client";
+
 import type { NextPage } from "next";
 import { useContext, CSSProperties } from "react";
-import { ThemeContext, ThemeContextType } from "../pages/_app";
+import { ThemeContext, ThemeContextType } from "./ThemeContextProvider";
 import styles from "../styles/ArrowButton.module.css";
 
 // The arrow button

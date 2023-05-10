@@ -1,9 +1,12 @@
 // The loading page component
 
+// Marks this as a client component
+"use client";
+
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useContext, CSSProperties } from "react";
-import { ThemeContext, ThemeContextType } from "../pages/_app";
+import { ThemeContext, ThemeContextType } from "./ThemeContextProvider";
 import styles from "../styles/LoadingPage.module.css";
 import ThemeToggler from "./ThemeToggler";
 import LoadingIcon from "./LoadingIcon";

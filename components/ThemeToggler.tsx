@@ -4,9 +4,12 @@
 // https://web.dev/building-a-theme-switch-component/
 // https://www.youtube.com/watch?v=kZiS1QStIWc
 
+// Marks this as a client component
+"use client";
+
 import type { NextPage } from "next";
 import { useContext, CSSProperties } from "react";
-import { ThemeContext, ThemeContextType } from "../pages/_app";
+import { ThemeContext, ThemeContextType } from "./ThemeContextProvider";
 import styles from "../styles/ThemeToggler.module.css";
 
 // The button to toggle between light and dark mode

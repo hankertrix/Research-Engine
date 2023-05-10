@@ -1,10 +1,13 @@
 // The page selector for the search results page
 
+// Marks this as a client component
+"use client";
+
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useContext } from "react";
-import { ThemeContext, ThemeContextType } from "../pages/_app";
+import { ThemeContext, ThemeContextType } from "./ThemeContextProvider";
 import styles from "../styles/PageSelector.module.css";
 import ArrowButton from "./ArrowButton";
 
