@@ -39,11 +39,8 @@ export default async function handler(
     return res.status(400).json({status: "400 Bad Request", message: INVALID_REQ_MSG});
   }
 
-  // Gets the search parameters from the request URL
-  const { searchParams } = new URL(req.url as string);
-
   // Gets the search term and the page number from the parsed query
-  const [searchTerm, pageNumber] = parseQuery(searchParams);
+  const [searchTerm, pageNumber] = parseQuery(req.url!);
 
   // If the search term is empty then return a message to the user saying that their request is empty
   if (searchTerm.length === 0) {

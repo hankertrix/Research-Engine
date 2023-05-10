@@ -24,8 +24,22 @@ export function removeMarkup(websiteObjList: {title: string, sentences: string[]
 }
 
 
+// Function to get the search parameters of the URL
+export function getSearchParams(url: string): URLSearchParams {
+
+  // Removes everything before a question mark
+  url = url.replace(/^.*?\?/, "?");
+
+  // Returns the search parameters
+  return new URLSearchParams(url);
+}
+
+
 // Function to parse a query
-export function parseQuery(query: URLSearchParams): [string, number] {
+export function parseQuery(query: string | URLSearchParams): [string, number] {
+
+  // If the query given is a string, convert it into a URLSearchParams object
+  if (typeof query === "string") query = getSearchParams(query);
   
   // If the query object doesn't have the search term, immediately return an empty string and a page number of 1
   if (!query.get("q")) return ["", 1];
