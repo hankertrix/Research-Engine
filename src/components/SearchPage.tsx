@@ -43,9 +43,9 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
   // Adds an event listener on the scroll event and create a new intersection observer
   useEffect(() => {
 
-    // Adds an event listener for the scroll event
-    document.addEventListener("scroll", () => {
-
+    // The function to handle the scroll event
+    function handleScroll() {
+      
       // Checks if the scroll position is more than 200px downwards
       if (window.scrollY >= 200) {
 
@@ -59,7 +59,10 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
         // Makes the scroll up button invisible
         scrollUpBtn.current!.style.opacity = "0";
       }
-    });
+    }
+
+    // Adds an event listener for the scroll event
+    document.addEventListener("scroll", handleScroll);
 
     // The callback function for the intersection observer
     const checkOnScreen: IntersectionObserverCallback = (entries) => {
@@ -101,6 +104,8 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
     // Sets the page observer reference to the current observer
     pageObserver.current = observer;
 
+    // Returns a function to remove the scroll event listener on the page
+    return () => document.removeEventListener("scroll", handleScroll);
   }, []);
 
   
@@ -214,7 +219,7 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
 
               {/* The search results */}
               <main className={`${styles.main} ${themeClass(styles, "main")}`}>
-                {splitResults(results, 10).map((data, page) => <ResultPage key={page + 1} results={data} page={page + 1} observer={pageObserver.current} />)}
+                {splitResults(results, 10).map((data, page) => <ResultPage key={pageNumber + page} results={data} page={pageNumber + page} observer={pageObserver.current} />)}
               </main>
       
               {/* The load more button */}

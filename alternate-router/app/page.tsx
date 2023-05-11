@@ -6,7 +6,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useContext, FormEvent } from "react";
 import { ThemeContext, ThemeContextType } from "../components/ThemeContextProvider";
 import searchIcon from "../../public/search.svg";
@@ -21,6 +21,9 @@ const MainPage: NextPage = () => {
   // Gets the themeClass function
   const { themeClass } = useContext(ThemeContext) as ThemeContextType;
 
+  // Gets the router object
+  const router = useRouter();
+
   // The function to handle the search form submission
   async function handleSearch(event: FormEvent<HTMLFormElement>) {
     
@@ -34,7 +37,7 @@ const MainPage: NextPage = () => {
     if (searchTerm) {
 
       // Search for the value
-      redirect(`/search?q=${searchTerm}`);
+      router.push(`/search?q=${searchTerm}`);
     }
   }
   
