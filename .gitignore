@@ -38,6 +38,3 @@ yarn-error.log*
 # replit
 .replit
 replit.nix
-
-# migration directory
-/migrate

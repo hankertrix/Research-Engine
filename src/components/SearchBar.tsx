@@ -6,7 +6,7 @@
 import type { NextPage } from "next";
 import Image from "next/image";
 import ResearchIcon from "./ResearchIcon";
-import searchIcon from "../public/search.svg";
+import searchIcon from "../../public/search.svg";
 import styles from "../styles/SearchBar.module.css";
 import { FormEvent, useContext } from "react";
 import { useRouter } from "next/router";

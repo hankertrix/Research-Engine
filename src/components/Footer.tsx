@@ -7,8 +7,8 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import { CSSProperties, useContext } from "react";
 import { ThemeContext, ThemeContextType } from "./ThemeContextProvider";
-import replitIcon from "../public/replit.png";
-import githubIcon from "../public/github.png";
+import replitIcon from "../../public/replit.png";
+import githubIcon from "../../public/github.png";
 import styles from "../styles/Footer.module.css";
 
 // The footer

@@ -1,27 +1,28 @@
 // The main page of the application
 
+// Set the main page as a client component
+"use client";
+
 import type { NextPage } from "next";
-import Image from "next/image";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import Image from "next/image";
+import { redirect } from "next/navigation";
 import { useContext, FormEvent } from "react";
 import { ThemeContext, ThemeContextType } from "../components/ThemeContextProvider";
-import searchIcon from "../public/search.svg";
+import searchIcon from "../../public/search.svg";
 import ResearchIcon from "../components/ResearchIcon";
 import Footer from "../components/Footer";
 import ThemeToggler from "../components/ThemeToggler";
 import styles from "../styles/MainPage.module.css";
 
+
 const MainPage: NextPage = () => {
 
-  // Gets the router
-  const router = useRouter();
-  
   // Gets the themeClass function
   const { themeClass } = useContext(ThemeContext) as ThemeContextType;
 
   // The function to handle the search form submission
-  async function handleSearch (event: FormEvent<HTMLFormElement>) {
+  async function handleSearch(event: FormEvent<HTMLFormElement>) {
     
     // Prevents the default behaviour
     event.preventDefault();
@@ -33,7 +34,7 @@ const MainPage: NextPage = () => {
     if (searchTerm) {
 
       // Search for the value
-      router.push(`/search?q=${searchTerm}`);
+      redirect(`/search?q=${searchTerm}`);
     }
   }
   
