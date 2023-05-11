@@ -2,5 +2,5 @@
 
 // The router interface so that the router can be passed to the components
 export interface Router {
-  push: () => void;
-}
+  push: (url: string) => void
+};
