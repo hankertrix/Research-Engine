@@ -4,7 +4,6 @@
 "use client";
 
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import { useContext } from "react";
 import { ThemeContext, ThemeContextType } from "./ThemeContextProvider";
@@ -12,14 +11,11 @@ import styles from "../styles/PageSelector.module.css";
 import ArrowButton from "./ArrowButton";
 
 // The page selector
-const PageSelector: NextPage<{page: number}> = ({ page }) => {
+const PageSelector: NextPage<{page: number, searchTerm: string}> = ({ page, searchTerm }) => {
 
   // Gets the themeClass function
   const { themeClass } = useContext(ThemeContext) as ThemeContextType;
 
-  // Gets the router
-  const router = useRouter();
-  
   // Function to render the page selector
   function renderPageSelector(page: number) {
 
@@ -27,7 +23,7 @@ const PageSelector: NextPage<{page: number}> = ({ page }) => {
     const elemList = [];
 
     // Create the relative url
-    const relativeUrl = `/search?q=${router.query.q ?? ""}&page=`;
+    const relativeUrl = `/search?q=${searchTerm ?? ""}&page=`;
 
     // If the page number is more than 1, adds the previous arrow button at the front
     if (page > 1) elemList.push(

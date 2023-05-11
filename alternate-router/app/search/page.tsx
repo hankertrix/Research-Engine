@@ -1,6 +1,6 @@
 // The page to display the results of a search
 
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { parseQuery } from "../../data-processor/utils";
 import SearchPage from "../../components/SearchPage";
 import { createSearchResults } from "../../data-processor/get-results";
@@ -36,6 +36,9 @@ export default async function ReturnSearchPage({ searchParams }: { searchParams:
   // Otherwise, search for the results
   const data = await createSearchResults(searchTerm, pageNumber);
 
+  // Gets the router
+  const router = useRouter();
+
   // Returns the search page
-  return <SearchPage initialResults={data ?? []} searchTerm={searchTerm} pageNumber={pageNumber} />;
+  return <SearchPage initialResults={data ?? []} searchTerm={searchTerm} pageNumber={pageNumber} router={router} />;
 };

@@ -4,19 +4,20 @@
 "use client";
 
 import type { NextPage } from "next";
+import type { Router } from "../types/types";
 import Head from "next/head";
 import { useEffect, useState, useContext, useRef, MouseEvent, CSSProperties } from "react";
-import SearchBar from "../components/SearchBar";
-import PageSelector from "../components/PageSelector";
-import ArrowButton from "../components/ArrowButton";
-import Footer from "../components/Footer";
-import type { Result } from "../components/ResultPage";
-import ResultPage from "../components/ResultPage";
+import SearchBar from "./SearchBar";
+import PageSelector from "./PageSelector";
+import ArrowButton from "./ArrowButton";
+import Footer from "./Footer";
+import type { Result } from "./ResultPage";
+import ResultPage from "./ResultPage";
 import { ThemeContext, ThemeContextType } from "./ThemeContextProvider";
 import styles from "../styles/SearchPage.module.css";
 
 // The search page
-const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNumber: number}> = ({ initialResults, searchTerm, pageNumber }) => {
+const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNumber: number, router: Router}> = ({ initialResults, searchTerm, pageNumber, router }) => {
 
   // Gets the themeClass function
   const { themeClass } = useContext(ThemeContext) as ThemeContextType;
@@ -205,7 +206,7 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
         <div id="top"></div>
 
         {/* The search bar at the top */}
-        <SearchBar query={searchTerm} />
+        <SearchBar query={searchTerm} router={router} />
 
         {/* The wrapper to wrap the whole content of the page */}
         <div className={styles.wrapper}>
@@ -238,7 +239,7 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
       
               {/* The page selector */}
               <div className={styles["page-selector"]}>
-                <PageSelector key={currentPage} page={currentPage} />
+                <PageSelector key={currentPage} page={currentPage} searchTerm={searchTerm} />
               </div>
             </>
           }

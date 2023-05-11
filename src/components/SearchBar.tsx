@@ -4,15 +4,15 @@
 "use client";
 
 import type { NextPage } from "next";
+import type { Router } from "../types/types";
 import Image from "next/image";
+import Link from "next/link";
 import ResearchIcon from "./ResearchIcon";
 import searchIcon from "../../public/search.svg";
 import styles from "../styles/SearchBar.module.css";
 import { FormEvent, useContext } from "react";
-import { useRouter } from "next/router";
 import { ThemeContext, ThemeContextType } from "./ThemeContextProvider";
 import ThemeToggler from "./ThemeToggler";
-import Link from "next/link";
 
 // The font size of the app name
 const logoFontSize = 20;
@@ -21,13 +21,10 @@ const logoFontSize = 20;
 const inputFontSize = 16;
 
 // The search bar
-const SearchBar: NextPage<{query: string}> = ({ query }) => {
+const SearchBar: NextPage<{query: string, router: Router}> = ({ query, router }) => {
 
-  // Gets the router
-  const router = useRouter();
-  
   // The function to handle the search form submission
-  async function handleSearch (event: FormEvent<HTMLFormElement>) {
+  async function handleSearch(event: FormEvent<HTMLFormElement>) {
     
     // Prevents the default behaviour
     event.preventDefault();
