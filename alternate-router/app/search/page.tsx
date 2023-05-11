@@ -36,9 +36,6 @@ export default async function ReturnSearchPage({ searchParams }: { searchParams:
   // Otherwise, search for the results
   const data = await createSearchResults(searchTerm, pageNumber);
 
-  // Gets the router
-  const router = useRouter();
-
   // Returns the search page
-  return <SearchPage initialResults={data ?? []} searchTerm={searchTerm} pageNumber={pageNumber} router={router} />;
+  return <SearchPage initialResults={data ?? []} searchTerm={searchTerm} pageNumber={pageNumber} useRouter={useRouter} />;
 };

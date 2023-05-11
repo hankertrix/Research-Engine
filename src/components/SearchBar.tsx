@@ -4,7 +4,7 @@
 "use client";
 
 import type { NextPage } from "next";
-import type { Router } from "../types/types";
+import type { useRouter } from "../types/types";
 import Image from "next/image";
 import Link from "next/link";
 import ResearchIcon from "./ResearchIcon";
@@ -21,7 +21,10 @@ const logoFontSize = 20;
 const inputFontSize = 16;
 
 // The search bar
-const SearchBar: NextPage<{query: string, router: Router}> = ({ query, router }) => {
+const SearchBar: NextPage<{query: string, useRouter: useRouter}> = ({ query, useRouter }) => {
+
+  // Gets the router
+  const router = useRouter();
 
   // The function to handle the search form submission
   async function handleSearch(event: FormEvent<HTMLFormElement>) {

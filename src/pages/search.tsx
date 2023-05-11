@@ -10,11 +10,8 @@ import { createSearchResults } from "../data-processor/get-results";
 // The results page
 const Results: NextPage<{initialResults: Result[], searchTerm: string, pageNumber: number}> = ({ initialResults, searchTerm, pageNumber }) => {
 
-  // Gets the router
-  const router = useRouter();
-
   // Returns the search page
-  return <SearchPage initialResults={initialResults} searchTerm={searchTerm} pageNumber={pageNumber} router={router} />;
+  return <SearchPage initialResults={initialResults} searchTerm={searchTerm} pageNumber={pageNumber} useRouter={useRouter} />;
 };
 
 

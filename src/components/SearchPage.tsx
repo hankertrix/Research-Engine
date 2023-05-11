@@ -4,7 +4,7 @@
 "use client";
 
 import type { NextPage } from "next";
-import type { Router } from "../types/types";
+import type { useRouter } from "../types/types";
 import Head from "next/head";
 import { useEffect, useState, useContext, useRef, MouseEvent, CSSProperties } from "react";
 import SearchBar from "./SearchBar";
@@ -17,7 +17,7 @@ import { ThemeContext, ThemeContextType } from "./ThemeContextProvider";
 import styles from "../styles/SearchPage.module.css";
 
 // The search page
-const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNumber: number, router: Router}> = ({ initialResults, searchTerm, pageNumber, router }) => {
+const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNumber: number, useRouter: useRouter}> = ({ initialResults, searchTerm, pageNumber, useRouter }) => {
 
   // Gets the themeClass function
   const { themeClass } = useContext(ThemeContext) as ThemeContextType;
@@ -206,7 +206,7 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
         <div id="top"></div>
 
         {/* The search bar at the top */}
-        <SearchBar query={searchTerm} router={router} />
+        <SearchBar query={searchTerm} useRouter={useRouter} />
 
         {/* The wrapper to wrap the whole content of the page */}
         <div className={styles.wrapper}>
