@@ -4,7 +4,7 @@
 "use client";
 
 import type { NextPage } from "next";
-import type { useRouter } from "../types/types";
+import type { useRouter } from "../types";
 import Image from "next/image";
 import Link from "next/link";
 import ResearchIcon from "./ResearchIcon";

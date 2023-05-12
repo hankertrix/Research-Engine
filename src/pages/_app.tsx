@@ -1,20 +1,11 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { createContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { ThemeContextProvider } from "../components/ThemeContextProvider";
 import LoadingPage from "../components/LoadingPage";
 
-// The theme context type
-export type ThemeContextType = {
-  theme: string,
-  toggleTheme: () => void,
-  themeClass: (style: { readonly [key: string]: string;}, cssClass: string) => string,
-}
-
-// The theme context
-export const ThemeContext = createContext<ThemeContextType | null>(null);
-
+// The main application
 function MyApp({ Component, pageProps }: AppProps) {
 
   // The router to use

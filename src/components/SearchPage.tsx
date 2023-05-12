@@ -4,7 +4,7 @@
 "use client";
 
 import type { NextPage } from "next";
-import type { useRouter } from "../types/types";
+import type { useRouter } from "../types";
 import Head from "next/head";
 import { useEffect, useState, useContext, useRef, MouseEvent, CSSProperties } from "react";
 import SearchBar from "./SearchBar";

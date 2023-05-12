@@ -2,7 +2,7 @@
 
 import "../styles/globals.css";
 import React from "react";
-import { ThemeContextProvider } from "../components/ThemeContextProvider";
+import MainApp from "../components/MainApp";
  
 // Export to the root layout
 export default function RootLayout({
@@ -13,7 +13,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeContextProvider>{children}</ThemeContextProvider>
+        <MainApp>
+          {children}
+        </MainApp>
       </body>
     </html>
   );

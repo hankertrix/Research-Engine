@@ -15,7 +15,7 @@ import Footer from "../components/Footer";
 import ThemeToggler from "../components/ThemeToggler";
 import styles from "../styles/MainPage.module.css";
 
-
+// The main page of the application
 const MainPage: NextPage = () => {
 
   // Gets the themeClass function
