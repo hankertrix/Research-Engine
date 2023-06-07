@@ -3,9 +3,7 @@
 // Marks this as a client component
 "use client";
 
-import type { NextPage } from "next";
 import React, { useState, useEffect, Suspense } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
 import { ThemeContextProvider } from "./ThemeContextProvider";
 import LoadingPage from "./LoadingPage";
 
