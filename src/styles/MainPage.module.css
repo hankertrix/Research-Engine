@@ -6,12 +6,12 @@
 
 .page-wrapper {
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
 }
 
 .main {
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   justify-content: center;
   padding-bottom: 3.5rem;
 }
