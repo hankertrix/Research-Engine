@@ -838,7 +838,7 @@ escape-string-regexp@^4.0.0:
 
 eslint-config-next@^13.4.7:
   version "13.4.7"
-  resolved "https://registry.npmjs.org/eslint-config-next/-/eslint-config-next-13.4.7.tgz"
+  resolved "https://registry.yarnpkg.com/eslint-config-next/-/eslint-config-next-13.4.7.tgz#59c48ecb37175ccc057f621a07af894cc931574f"
   integrity sha512-+IRAyD0+J1MZaTi9RQMPUfr6Q+GCZ1wOkK6XM52Vokh7VI4R6YFGOFzdkEFHl4ZyIX4FKa5vcwUP2WscSFNjNQ==
   dependencies:
     "@next/eslint-plugin-next" "13.4.7"
@@ -965,7 +965,7 @@ eslint-visitor-keys@^3.3.0, eslint-visitor-keys@^3.4.1:
 
 eslint@^8.43.0:
   version "8.43.0"
-  resolved "https://registry.npmjs.org/eslint/-/eslint-8.43.0.tgz"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.43.0.tgz#3e8c6066a57097adfd9d390b8fc93075f257a094"
   integrity sha512-aaCpf2JqqKesMFGgmRPessmVKjcGXqdlAYLLC3THM8t5nBRZRQ+st5WM/hoJXkdioEXLLbXgclUpM0TXo5HX5Q==
   dependencies:
     "@eslint-community/eslint-utils" "^4.2.0"
