@@ -108,3 +108,10 @@
     --right-margin: var(--source-right-margin-400);
   }
 }
+
+@media only screen and (max-width: 370px) {
+
+  .rights-notice {
+    display: none;
+  }
+}
