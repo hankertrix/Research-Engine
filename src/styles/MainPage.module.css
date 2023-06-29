@@ -22,14 +22,15 @@
 
 .icon-wrapper {
   flex-direction: row;
+  justify-content: center;
   font-family: Black Chancery;
   font-size: 3.4rem;
   padding-right: 10px;
+  gap: 20px;
 }
 
 .icon {
   height: 2em;
-  margin-right: 20px;
 }
 
 .name {
@@ -145,6 +146,7 @@
 
   .icon-wrapper {
     flex-direction: column;
+    gap: 0;
     padding-right: 0;
   }
 }

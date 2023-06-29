@@ -17,12 +17,12 @@
 
 .copyleft {
   font-size: 0.75rem;
-  flex-direction: row;
+  justify-self: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   color: inherit;
   text-decoration: none;
-  justify-self: start;
-  justify-content: center;
-  align-items: center;
 }
 
 .symbol {

@@ -23,7 +23,7 @@ const Footer: NextPage<{style?: CSSProperties}> = ({ style }) => {
   
   return (
       <footer className={`${styles.footer} ${themeClass(styles, "footer")}`} style={style}>
-        <a href="https://github.com/hankertrix/Research-Engine/blob/main/LICENSE.txt" target="_blank" title="Copyright notice and license" className={`${styles.copyleft} ${styles.flex}`} rel="noopener noreferrer">
+        <a href="https://codeberg.org/Hanker/Research-Engine/src/branch/main/LICENSE.txt" target="_blank" title="Copyright notice and license" className={styles.copyleft} rel="noopener noreferrer">
           <div>Copyleft&nbsp;<span className={styles.symbol}>©</span>&nbsp;2023 Hankertrix.&nbsp;</div><div className={styles["rights-notice"]}>All Wrongs Reserved.</div>
         </a>
         <div className={styles["source-wrapper"]}>
