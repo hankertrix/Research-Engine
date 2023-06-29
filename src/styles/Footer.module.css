@@ -7,15 +7,12 @@
 .footer {
   position: absolute;
   bottom: 0;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   width: 100vw;
   height: 3.5rem;
   font-family: Helvetica;
   padding: 5px 20px;
-  --source-right-margin-normal: 188px;
-  --source-right-margin-700: 72px;
-  --source-right-margin-400: 65px;
 }
 
 .copyleft {
@@ -23,16 +20,14 @@
   flex-direction: row;
   color: inherit;
   text-decoration: none;
+  justify-self: start;
+  justify-content: center;
+  align-items: center;
 }
 
 .symbol {
   display: inline-block;
   transform: scale(-1, 1);
-}
-
-.source-wrapper {
-  --right-margin: var(--source-right-margin-normal);
-  margin-right: var(--right-margin);
 }
 
 .source {
@@ -43,11 +38,16 @@
 .icon-wrapper {
   margin-top: 3px;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 }
 
 .theme {
   white-space: nowrap;
+  display: flex;
+  justify-self: end;
+  align-items: center;
+  justify-content: center;
 }
 
 
@@ -95,19 +95,8 @@
   .copyleft > div:nth-of-type(2) {
     align-self: flex-start;
   }
-
-  .source-wrapper {
-    --right-margin: var(--source-right-margin-700);
-  }
 }
 
-
-@media only screen and (max-width: 400px) {
-  
-  .source-wrapper {
-    --right-margin: var(--source-right-margin-400);
-  }
-}
 
 @media only screen and (max-width: 370px) {
 
