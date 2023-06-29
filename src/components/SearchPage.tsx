@@ -40,17 +40,23 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
   // The scroll up button
   const scrollUpBtn = useRef<HTMLAnchorElement | null>(null);
 
+  // The function to pause the program for a duration in milliseconds
+  function wait(timeInMs: number) {
+    return new Promise(resolve => setTimeout(resolve, timeInMs));
+  }
+
 
   // Adds an event listener on the scroll event and create a new intersection observer
   useEffect(() => {
 
     // The function to handle the scroll event
-    function handleScroll() {
+    async function handleScroll() {
       
       // Checks if the scroll position is more than 200px downwards
       if (window.scrollY >= 200) {
 
         // Makes the scroll up button visible
+        scrollUpBtn.current!.style.visibility = "visible";
         scrollUpBtn.current!.style.opacity = "1";
       }
 
@@ -59,6 +65,10 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
 
         // Makes the scroll up button invisible
         scrollUpBtn.current!.style.opacity = "0";
+
+        // Wait a while before making the scroll up button invisible
+        await wait(500);
+        scrollUpBtn.current!.style.visibility = "hidden";
       }
     }
 
