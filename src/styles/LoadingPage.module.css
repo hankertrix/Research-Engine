@@ -12,7 +12,7 @@
   --glow-opacity: 0.25;
   
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   font-family: Black Chancery;
   position: relative;
   overflow: hidden;
