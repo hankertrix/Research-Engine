@@ -40,12 +40,6 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
   // The scroll up button
   const scrollUpBtn = useRef<HTMLAnchorElement | null>(null);
 
-  // The function to pause the program for a duration in milliseconds
-  function wait(timeInMs: number) {
-    return new Promise(resolve => setTimeout(resolve, timeInMs));
-  }
-
-
   // Adds an event listener on the scroll event and create a new intersection observer
   useEffect(() => {
 
@@ -65,9 +59,6 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
 
         // Makes the scroll up button invisible
         scrollUpBtn.current!.style.opacity = "0";
-
-        // Wait a while before making the scroll up button invisible
-        await wait(500);
         scrollUpBtn.current!.style.visibility = "hidden";
       }
     }
@@ -193,10 +184,7 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
 
   // The footer styles
   const footerStyles = {
-    width: "100%",
-    "--source-right-margin-normal": "67px",
-    "--source-right-margin-700": "40px",
-    "--source-right-margin-400": "29px"
+    width: "100%"
   } as CSSProperties;
 
   
