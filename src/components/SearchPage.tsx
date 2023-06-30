@@ -44,7 +44,7 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
   useEffect(() => {
 
     // The function to handle the scroll event
-    async function handleScroll() {
+    function handleScroll() {
       
       // Checks if the scroll position is more than 200px downwards
       if (window.scrollY >= 200) {
