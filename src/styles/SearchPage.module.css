@@ -4,6 +4,10 @@
   min-height: 100vh;
 }
 
+#top {
+  display: none;
+}
+
 .wrapper {
   margin-left: 230px;
   margin-right: 110px;

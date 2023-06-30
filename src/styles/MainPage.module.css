@@ -22,7 +22,6 @@
 
 .icon-wrapper {
   flex-direction: row;
-  justify-content: center;
   font-family: Black Chancery;
   font-size: 3.4rem;
   padding-right: 10px;
@@ -30,7 +29,10 @@
 }
 
 .icon {
-  height: 2em;
+  --icon-height: 2em;
+
+  height: var(--icon-height);
+  width: calc(var(--icon-height) / (160 / 120));
 }
 
 .name {
