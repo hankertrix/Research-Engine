@@ -4,8 +4,8 @@
   min-height: 100vh;
 }
 
-#top {
-  display: none;
+.top {
+  visibility: hidden;
 }
 
 .wrapper {

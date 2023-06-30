@@ -201,7 +201,7 @@ const SearchPage: NextPage<{initialResults: Result[], searchTerm: string, pageNu
       <div className={`${styles["page-wrapper"]} ${themeClass(styles, "page-wrapper")}`}>
 
         {/* The top of the page */}
-        <div id="top"></div>
+        <div id="top" className={styles.top}></div>
 
         {/* The search bar at the top */}
         <SearchBar query={searchTerm} useRouter={useRouter} />
