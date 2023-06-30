@@ -10,9 +10,18 @@ html, body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  scroll-behavior: smooth;
 }
 
 * {
   box-sizing: border-box;
+}
+
+
+/* Use smooth scrolling when the user has no preference for reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+
+  html {
+    scroll-behavior: smooth;
+  }
+  
 }
