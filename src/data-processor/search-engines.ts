@@ -132,7 +132,8 @@ export class CORE extends SearchEngine {
   parse() {
 
     // The list of results
-    const resultList = this.response.results;
+    // Make the resultList an empty list if there are no results
+    const resultList = this.response.results || [];
 
     // The list of websites
     const websiteList: Website[] = [];
@@ -205,7 +206,8 @@ export class SemanticScholar extends SearchEngine {
   parse() {
 
     // The list of results
-    const resultList = this.response.data;
+    // Make the resultList an empty list if there are no results
+    const resultList = this.response.data || [];
 
     // The list of websites
     const websiteList: Website[] = [];
@@ -322,7 +324,8 @@ export class DOAJ extends SearchEngine {
   parse() {
 
     // The list of results
-    const resultList = this.response.results;
+    // Make the resultList an empty list if there are no results
+    const resultList = this.response.results || [];
 
     // The list of websites
     const websiteList: Website[] = [];
@@ -394,7 +397,8 @@ export class AMiner extends SearchEngine {
   parse() {
 
     // The list of results
-    const resultList = this.response.result;
+    // Make the resultList an empty list if there are no results
+    const resultList = this.response.result || [];
 
     // The list of websites
     const websiteList: Website[] = [];
@@ -461,7 +465,8 @@ export class PLOS_ONE extends SearchEngine {
   parse() {
 
     // Gets the search results
-    const resultList = this.response.response.docs;
+    // Make the resultList an empty list if there are no results
+    const resultList = this.response.response.docs || [];
 
     // The list of websites
     const websiteList = [];
@@ -634,7 +639,8 @@ export class IndexCopernicus extends SearchEngine {
   parse() {
 
     // Gets the search results
-    const resultList = this.response.metadatas;
+    // Make the resultList an empty list if there are no results
+    const resultList = this.response.metadatas || [];
 
     // The list of websites
     const websiteList = [];
@@ -715,7 +721,8 @@ export class IEEE_Xplore extends SearchEngine {
   parse() {
 
     // Gets the search results
-    const resultList = this.response.records;
+    // Make the resultList an empty list if there are no results
+    const resultList = this.response.records || [];
 
     // The list of websites
     const websiteList = [];
