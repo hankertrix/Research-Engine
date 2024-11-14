@@ -1,3 +1,24 @@
+> [!CAUTION]
+> This web application is no longer being maintained.
+> It doesn't work well at all and takes far too long
+> to retrieve the results from the various search engines.
+> The parsers for the various search engines haven't been updated
+> in a year, and are hence probably broken for quite a few of
+> the sites. It takes far too much effort to maintain them
+> such that they work properly.
+>
+> I also have no interest in keeping up with the Next.js
+> JavaScript framework as it is constantly being updated
+> with breaking changes.
+> I have no idea when the `pages` router will be deprecated,
+> and since this site doesn't work properly with the `app`
+> router, I have no plans on migrating it.
+>
+> Barely anyone uses this site anyway, it is just way too
+> slow to be useful to anyone. I only use it to show off
+> the pretty loading animation I made to deal with the
+> site's extremely slow loading speeds.
+
 # [Research Engine](https://research-engine.onrender.com)
 
 Link: https://research-engine.onrender.com
@@ -5,14 +26,17 @@ Link: https://research-engine.onrender.com
 <br>
 
 ### What is it for?
+
 The Research Engine is a [Next.js](https://nextjs.org/) web application built to facilitate research by forwarding your query to various different search engines that specialise in searching for research papers so that you don't have to spend time scrolling through various different search engines to find what you're looking for.
 
 ### How does it work?
+
 The engine forwards your query to 16 different search engines that specialise in research papers and gets the search results from each of them. The engine will then get the abstract of 10 of the results and display the title and the first 3 relevant sentences on the search results page. Do note that it does take some time (simply put, it's quite slow) for the application to get the data from so many different search engines and websites so please be patient. There isn't much else I can do to improve the performance of the application given its nature so cut me some slack yeah.
 
 <br>
 
 ### Search engines used
+
 1. [ERIC (Education Resources Information Center)](https://eric.ed.gov/)
 2. [CORE](https://core.ac.uk/)
 3. [Semantic Scholar](https://www.semanticscholar.org/)
@@ -22,7 +46,7 @@ The engine forwards your query to 16 different search engines that specialise in
 7. [fatcat!](https://fatcat.wiki/)
 8. [AMiner](https://www.aminer.org/)
 9. [OSTI (U.S. Department of Energy
-Office of Scientific and Technical Information)](https://www.osti.gov/)
+   Office of Scientific and Technical Information)](https://www.osti.gov/)
 10. [PLOS ONE](https://journals.plos.org/plosone/)
 11. [Internet Archive Scholar](https://scholar.archive.org/)
 12. [IOP Science](https://iopscience.iop.org/)
@@ -34,6 +58,7 @@ Office of Scientific and Technical Information)](https://www.osti.gov/)
 <br>
 
 ### iOS Shortcuts helper
+
 There are two iOS shortcuts to help you interact with the API on the Research Engine and provide you with the information directly on your notes app. One of them is the main shortcut and the other one is simply a wrapper, adding a variable to the shortcut so it'll run automatically and skip the user interaction part. This automated wrapper is meant to be run as an automation so that you'll get new results on a regular basis.
 
 The main shortcut: https://www.icloud.com/shortcuts/b66b3756c8bc49669d2427d2fd2e901a
@@ -43,9 +68,11 @@ The automated wrapper shortcut: https://www.icloud.com/shortcuts/51f2ebce34a14c6
 <br>
 
 ### Regarding privacy and cookies
+
 This web application is fully open source and does not collect any user data or set any cookies. You can use it to avoid being tracked by the search engines above by using this application as most of them do set cookies in order for you to use the site. The site only uses local storage to store your theme.
 
 ### License and copyright information
+
 This web application is licensed under the GNU AGPL v3 license. For the full license, look at the [LICENSE.txt](https://codeberg.org/Hanker/Research-Engine/src/branch/main/LICENSE.txt) file.
 
 <br>
@@ -60,6 +87,7 @@ Example API request: https://research-engine.onrender.com/api/search?q=animals&p
 <br>
 
 Query parameters:
+
 ```
 q: Your search term.
 
@@ -71,6 +99,7 @@ rich: Set this to true if you want the search term within the relevant sentences
 <br>
 
 JSON response data type:
+
 ```
 {
   status: string,
@@ -88,6 +117,7 @@ JSON response data type:
 <br>
 
 Example of a failed JSON response:
+
 ```
 {
   "status": "400 Bad Request",
@@ -98,6 +128,7 @@ Example of a failed JSON response:
 <br>
 
 Example of a successful JSON response:
+
 ```
 {
   "status": "200 OK",
